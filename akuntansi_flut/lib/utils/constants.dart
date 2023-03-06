@@ -20,6 +20,9 @@ class TypeChatMessage {
   static const sticker = "sticker";
 }
 
+double mobileSize = 576;
+double webSize = 992;
+
 double textSizeSuperSmall = 9.0;
 double textSizeSmall = 11.0;
 double textSizeMedium = 13.0;

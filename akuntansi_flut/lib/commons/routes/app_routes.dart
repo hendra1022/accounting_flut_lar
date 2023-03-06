@@ -4,4 +4,5 @@ abstract class RoutesPath {
   RoutesPath._();
   static const login = '/login';
   static const dashboard = '/dashboard';
+  static const navigator = '/navigator';
 }

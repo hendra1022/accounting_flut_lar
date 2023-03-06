@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../utils/v_color.dart';
-import '../../utils/widgets/v_widgets.dart';
+import 'components/login_screen_top_image.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -21,10 +21,12 @@ class LoginPage extends StatelessWidget {
   }
 
   _body() {
-    return GetBuilder<LoginController>(
-      builder: (controller) => const Responsive(
-        mobile: MobileLoginPage(),
-        desktop: DeskopLoginPage(),
+    return SingleChildScrollView(
+      child: GetBuilder<LoginController>(
+        builder: (controller) => const Responsive(
+          mobile: MobileLoginPage(),
+          desktop: DeskopLoginPage(),
+        ),
       ),
     );
   }
@@ -40,13 +42,14 @@ class MobileLoginPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            flex: 7,
-            child: Center(child: VSvgPicture("${iconPath}chat.svg")),
-          ),
-          const Expanded(
-            flex: 3,
-            child: LoginForm(),
+          const LoginScreenTopImage(),
+          Row(
+            children: const [
+              Expanded(
+                flex: 8,
+                child: LoginForm(),
+              ),
+            ],
           ),
         ],
       ),
@@ -62,16 +65,17 @@ class DeskopLoginPage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(paddingExtraLarge.w),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Expanded(
-            flex: 7,
-            child: Center(child: VSvgPicture("${iconPath}chat.svg")),
-          ),
           const Expanded(
-            flex: 3,
-            child: LoginForm(),
+            child: LoginScreenTopImage(),
+          ),
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                SizedBox(width: 450, child: LoginForm()),
+              ],
+            ),
           ),
         ],
       ),

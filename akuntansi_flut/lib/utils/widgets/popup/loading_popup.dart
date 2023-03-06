@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../constants.dart';
 import '../../v_color.dart';
@@ -12,30 +11,30 @@ class LoadingPopup extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Material(
-        borderRadius: BorderRadius.circular(radiusMedium.r),
+        borderRadius: BorderRadius.circular(radiusMedium),
         child: Container(
-          padding: EdgeInsets.all(paddingExtraLarge.w),
+          padding: EdgeInsets.all(paddingExtraLarge),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(
-                width: imageSizeMedium.w,
-                height: imageSizeMedium.w,
+                width: imageSizeMedium,
+                height: imageSizeMedium,
                 child: CircularProgressIndicator(
-                  strokeWidth: paddingSuperSmall.w,
+                  strokeWidth: paddingSuperSmall,
                   valueColor: const AlwaysStoppedAnimation<Color>(VColor.secondary),
                 ),
               ),
               SizedBox(
-                height: marginLarge.h,
+                height: marginLarge,
               ),
               VText(
                 "Loading",
                 color: VColor.black,
                 isBold: true,
-                fontSize: textSizeMedium.sp,
+                fontSize: textSizeMedium,
                 maxLines: 1,
               ),
             ],

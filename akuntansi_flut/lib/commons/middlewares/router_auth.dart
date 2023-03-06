@@ -10,7 +10,7 @@ class RouteAuthMiddleware extends GetMiddleware {
   @override
   RouteSettings? redirect(String? route) {
     if (UserStore.to.getStatusLogin()) {
-      return const RouteSettings(name: RoutesPath.dashboard);
+      return const RouteSettings(name: RoutesPath.navigator);
     } else {
       return null;
       // return const RouteSettings(name: RoutesPath.login);

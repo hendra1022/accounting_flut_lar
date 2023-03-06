@@ -14,11 +14,11 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        children: [
-          GetBuilder<LoginController>(
-            builder: (controller) => VInputText(
+    return GetBuilder<LoginController>(
+      builder: (controller) => Form(
+        child: Column(
+          children: [
+            VInputText(
               hint: "Username",
               textCapitalization: TextCapitalization.none,
               textInputAction: TextInputAction.next,
@@ -29,22 +29,17 @@ class LoginForm extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               textPadding: paddingSuperSmall.w,
               prefixIcon: Container(
-                padding: EdgeInsets.only(
-                  right: paddingSuperSmall.w,
-                  left: paddingSmall.w,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: paddingSuperSmall.sp),
                 child: const Icon(
                   Icons.person,
                   color: VColor.secondary,
                 ),
               ),
             ),
-          ),
-          SizedBox(
-            height: marginMedium.h,
-          ),
-          GetBuilder<LoginController>(
-            builder: (controller) => VInputText(
+            SizedBox(
+              height: marginMedium.h,
+            ),
+            VInputText(
               hint: "Password",
               textCapitalization: TextCapitalization.none,
               textInputAction: TextInputAction.next,
@@ -55,30 +50,29 @@ class LoginForm extends StatelessWidget {
               keyboardType: TextInputType.emailAddress,
               textPadding: paddingSuperSmall.w,
               prefixIcon: Container(
-                padding: EdgeInsets.only(
-                  right: paddingSuperSmall.w,
-                  left: paddingSmall.w,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: paddingSuperSmall.sp),
                 child: const Icon(
                   Icons.lock,
                   color: VColor.secondary,
                 ),
               ),
             ),
-          ),
-          SizedBox(height: paddingMedium.h),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxHeight: 50),
-            child: SizedBox(
-              width: double.infinity,
-              child: VButton(
-                "Login",
-                buttonColor: VColor.secondary,
-                onPressed: () {},
+            SizedBox(height: paddingMedium.h),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxHeight: 50),
+              child: SizedBox(
+                width: double.infinity,
+                child: VButton(
+                  "Login",
+                  buttonColor: VColor.secondary,
+                  onPressed: () async {
+                    await controller.doLogin();
+                  },
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

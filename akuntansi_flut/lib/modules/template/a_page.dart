@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
 
 class APage extends StatelessWidget {
@@ -9,6 +10,7 @@ class APage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _body(),
+      backgroundColor: VColor.background,
     );
   }
 

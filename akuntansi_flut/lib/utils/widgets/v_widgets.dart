@@ -71,7 +71,7 @@ class VInputText extends StatelessWidget {
       textInputAction: textInputAction,
       controller: textEditingController?.text == '' ? (textEditingController?..text = initialValue) : textEditingController,
       focusNode: focusNode,
-      style: TextStyle(fontFamily: interFontFamily, fontSize: (textSizeMedium.sp), color: filled ? textColor : VColor.grey4),
+      style: TextStyle(fontFamily: interFontFamily, color: filled ? textColor : VColor.grey4),
       maxLines: maxLines,
       obscureText: isSecureText,
       keyboardType: keyboardType,
@@ -80,7 +80,6 @@ class VInputText extends StatelessWidget {
         suffixIcon: suffixIcon,
         hintText: hint,
         hintStyle: TextStyle(
-          fontSize: textSizeMedium.sp,
           fontFamily: interFontFamily,
           color: filled ? hintTextColor : VColor.grey3Opacity,
         ),

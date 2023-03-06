@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../modules/dashboard/dashboard.dart';
 import '../../modules/login/login.dart';
+import '../../modules/navigator/navigator.dart';
 import '../middlewares/middlewares.dart';
 
 part 'app_routes.dart';
@@ -18,6 +19,11 @@ class AppPages {
       middlewares: [
         RouteAuthMiddleware(priority: 1),
       ],
+    ),
+    GetPage(
+      name: RoutesPath.navigator,
+      page: () => const NavigatorPage(),
+      binding: NavigatorBinding(),
     ),
     GetPage(
       name: RoutesPath.dashboard,

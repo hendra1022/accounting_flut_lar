@@ -13,10 +13,12 @@ class LoginScreenTopImage extends StatelessWidget {
       children: [
         Row(
           children: [
+            const Spacer(),
             Expanded(
-              flex: 5,
+              flex: 8,
               child: VSvgPicture("${iconPath}chat.svg"),
             ),
+            const Spacer(),
           ],
         ),
         SizedBox(height: paddingMedium * 2),
