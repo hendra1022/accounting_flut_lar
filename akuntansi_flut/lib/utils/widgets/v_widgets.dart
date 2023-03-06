@@ -632,9 +632,11 @@ class VButton extends StatelessWidget {
   final Color buttonColor;
   final Color buttonColorDisabled;
   final VoidCallback? onPressed;
+  final Function(bool)? onHover;
   final bool disabled;
   final double textPadding;
   final double borderRadius;
+  final Widget? rightIcon;
 
   const VButton(
     this.title, {
@@ -644,9 +646,11 @@ class VButton extends StatelessWidget {
     this.buttonColor = VColor.primary,
     this.buttonColorDisabled = VColor.primaryOpacity,
     @required this.onPressed,
+    this.onHover,
     this.disabled = false,
     this.textPadding = 24,
     this.borderRadius = 10,
+    this.rightIcon,
   });
 
   @override
@@ -654,9 +658,11 @@ class VButton extends StatelessWidget {
     return AbsorbPointer(
       absorbing: disabled,
       child: TextButton(
+        onHover: onHover,
         onPressed: onPressed,
         style: ButtonStyle(
-          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.all(textPadding)),
+          padding:
+              MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.only(left: textPadding, top: textPadding, bottom: textPadding, right: textPadding / 2)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
           ),
@@ -664,10 +670,16 @@ class VButton extends StatelessWidget {
             !disabled ? buttonColor : buttonColorDisabled,
           ),
         ),
-        child: VText(
-          title,
-          isBold: true,
-          color: !disabled ? textColor : textColorDisabled,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            VText(
+              title,
+              isBold: true,
+              color: !disabled ? textColor : textColorDisabled,
+            ),
+            rightIcon ?? Container(),
+          ],
         ),
       ),
     );

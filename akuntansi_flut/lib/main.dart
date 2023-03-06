@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_portal/flutter_portal.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -25,20 +26,22 @@ class MyApp extends StatelessWidget {
       statusBarBrightness: Brightness.light,
     ));
     return ScreenUtilInit(
-      builder: (context, child) => GetMaterialApp(
-        title: 'Akuntans',
-        theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: VColor.primary,
+      builder: (context, child) => Portal(
+        child: GetMaterialApp(
+          title: 'Akuntans',
+          theme: ThemeData(
+            brightness: Brightness.light,
+            primaryColor: VColor.primary,
+          ),
+          fallbackLocale: const Locale('en'),
+          locale: const Locale('id', 'ID'),
+          initialRoute: AppPages.initial,
+          getPages: AppPages.routes,
+          // debugShowCheckedModeBanner: false,
+          builder: (context, child) {
+            return MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), child: child!);
+          },
         ),
-        fallbackLocale: const Locale('en'),
-        locale: const Locale('id', 'ID'),
-        initialRoute: AppPages.initial,
-        getPages: AppPages.routes,
-        // debugShowCheckedModeBanner: false,
-        builder: (context, child) {
-          return MediaQuery(data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0), child: child!);
-        },
       ),
     );
   }
