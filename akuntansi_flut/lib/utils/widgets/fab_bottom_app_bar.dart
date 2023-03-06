@@ -9,8 +9,10 @@ class FABBottomAppBarItem {
   String? text, imgPath;
 }
 
+// ignore: must_be_immutable
 class FABBottomAppBar extends StatefulWidget {
   FABBottomAppBar({
+    super.key,
     this.items,
     this.height = 60.0,
     this.iconSize = 24.0,
@@ -54,12 +56,11 @@ class FABBottomAppBarState extends State<FABBottomAppBar> {
       );
     });
 
-    return Container(
-        child: Row(
+    return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: items,
-    ));
+    );
   }
 
   Widget _buildTabItem({

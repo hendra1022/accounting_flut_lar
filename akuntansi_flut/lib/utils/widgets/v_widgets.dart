@@ -1392,6 +1392,7 @@ class ExpansionTileState extends State<VExpansionTile> with SingleTickerProvider
   late AnimationController _controller;
   late Animation<double> _iconTurns;
   late Animation<double> _heightFactor;
+  // ignore: unused_field
   late Animation<Color?> _borderColor;
   late Animation<Color?> _headerColor;
   late Animation<Color?> _iconColor;

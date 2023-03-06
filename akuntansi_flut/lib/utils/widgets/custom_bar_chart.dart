@@ -6,17 +6,18 @@ import '../v_color.dart';
 import 'v_widgets.dart';
 
 class CustomBarChart extends StatelessWidget {
-  String? leftTitle;
-  String? rightTitle;
-  String? leftAmount;
-  String? rightAmount;
-  double? value;
-  Color? barValueColor;
-  Color? barBackgroundColor;
-  String? valueString;
+  final String? leftTitle;
+  final String? rightTitle;
+  final String? leftAmount;
+  final String? rightAmount;
+  final double? value;
+  final Color? barValueColor;
+  final Color? barBackgroundColor;
+  final String? valueString;
 
-  CustomBarChart(
-      {this.leftTitle,
+  const CustomBarChart(
+      {super.key,
+      this.leftTitle,
       this.rightTitle,
       this.barValueColor = VColor.primary,
       this.barBackgroundColor = VColor.primaryOpacity,
