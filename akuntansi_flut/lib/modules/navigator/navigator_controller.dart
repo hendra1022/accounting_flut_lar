@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../commons/base_controller.dart';
 import '../customer/customer.dart';
@@ -13,7 +14,7 @@ class NavigatorController extends BaseController {
   bool showDropdownMaster = false;
   bool showDropdownTransaction = false;
 
-  int selectedPage = 0;
+  int selectedPage = 1;
 
   @override
   Future<void> onInit() async {
@@ -43,14 +44,19 @@ class NavigatorController extends BaseController {
   Widget selectedPageWidget() {
     switch (selectedPage) {
       case 0:
+        Get.lazyPut<DashboardController>(() => DashboardController());
         return const DashboardPage();
       case 1:
+        Get.lazyPut<ItemController>(() => ItemController());
         return const ItemPage();
       case 2:
+        Get.lazyPut<ItemCategoryController>(() => ItemCategoryController());
         return const ItemCategoryPage();
       case 3:
+        Get.lazyPut<SupplierController>(() => SupplierController());
         return const SupplierPage();
       case 4:
+        Get.lazyPut<CustomerController>(() => CustomerController());
         return const CustomerPage();
       default:
         return const DashboardPage();

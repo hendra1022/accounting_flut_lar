@@ -1,10 +1,12 @@
-import 'package:akuntansi_flut/modules/item/item.dart';
+import 'package:akuntansi_flut/modules/item/component/item_table_builder.dart';
 import 'package:akuntansi_flut/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
+import '../navigator/navigator.dart';
+import 'item.dart';
 
 class ItemPage extends StatelessWidget {
   const ItemPage({super.key});
@@ -17,7 +19,7 @@ class ItemPage extends StatelessWidget {
     );
   }
 
-  _body() {
+  Widget _body() {
     return GetBuilder<ItemController>(
       builder: (controller) => Container(
         width: double.infinity,
@@ -28,29 +30,7 @@ class ItemPage extends StatelessWidget {
             SizedBox(
               height: marginMedium,
             ),
-            Expanded(
-              child: SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: PaginatedDataTable(
-                  source: controller.dataSource,
-                  columns: [
-                    const DataColumn(
-                      label: Text('ID'),
-                    ),
-                    DataColumn(
-                      label: const Text('Name'),
-                      onSort: (columnIndex, ascending) => controller.sort((user) => int.parse(user.id!), columnIndex, !ascending, controller.dataSource),
-                    ),
-                    const DataColumn(label: Text('Category Id')),
-                    const DataColumn(label: Text('Price')),
-                  ],
-                  columnSpacing: 100,
-                  horizontalMargin: 10,
-                  rowsPerPage: 22,
-                  showCheckboxColumn: false,
-                ),
-              ),
-            ),
+            Expanded(child: buildTableItem(controller)),
           ],
         ),
       ),
@@ -65,10 +45,26 @@ class ItemPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          VText(
-            "subTitle",
-            fontSize: textSizeMedium,
-            color: VColor.white,
+          Row(
+            children: [
+              VText(
+                "Dashboard",
+                fontSize: textSizeMedium,
+                color: VColor.white,
+                onPressed: () {
+                  Get.find<NavigatorController>().updateSelectedPage(0);
+                },
+              ),
+              const Icon(
+                Icons.arrow_right,
+                color: VColor.white,
+              ),
+              VText(
+                "Item",
+                fontSize: textSizeMedium,
+                color: VColor.white,
+              ),
+            ],
           ),
           SizedBox(
             height: marginSuperSmall,

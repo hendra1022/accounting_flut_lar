@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:akuntansi_flut/services/model/item_model.dart';
+import 'package:akuntansi_flut/utils/extensions.dart';
+import 'package:akuntansi_flut/utils/widgets/v_widgets.dart';
 import 'package:flutter/material.dart';
 
 import '../../commons/base_controller.dart';
@@ -8,13 +10,8 @@ import '../../commons/base_controller.dart';
 class ItemController extends BaseController {
   final MyData dataSource = MyData();
 
-  void sort<T>(
-    Comparable<T> Function(ItemModel user) getField,
-    int colIndex,
-    bool asc,
-    MyData src,
-  ) {
-    src.sort<T>(getField, asc);
+  void sortData<T>(Comparable<T> Function(ItemModel user) getField, int colIndex, bool ascending) {
+    dataSource.sort<T>(getField, ascending);
   }
 }
 
@@ -24,9 +21,15 @@ class MyData extends DataTableSource {
     200,
     (index) => ItemModel(
       id: index.toString(),
+      code: index.toString(),
       name: "item $index",
       categoryId: "1",
-      harga: "${Random().nextInt(50000)}",
+      categoryName: "Demo",
+      active: "1",
+      minPrice: "${Random().nextInt(50000)}",
+      price: "${Random().nextInt(50000)}",
+      createdDate: "2023-01-01",
+      updatedDate: "2023-01-01",
     ),
   );
 
@@ -53,11 +56,68 @@ class MyData extends DataTableSource {
 
   @override
   DataRow getRow(int index) {
-    return DataRow(cells: [
-      DataCell(Text(_data[index].id!)),
-      DataCell(Text(_data[index].name!)),
-      DataCell(Text(_data[index].categoryId!)),
-      DataCell(Text(_data[index].categoryId!)),
-    ]);
+    return DataRow(
+      cells: [
+        DataCell(
+          Container(
+            padding: const EdgeInsets.only(right: 5),
+            constraints: const BoxConstraints(minWidth: 50),
+            child: VText(_data[index].id!, align: TextAlign.right),
+          ),
+        ),
+        DataCell(
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            constraints: const BoxConstraints(minWidth: 100),
+            child: VText(_data[index].name!),
+          ),
+        ),
+        DataCell(
+          Container(
+            padding: const EdgeInsets.only(left: 5),
+            constraints: const BoxConstraints(minWidth: 100),
+            child: VText(_data[index].categoryName!),
+          ),
+        ),
+        DataCell(
+          Container(
+            padding: const EdgeInsets.only(right: 5),
+            constraints: const BoxConstraints(minWidth: 70),
+            child: VText(_data[index].minPrice!.currencyInt, align: TextAlign.right),
+          ),
+        ),
+        DataCell(
+          Container(
+            padding: const EdgeInsets.only(right: 5),
+            constraints: const BoxConstraints(minWidth: 70),
+            child: VText(_data[index].price!.currencyInt, align: TextAlign.right),
+          ),
+        ),
+        DataCell(
+          Center(
+            child: Container(
+              padding: const EdgeInsets.only(right: 5),
+              constraints: const BoxConstraints(minWidth: 50),
+              child: Checkbox(
+                value: _data[index].active == "1" ? true : false,
+                onChanged: (value) => {},
+              ),
+            ),
+          ),
+        ),
+        DataCell(
+          Center(
+            child: Container(
+              padding: const EdgeInsets.only(right: 5),
+              constraints: const BoxConstraints(minWidth: 50),
+              child: Checkbox(
+                value: _data[index].active == "1" ? true : false,
+                onChanged: (value) => {},
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
