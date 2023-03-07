@@ -1,4 +1,6 @@
 class ApiUrl {
+  static const dataDummyUrl = "https://jsonplaceholder.typicode.com/users";
+
   // static const BASE_URL = "http://mysidomuncul.sidomuncul.co.id:5000";
   // static const V1 = "/v1/api/";
 

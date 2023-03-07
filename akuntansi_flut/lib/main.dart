@@ -1,3 +1,4 @@
+import 'package:akuntansi_flut/utils/scroll_behavior/custom_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       builder: (context, child) => Portal(
         child: GetMaterialApp(
+          scrollBehavior: MyCustomScrollBehavior(),
           title: 'Akuntans',
           theme: ThemeData(
             brightness: Brightness.light,
