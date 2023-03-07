@@ -28,24 +28,27 @@ class ItemPage extends StatelessWidget {
             SizedBox(
               height: marginMedium,
             ),
-            SingleChildScrollView(
-              child: PaginatedDataTable(
-                source: controller.dataSource,
-                columns: [
-                  const DataColumn(
-                    label: Text('ID'),
-                  ),
-                  DataColumn(
-                    label: const Text('Name'),
-                    onSort: (columnIndex, ascending) => controller.sort((user) => int.parse(user.id!), columnIndex, !ascending, controller.dataSource),
-                  ),
-                  const DataColumn(label: Text('Category Id')),
-                  const DataColumn(label: Text('Price')),
-                ],
-                columnSpacing: 100,
-                horizontalMargin: 10,
-                rowsPerPage: 55,
-                showCheckboxColumn: false,
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: PaginatedDataTable(
+                  source: controller.dataSource,
+                  columns: [
+                    const DataColumn(
+                      label: Text('ID'),
+                    ),
+                    DataColumn(
+                      label: const Text('Name'),
+                      onSort: (columnIndex, ascending) => controller.sort((user) => int.parse(user.id!), columnIndex, !ascending, controller.dataSource),
+                    ),
+                    const DataColumn(label: Text('Category Id')),
+                    const DataColumn(label: Text('Price')),
+                  ],
+                  columnSpacing: 100,
+                  horizontalMargin: 10,
+                  rowsPerPage: 22,
+                  showCheckboxColumn: false,
+                ),
               ),
             ),
           ],
