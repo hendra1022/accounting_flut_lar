@@ -75,21 +75,35 @@ Widget appBar(NavigatorController controller) {
         ),
       ],
     ),
+    actions: [
+      Container(
+        margin: EdgeInsets.only(right: marginMedium),
+        height: 50,
+        child: Center(
+          child: VButton(
+            "Log Out",
+            onPressed: () {},
+            textColor: VColor.black,
+            buttonColor: VColor.white,
+          ),
+        ),
+      ),
+    ],
     backgroundColor: VColor.white,
   );
 }
 
 Widget dropdownMenuMaster(NavigatorController controller) {
   return SizedBox(
-    width: 110,
+    width: 150,
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
           width: double.infinity,
           child: VButton(
-            "Customer",
-            onPressed: () {},
+            "Item",
+            onPressed: () => controller.updateSelectedPage(1),
             onHover: (p0) {
               controller.updateDropdownMaster();
             },
@@ -100,15 +114,39 @@ Widget dropdownMenuMaster(NavigatorController controller) {
         SizedBox(
           width: double.infinity,
           child: VButton(
-            "Item",
-            onPressed: () {},
+            "Item Category",
+            onPressed: () => controller.updateSelectedPage(2),
             onHover: (p0) {
               controller.updateDropdownMaster();
             },
             buttonColor: VColor.white,
             textColor: VColor.black,
           ),
-        )
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: VButton(
+            "Supplier",
+            onPressed: () => controller.updateSelectedPage(3),
+            onHover: (p0) {
+              controller.updateDropdownMaster();
+            },
+            buttonColor: VColor.white,
+            textColor: VColor.black,
+          ),
+        ),
+        SizedBox(
+          width: double.infinity,
+          child: VButton(
+            "Customer",
+            onPressed: () => controller.updateSelectedPage(4),
+            onHover: (p0) {
+              controller.updateDropdownMaster();
+            },
+            buttonColor: VColor.white,
+            textColor: VColor.black,
+          ),
+        ),
       ],
     ),
   );
@@ -123,7 +161,7 @@ Widget dropdownMenuTransaction(NavigatorController controller) {
         SizedBox(
           width: double.infinity,
           child: VButton(
-            "Customer",
+            "Purchasing",
             onPressed: () {},
             onHover: (p0) {
               controller.updateDropdownTransaction();
@@ -135,7 +173,7 @@ Widget dropdownMenuTransaction(NavigatorController controller) {
         SizedBox(
           width: double.infinity,
           child: VButton(
-            "Item",
+            "Sales",
             onPressed: () {},
             onHover: (p0) {
               controller.updateDropdownTransaction();

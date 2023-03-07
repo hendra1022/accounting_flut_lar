@@ -1,5 +1,4 @@
 import 'package:akuntansi_flut/modules/navigator/navigator.dart';
-import 'package:akuntansi_flut/utils/widgets/v_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,8 +21,8 @@ class NavigatorPage extends StatelessWidget {
       builder: (controller) => Column(
         children: [
           appBar(controller),
-          const Expanded(
-            child: VText("asd"),
+          Expanded(
+            child: controller.selectedPageWidget(),
           ),
         ],
       ),
