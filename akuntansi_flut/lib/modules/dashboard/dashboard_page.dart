@@ -39,10 +39,18 @@ class DashboardPage extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          VText(
-            "Dashboard",
-            fontSize: textSizeMedium,
-            color: VColor.white,
+          Row(
+            children: [
+              VText(
+                "Dashboard",
+                fontSize: textSizeMedium,
+                color: VColor.white,
+              ),
+              const Icon(
+                Icons.arrow_right,
+                color: VColor.primary,
+              )
+            ],
           ),
           SizedBox(
             height: marginSuperSmall,

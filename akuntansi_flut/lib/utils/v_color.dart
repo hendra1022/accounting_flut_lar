@@ -21,6 +21,7 @@ class VColor {
   static const Color brown = Color.fromARGB(255, 224, 150, 38);
   static const Color greybg = Color.fromARGB(255, 214, 214, 214);
   static const Color yellow = Color.fromARGB(255, 211, 226, 2);
+  static const Color transparant = Color.fromARGB(0, 0, 0, 0);
 
   static const Color silver = Color.fromARGB(255, 192, 192, 192);
   static const Color gold1 = Color.fromARGB(255, 255, 125, 0);

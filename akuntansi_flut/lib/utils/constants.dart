@@ -8,6 +8,8 @@ class PrefConst {
   static const String keyIsLogin = 'isLogin';
   static const String keyUsername = 'username';
   static const String keyPassword = 'password';
+
+  static const String keyArgsItemId = 'item_id';
 }
 
 class SettingsConstants {

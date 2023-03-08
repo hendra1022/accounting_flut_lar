@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../modules/customer/customer.dart';
 import '../../modules/dashboard/dashboard.dart';
 import '../../modules/item/item.dart';
+import '../../modules/item/item_detail/item_detail.dart';
 import '../../modules/item_category/item_category.dart';
 import '../../modules/login/login.dart';
 import '../../modules/navigator/navigator.dart';
@@ -42,6 +43,11 @@ class AppPages {
       name: RoutesPath.item,
       page: () => const ItemPage(),
       binding: ItemBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.itemDetail,
+      page: () => const ItemDetailPage(),
+      binding: ItemDetailBinding(),
     ),
     GetPage(
       name: RoutesPath.itemCategory,
