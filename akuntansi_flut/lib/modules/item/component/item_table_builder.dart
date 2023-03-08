@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../services/model/item_model.dart';
+import '../../../utils/constants.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../item.dart';
 
 Widget buildTableItem(ItemController controller) {
-  return SingleChildScrollView(
-    scrollDirection: Axis.vertical,
+  return Container(
+    decoration: BoxDecoration(
+      color: VColor.white,
+      borderRadius: BorderRadius.all(
+        Radius.circular(radiusMedium),
+      ),
+    ),
     child: Theme(
-      data: Theme.of(Get.context!).copyWith(cardColor: VColor.white, dividerColor: Colors.green),
+      data: Theme.of(Get.context!).copyWith(cardColor: VColor.white, dividerColor: VColor.primary),
       child: PaginatedDataTable(
         source: controller.dataSource,
         showFirstLastButtons: true,
@@ -20,13 +26,13 @@ Widget buildTableItem(ItemController controller) {
         rowsPerPage: 15,
         showCheckboxColumn: false,
         columns: [
-          tableColumn(controller, "Code", (user) => user.code!, minWidth: 0),
-          tableColumn(controller, "Name", (user) => user.name!),
-          tableColumn(controller, "Category Name", (user) => user.categoryName!),
-          tableColumn(controller, "Min Price", (user) => int.parse(user.minPrice!), numeric: true, minWidth: 70),
-          tableColumn(controller, "Price", (user) => int.parse(user.price!), numeric: true, minWidth: 70),
-          tableColumn(controller, "Active", (user) => user.active!, minWidth: 50),
-          tableColumn(controller, " ", null, minWidth: 50),
+          tableColumn(controller, "Code", (user) => user.code!, minWidth: Get.width * (2 / 100)),
+          tableColumn(controller, "Name", (user) => user.name!, minWidth: Get.width * (12 / 100)),
+          tableColumn(controller, "Category Name", (user) => user.categoryName!, minWidth: Get.width * (8 / 100)),
+          tableColumn(controller, "Min Price", (user) => int.parse(user.minPrice!), minWidth: Get.width * (6 / 100)),
+          tableColumn(controller, "Price", (user) => int.parse(user.price!), minWidth: Get.width * (4 / 100)),
+          tableColumn(controller, "Active", (user) => user.active!, minWidth: Get.width * (4 / 100)),
+          tableColumn(controller, " ", null, minWidth: Get.width * (4 / 100)),
         ],
       ),
     ),
@@ -38,17 +44,16 @@ DataColumn tableColumn<T>(
   String title,
   Comparable<T> Function(ItemModel user)? sortBy, {
   double minWidth = 150.0,
-  bool numeric = false,
 }) {
   return DataColumn(
-    label: Container(
-      constraints: BoxConstraints(minWidth: minWidth),
+    label: SizedBox(
+      width: minWidth,
       child: VText(
         title,
-        align: numeric ? TextAlign.end : TextAlign.start,
+        align: TextAlign.left,
+        overflow: TextOverflow.clip,
       ),
     ),
     onSort: sortBy != null ? (columnIndex, ascending) => controller.sortData(sortBy, columnIndex, ascending) : null,
-    numeric: numeric,
   );
 }

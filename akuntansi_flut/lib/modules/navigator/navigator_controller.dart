@@ -1,3 +1,4 @@
+import 'package:akuntansi_flut/commons/routes/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -61,5 +62,9 @@ class NavigatorController extends BaseController {
       default:
         return const DashboardPage();
     }
+  }
+
+  void doLogOut() {
+    VNavigation().offAllToLoginPage();
   }
 }

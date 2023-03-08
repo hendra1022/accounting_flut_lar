@@ -2,6 +2,7 @@ part of 'app_pages.dart';
 
 abstract class RoutesPath {
   RoutesPath._();
+  static const init = '/';
   static const login = '/login';
   static const navigator = '/navigator';
   static const dashboard = '/dashboard';

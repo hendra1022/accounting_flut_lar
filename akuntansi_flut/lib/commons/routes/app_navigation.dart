@@ -8,6 +8,10 @@ class VNavigation {
     Get.offAllNamed(RoutesPath.navigator);
   }
 
+  offAllToLoginPage() {
+    Get.offAllNamed(RoutesPath.login);
+  }
+
   toDashboard() {
     Get.toNamed(RoutesPath.dashboard);
   }

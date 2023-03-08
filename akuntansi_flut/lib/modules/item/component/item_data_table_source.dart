@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:akuntansi_flut/commons/routes/app_navigation.dart';
-import 'package:akuntansi_flut/utils/extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../../commons/routes/app_navigation.dart';
 import '../../../services/model/item_model.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
@@ -52,79 +52,63 @@ class ItemDataTableSource extends DataTableSource {
     return DataRow(
       color: index % 2 == 1 ? MaterialStateColor.resolveWith((states) => VColor.grey4Opacity) : MaterialStateColor.resolveWith((states) => VColor.transparant),
       cells: [
+        dataCell(_data[index].code, Get.width * (2 / 100), flex: 1),
+        dataCell(_data[index].name, Get.width * (12 / 100), flex: 6),
+        dataCell(_data[index].categoryName, Get.width * (8 / 100), flex: 4),
+        dataCell(_data[index].minPrice, Get.width * (6 / 100), flex: 2),
+        dataCell(_data[index].price, Get.width * (4 / 100), flex: 2),
         DataCell(
           Container(
             padding: const EdgeInsets.only(right: 5),
-            constraints: const BoxConstraints(minWidth: 50),
-            child: VText(_data[index].code!, align: TextAlign.left),
-          ),
-        ),
-        DataCell(
-          Container(
-            padding: const EdgeInsets.only(left: 5),
-            constraints: const BoxConstraints(minWidth: 100),
-            child: VText(_data[index].name!),
-          ),
-        ),
-        DataCell(
-          Container(
-            padding: const EdgeInsets.only(left: 5),
-            constraints: const BoxConstraints(minWidth: 100),
-            child: VText(_data[index].categoryName!),
-          ),
-        ),
-        DataCell(
-          Container(
-            padding: const EdgeInsets.only(right: 5),
-            constraints: const BoxConstraints(minWidth: 70),
-            child: VText(_data[index].minPrice!.currencyInt, align: TextAlign.right),
-          ),
-        ),
-        DataCell(
-          Container(
-            padding: const EdgeInsets.only(right: 5),
-            constraints: const BoxConstraints(minWidth: 70),
-            child: VText(_data[index].price!.currencyInt, align: TextAlign.right),
-          ),
-        ),
-        DataCell(
-          Center(
-            child: Container(
-              padding: const EdgeInsets.only(right: 5),
-              constraints: const BoxConstraints(minWidth: 50),
-              child: Checkbox(
-                activeColor: VColor.grey1,
-                value: _data[index].active == "1" ? true : false,
-                onChanged: (value) => {},
-              ),
+            constraints: BoxConstraints(
+              minWidth: Get.width * (4 / 100),
+            ),
+            // width: Get.width * (2 / 100),
+            child: Checkbox(
+              activeColor: VColor.grey1,
+              value: _data[index].active == "1" ? true : false,
+              onChanged: (value) => {},
             ),
           ),
         ),
         DataCell(
-          Center(
-            child: Container(
-                padding: const EdgeInsets.only(right: 5),
-                constraints: const BoxConstraints(minWidth: 50),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      hoverColor: VColor.transparant,
-                      onPressed: () {
-                        VNavigation().toItemDetailPage(int.parse(_data[index].id!));
-                      },
-                      icon: const Icon(Icons.ads_click, color: VColor.black),
-                    ),
-                    IconButton(
-                      hoverColor: VColor.transparant,
-                      onPressed: () {},
-                      icon: const Icon(Icons.edit, color: VColor.blue),
-                    ),
-                  ],
-                )),
+          Container(
+            padding: const EdgeInsets.only(right: 5),
+            constraints: BoxConstraints(
+              minWidth: Get.width * (4 / 100),
+            ),
+            // width: Get.width * (4 / 100),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  hoverColor: VColor.transparant,
+                  onPressed: () {
+                    VNavigation().toItemDetailPage(int.parse(_data[index].id!));
+                  },
+                  icon: const Icon(Icons.ads_click, color: VColor.black),
+                ),
+                IconButton(
+                  hoverColor: VColor.transparant,
+                  onPressed: () {},
+                  icon: const Icon(Icons.edit, color: VColor.blue),
+                ),
+              ],
+            ),
           ),
         ),
       ],
+    );
+  }
+
+  DataCell dataCell(String? text, double width, {int flex = 1}) {
+    return DataCell(
+      Container(
+        constraints: BoxConstraints(minWidth: width),
+        // width: width,
+        padding: const EdgeInsets.only(right: 5),
+        child: VText(text ?? "null", align: TextAlign.left),
+      ),
     );
   }
 }

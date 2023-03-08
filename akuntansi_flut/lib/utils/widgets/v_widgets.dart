@@ -46,7 +46,7 @@ class VInputText extends StatelessWidget {
       this.filled = false,
       this.fillColor = VColor.primaryOpacity,
       this.textColor = VColor.grey4,
-      this.hintTextColor = VColor.grey4,
+      this.hintTextColor = VColor.grey1,
       this.filledBorderColor = Colors.transparent,
       this.onChanged,
       this.isSecureText = false,
@@ -81,7 +81,7 @@ class VInputText extends StatelessWidget {
         hintText: hint,
         hintStyle: TextStyle(
           fontFamily: interFontFamily,
-          color: filled ? hintTextColor : VColor.grey3Opacity,
+          color: hintTextColor,
         ),
         filled: filled,
         fillColor: fillColor,
@@ -636,6 +636,9 @@ class VButton extends StatelessWidget {
   final bool disabled;
   final double textPadding;
   final double borderRadius;
+  final TextAlign textAlign;
+  final bool centerText;
+  final Widget? leftIcon;
   final Widget? rightIcon;
 
   const VButton(
@@ -648,8 +651,11 @@ class VButton extends StatelessWidget {
     @required this.onPressed,
     this.onHover,
     this.disabled = false,
-    this.textPadding = 24,
+    this.textPadding = 14,
     this.borderRadius = 10,
+    this.textAlign = TextAlign.left,
+    this.centerText = false,
+    this.leftIcon,
     this.rightIcon,
   });
 
@@ -661,8 +667,7 @@ class VButton extends StatelessWidget {
         onHover: onHover,
         onPressed: onPressed,
         style: ButtonStyle(
-          padding:
-              MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.only(left: textPadding, top: textPadding, bottom: textPadding, right: textPadding / 2)),
+          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.symmetric(vertical: textPadding, horizontal: textPadding)),
           shape: MaterialStateProperty.all<RoundedRectangleBorder>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(borderRadius)),
           ),
@@ -670,17 +675,45 @@ class VButton extends StatelessWidget {
             !disabled ? buttonColor : buttonColorDisabled,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            VText(
-              title,
-              isBold: true,
-              color: !disabled ? textColor : textColorDisabled,
-            ),
-            rightIcon ?? Container(),
-          ],
-        ),
+        child: centerText
+            ? VText(
+                title,
+                isBold: true,
+                color: !disabled ? textColor : textColorDisabled,
+                align: textAlign,
+              )
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  leftIcon == null
+                      ? Container()
+                      : Row(
+                          children: [
+                            leftIcon!,
+                            SizedBox(
+                              width: marginSuperSmall,
+                            )
+                          ],
+                        ),
+                  VText(
+                    title,
+                    isBold: true,
+                    color: !disabled ? textColor : textColorDisabled,
+                    align: textAlign,
+                  ),
+                  rightIcon == null
+                      ? Container()
+                      : Row(
+                          children: [
+                            SizedBox(
+                              width: marginSuperSmall,
+                            ),
+                            rightIcon!
+                          ],
+                        ),
+                ],
+              ),
       ),
     );
   }

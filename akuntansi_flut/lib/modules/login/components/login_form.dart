@@ -58,17 +58,16 @@ class LoginForm extends StatelessWidget {
               ),
             ),
             SizedBox(height: paddingMedium.h),
-            ConstrainedBox(
-              constraints: const BoxConstraints(maxHeight: 50),
-              child: SizedBox(
-                width: double.infinity,
-                child: VButton(
-                  "Login",
-                  buttonColor: VColor.secondary,
-                  onPressed: () async {
-                    await controller.doLogin();
-                  },
-                ),
+            SizedBox(
+              width: double.infinity,
+              child: VButton(
+                "Login",
+                buttonColor: VColor.secondary,
+                textAlign: TextAlign.center,
+                centerText: true,
+                onPressed: () async {
+                  await controller.doLogin();
+                },
               ),
             ),
           ],

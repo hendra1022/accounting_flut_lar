@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
 import '../navigator/navigator.dart';
+import 'component/item_filter.dart';
 import 'item.dart';
 
 class ItemPage extends StatelessWidget {
@@ -28,9 +29,19 @@ class ItemPage extends StatelessWidget {
           children: [
             _header(),
             SizedBox(
-              height: marginMedium,
+              height: marginSmall,
             ),
-            Expanded(child: buildTableItem(controller)),
+            Expanded(
+              child: ListView(
+                children: [
+                  itemFilter(controller),
+                  SizedBox(
+                    height: marginSmall,
+                  ),
+                  buildTableItem(controller),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -42,38 +53,56 @@ class ItemPage extends StatelessWidget {
       width: double.infinity,
       decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
       padding: EdgeInsets.all(paddingMedium),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              VText(
-                "Dashboard",
-                fontSize: textSizeMedium,
-                color: VColor.white,
-                onPressed: () {
-                  Get.find<NavigatorController>().updateSelectedPage(0);
-                },
+              Row(
+                children: [
+                  VText(
+                    "Dashboard",
+                    fontSize: textSizeMedium,
+                    color: VColor.white,
+                    onPressed: () {
+                      Get.find<NavigatorController>().updateSelectedPage(0);
+                    },
+                  ),
+                  const Icon(
+                    Icons.arrow_right,
+                    color: VColor.white,
+                  ),
+                  VText(
+                    "Item",
+                    fontSize: textSizeMedium,
+                    color: VColor.white,
+                  ),
+                ],
               ),
-              const Icon(
-                Icons.arrow_right,
-                color: VColor.white,
+              SizedBox(
+                height: marginSuperSmall,
               ),
               VText(
                 "Item",
-                fontSize: textSizeMedium,
+                fontSize: textSizeLarge,
                 color: VColor.white,
               ),
             ],
           ),
-          SizedBox(
-            height: marginSuperSmall,
-          ),
-          VText(
-            "Item",
-            fontSize: textSizeLarge,
-            color: VColor.white,
-          ),
+          Column(
+            children: [
+              VButton(
+                "CREATE",
+                buttonColor: VColor.secondary,
+                leftIcon: const Icon(
+                  Icons.add,
+                  color: VColor.white,
+                ),
+                onPressed: () {},
+              )
+            ],
+          )
         ],
       ),
     );

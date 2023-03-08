@@ -12,7 +12,7 @@ class RouteAuthMiddleware extends GetMiddleware {
     if (UserStore.to.getStatusLogin()) {
       return const RouteSettings(name: RoutesPath.navigator);
     } else {
-      return null;
+      return const RouteSettings(name: RoutesPath.login);
       // return const RouteSettings(name: RoutesPath.login);
     }
   }

@@ -82,7 +82,9 @@ Widget appBar(NavigatorController controller) {
         child: Center(
           child: VButton(
             "Log Out",
-            onPressed: () {},
+            onPressed: () {
+              controller.doLogOut();
+            },
             textColor: VColor.black,
             buttonColor: VColor.white,
           ),
@@ -107,6 +109,7 @@ Widget dropdownMenuMaster(NavigatorController controller) {
             onHover: (p0) {
               controller.updateDropdownMaster();
             },
+            textPadding: marginExtraLarge,
             buttonColor: VColor.white,
             textColor: VColor.black,
           ),
@@ -119,6 +122,7 @@ Widget dropdownMenuMaster(NavigatorController controller) {
             onHover: (p0) {
               controller.updateDropdownMaster();
             },
+            textPadding: marginExtraLarge,
             buttonColor: VColor.white,
             textColor: VColor.black,
           ),
@@ -131,6 +135,7 @@ Widget dropdownMenuMaster(NavigatorController controller) {
             onHover: (p0) {
               controller.updateDropdownMaster();
             },
+            textPadding: marginExtraLarge,
             buttonColor: VColor.white,
             textColor: VColor.black,
           ),
@@ -143,6 +148,7 @@ Widget dropdownMenuMaster(NavigatorController controller) {
             onHover: (p0) {
               controller.updateDropdownMaster();
             },
+            textPadding: marginExtraLarge,
             buttonColor: VColor.white,
             textColor: VColor.black,
           ),
@@ -154,7 +160,7 @@ Widget dropdownMenuMaster(NavigatorController controller) {
 
 Widget dropdownMenuTransaction(NavigatorController controller) {
   return SizedBox(
-    width: 110,
+    width: 150,
     child: Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -166,6 +172,7 @@ Widget dropdownMenuTransaction(NavigatorController controller) {
             onHover: (p0) {
               controller.updateDropdownTransaction();
             },
+            textPadding: marginExtraLarge,
             buttonColor: VColor.white,
             textColor: VColor.black,
           ),
@@ -178,6 +185,7 @@ Widget dropdownMenuTransaction(NavigatorController controller) {
             onHover: (p0) {
               controller.updateDropdownTransaction();
             },
+            textPadding: marginExtraLarge,
             buttonColor: VColor.white,
             textColor: VColor.black,
           ),
