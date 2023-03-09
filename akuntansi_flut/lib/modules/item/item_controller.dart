@@ -29,6 +29,16 @@ class ItemController extends BaseController {
     'Nama',
   ];
 
+  @override
+  Future<void> onInit() async {
+    isLoading = true;
+    await Future.delayed(const Duration(seconds: 1));
+    isLoading = false;
+    update();
+
+    super.onInit();
+  }
+
   void sortData<T>(Comparable<T> Function(ItemModel user) getField, int colIndex, bool ascending) {
     dataSource.sort<T>(getField, ascending);
   }

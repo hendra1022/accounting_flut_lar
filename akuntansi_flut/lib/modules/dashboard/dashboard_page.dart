@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../utils/constants.dart';
 import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
-import 'dashboard.dart';
+import '../app_bar/custom_app_bar.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
@@ -13,20 +12,19 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _body(),
+      appBar: customAppBar(),
       backgroundColor: VColor.background,
     );
   }
 
   _body() {
-    return GetBuilder<DashboardController>(
-      builder: (controller) => Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(paddingSmall),
-        child: Column(
-          children: [
-            _header(),
-          ],
-        ),
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(paddingSmall),
+      child: Column(
+        children: [
+          _header(),
+        ],
       ),
     );
   }

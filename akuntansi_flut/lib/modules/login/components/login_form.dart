@@ -64,6 +64,7 @@ class LoginForm extends StatelessWidget {
                 "Login",
                 buttonColor: VColor.secondary,
                 textAlign: TextAlign.center,
+                textPadding: marginExtraLarge,
                 centerText: true,
                 onPressed: () async {
                   await controller.doLogin();

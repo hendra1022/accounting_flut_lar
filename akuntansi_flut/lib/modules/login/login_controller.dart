@@ -13,6 +13,6 @@ class LoginController extends BaseController {
     VPopup().loading();
     // await Future.delayed(const Duration(seconds: 2));
     Get.back();
-    VNavigation().offAllToNavigatorPage();
+    VNavigation().offAllToDashboardPage();
   }
 }

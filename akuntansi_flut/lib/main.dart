@@ -1,4 +1,3 @@
-import 'package:akuntansi_flut/utils/scroll_behavior/custom_scroll_behavior.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_portal/flutter_portal.dart';
@@ -7,11 +6,14 @@ import 'package:get/get.dart';
 
 import 'commons/routes/app_pages.dart';
 import 'commons/store/store.dart';
+import 'modules/app_bar/custom_app_bar.dart';
+import 'utils/scroll_behavior/custom_scroll_behavior.dart';
 import 'utils/v_color.dart';
 
 Future<void> main() async {
   await Get.putAsync<StorageService>(() => StorageService().init());
   Get.put<UserStore>(UserStore());
+  Get.put<CustomAppBarController>(CustomAppBarController());
 
   runApp(const MyApp());
 }

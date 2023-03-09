@@ -4,10 +4,11 @@ abstract class RoutesPath {
   RoutesPath._();
   static const init = '/';
   static const login = '/login';
-  static const navigator = '/navigator';
   static const dashboard = '/dashboard';
   static const customer = '/customer';
+  static const supplier = '/supplier';
   static const item = '/item';
-  static const itemDetail = '/item-detail';
   static const itemCategory = '/item-category';
+
+  static const itemDetail = '/item-detail';
 }

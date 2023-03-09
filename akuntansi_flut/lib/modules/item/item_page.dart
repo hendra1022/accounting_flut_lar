@@ -1,13 +1,11 @@
+import 'package:akuntansi_flut/modules/app_bar/custom_app_bar_widget.dart';
 import 'package:akuntansi_flut/modules/item/component/item_table_builder.dart';
 import 'package:akuntansi_flut/utils/constants.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
-import '../navigator/navigator.dart';
 import 'component/item_filter.dart';
-import 'item.dart';
 
 class ItemPage extends StatelessWidget {
   const ItemPage({super.key});
@@ -16,34 +14,33 @@ class ItemPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _body(),
+      appBar: customAppBar(),
       backgroundColor: VColor.background,
     );
   }
 
   Widget _body() {
-    return GetBuilder<ItemController>(
-      builder: (controller) => Container(
-        width: double.infinity,
-        padding: EdgeInsets.all(paddingSmall),
-        child: Column(
-          children: [
-            _header(),
-            SizedBox(
-              height: marginSmall,
+    return Container(
+      width: double.infinity,
+      padding: EdgeInsets.all(paddingSmall),
+      child: Column(
+        children: [
+          _header(),
+          SizedBox(
+            height: marginSmall,
+          ),
+          Expanded(
+            child: ListView(
+              children: [
+                itemFilter(),
+                SizedBox(
+                  height: marginSmall,
+                ),
+                buildTableItem(),
+              ],
             ),
-            Expanded(
-              child: ListView(
-                children: [
-                  itemFilter(controller),
-                  SizedBox(
-                    height: marginSmall,
-                  ),
-                  buildTableItem(controller),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -65,9 +62,7 @@ class ItemPage extends StatelessWidget {
                     "Dashboard",
                     fontSize: textSizeMedium,
                     color: VColor.white,
-                    onPressed: () {
-                      Get.find<NavigatorController>().updateSelectedPage(0);
-                    },
+                    onPressed: () {},
                   ),
                   const Icon(
                     Icons.arrow_right,
