@@ -6,8 +6,8 @@ import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
 import '../app_bar/custom_app_bar.dart';
 
-class CustomerPage extends StatelessWidget {
-  const CustomerPage({super.key});
+class SalesPage extends StatelessWidget {
+  const SalesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class CustomerPage extends StatelessWidget {
                     color: VColor.white,
                   ),
                   VText(
-                    "Customer",
+                    "Sales",
                     fontSize: textSizeMedium,
                     color: VColor.white,
                   ),
@@ -74,7 +74,7 @@ class CustomerPage extends StatelessWidget {
                 height: marginSuperSmall,
               ),
               VText(
-                "Customer",
+                "Sales",
                 fontSize: textSizeLarge,
                 color: VColor.white,
               ),

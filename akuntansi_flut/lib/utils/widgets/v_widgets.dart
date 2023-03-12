@@ -1200,15 +1200,23 @@ class VIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: onPressed,
-      padding: EdgeInsets.zero,
-      icon: Icon(
-        icon,
-        color: colorIcon,
-        size: size,
+    return Container(
+      decoration: BoxDecoration(
+        color: colorBackground,
+        borderRadius: BorderRadius.all(
+          Radius.circular(radiusLarge),
+        ),
       ),
-      color: colorBackground,
+      child: IconButton(
+        onPressed: onPressed,
+        padding: EdgeInsets.zero,
+        icon: Icon(
+          icon,
+          color: colorIcon,
+          size: size,
+        ),
+        color: colorBackground,
+      ),
     );
   }
 }

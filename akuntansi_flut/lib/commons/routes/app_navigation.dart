@@ -13,23 +13,31 @@ class VNavigation {
   }
 
   toDashboardPage() {
-    Get.toNamed(RoutesPath.dashboard);
+    Get.offNamedUntil(RoutesPath.dashboard, (route) => route.settings.name == RoutesPath.dashboard);
   }
 
   toItemPage() {
-    Get.toNamed(RoutesPath.item);
+    Get.offNamedUntil(RoutesPath.item, (route) => route.settings.name == RoutesPath.dashboard);
   }
 
   toItemCategoryPage() {
-    Get.toNamed(RoutesPath.itemCategory);
+    Get.offNamedUntil(RoutesPath.itemCategory, (route) => route.settings.name == RoutesPath.dashboard);
   }
 
   toSupplierPage() {
-    Get.toNamed(RoutesPath.supplier);
+    Get.offNamedUntil(RoutesPath.supplier, (route) => route.settings.name == RoutesPath.dashboard);
   }
 
   toCustomerPage() {
-    Get.toNamed(RoutesPath.customer);
+    Get.offNamedUntil(RoutesPath.customer, (route) => route.settings.name == RoutesPath.dashboard);
+  }
+
+  toPurchasePage() {
+    Get.offNamedUntil(RoutesPath.purchase, (route) => route.settings.name == RoutesPath.dashboard);
+  }
+
+  toSalesPage() {
+    Get.offNamedUntil(RoutesPath.sales, (route) => route.settings.name == RoutesPath.dashboard);
   }
 
   toItemDetailPage(int itemId) {
@@ -39,6 +47,10 @@ class VNavigation {
         PrefConst.keyArgsItemId: itemId,
       },
     );
+  }
+
+  toItemCreatePage() {
+    Get.toNamed(RoutesPath.itemCreate);
   }
 
   // offToSearchResultPage(String keyword, String categoryId) {

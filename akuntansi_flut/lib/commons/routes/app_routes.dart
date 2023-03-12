@@ -9,6 +9,9 @@ abstract class RoutesPath {
   static const supplier = '/supplier';
   static const item = '/item';
   static const itemCategory = '/item-category';
+  static const purchase = '/purchase';
+  static const sales = '/sales';
 
   static const itemDetail = '/item-detail';
+  static const itemCreate = '/item-create';
 }

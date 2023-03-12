@@ -29,13 +29,13 @@ Widget buildTableItem() {
                 rowsPerPage: 15,
                 showCheckboxColumn: false,
                 columns: [
-                  tableColumn(controller, "Code", (user) => user.code!, minWidth: Get.width * (2 / 100)),
-                  tableColumn(controller, "Name", (user) => user.name!, minWidth: Get.width * (12 / 100)),
-                  tableColumn(controller, "Category Name", (user) => user.categoryName!, minWidth: Get.width * (8 / 100)),
-                  tableColumn(controller, "Min Price", (user) => int.parse(user.minPrice!), minWidth: Get.width * (6 / 100)),
-                  tableColumn(controller, "Price", (user) => int.parse(user.price!), minWidth: Get.width * (4 / 100)),
-                  tableColumn(controller, "Active", (user) => user.active!, minWidth: Get.width * (4 / 100)),
-                  tableColumn(controller, " ", null, minWidth: Get.width * (4 / 100)),
+                  tableColumn(controller, "Code", (user) => user.code!, minWidth: Get.width * (4 / 100)),
+                  tableColumn(controller, "Name", (user) => user.name!, minWidth: Get.width * (24 / 100)),
+                  tableColumn(controller, "Category Name", (user) => user.categoryName!, minWidth: Get.width * (16 / 100)),
+                  tableColumn(controller, "Min Price", (user) => int.parse(user.minPrice!), minWidth: Get.width * (12 / 100)),
+                  tableColumn(controller, "Price", (user) => int.parse(user.price!), minWidth: Get.width * (8 / 100)),
+                  tableColumn(controller, "Active", (user) => user.active!, minWidth: Get.width * (8 / 100)),
+                  tableColumn(controller, " ", null, minWidth: Get.width * (8 / 100)),
                 ],
               ),
             ),
@@ -47,7 +47,7 @@ DataColumn tableColumn<T>(
   ItemController controller,
   String title,
   Comparable<T> Function(ItemModel user)? sortBy, {
-  double minWidth = 150.0,
+  double minWidth = 100.0,
 }) {
   return DataColumn(
     label: SizedBox(

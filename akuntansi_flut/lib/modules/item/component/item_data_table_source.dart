@@ -11,7 +11,7 @@ import '../../../utils/widgets/v_widgets.dart';
 class ItemDataTableSource extends DataTableSource {
   // Generate some made-up data
   final List<ItemModel> _data = List.generate(
-    200,
+    50,
     (index) => ItemModel(
       id: index.toString(),
       code: index.toString(),

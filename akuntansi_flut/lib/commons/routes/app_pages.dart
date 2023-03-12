@@ -4,9 +4,12 @@ import 'package:get/get.dart';
 import '../../modules/customer/customer.dart';
 import '../../modules/dashboard/dashboard.dart';
 import '../../modules/item/item.dart';
+import '../../modules/item/item_create/item_create.dart';
 import '../../modules/item/item_detail/item_detail.dart';
 import '../../modules/item_category/item_category.dart';
 import '../../modules/login/login.dart';
+import '../../modules/purchase/purchase.dart';
+import '../../modules/sales/sales.dart';
 import '../../modules/supplier/supplier.dart';
 import '../middlewares/middlewares.dart';
 
@@ -55,9 +58,24 @@ class AppPages {
       binding: SupplierBinding(),
     ),
     GetPage(
+      name: RoutesPath.purchase,
+      page: () => const PurchasePage(),
+      binding: PurchaseBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.sales,
+      page: () => const SalesPage(),
+      binding: SalesBinding(),
+    ),
+    GetPage(
       name: RoutesPath.itemDetail,
       page: () => const ItemDetailPage(),
       binding: ItemDetailBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.itemCreate,
+      page: () => const ItemCreatePage(),
+      binding: ItemCreateBinding(),
     ),
   ];
 }

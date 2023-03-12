@@ -1,7 +1,9 @@
+import 'package:akuntansi_flut/commons/routes/app_navigation.dart';
 import 'package:akuntansi_flut/modules/app_bar/custom_app_bar_widget.dart';
 import 'package:akuntansi_flut/modules/item/component/item_table_builder.dart';
 import 'package:akuntansi_flut/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
@@ -62,7 +64,9 @@ class ItemPage extends StatelessWidget {
                     "Dashboard",
                     fontSize: textSizeMedium,
                     color: VColor.white,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.back();
+                    },
                   ),
                   const Icon(
                     Icons.arrow_right,
@@ -94,7 +98,9 @@ class ItemPage extends StatelessWidget {
                   Icons.add,
                   color: VColor.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  VNavigation().toItemCreatePage();
+                },
               )
             ],
           )

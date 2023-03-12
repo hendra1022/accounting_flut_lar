@@ -1,3 +1,4 @@
+import 'package:akuntansi_flut/commons/routes/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,8 +17,11 @@ Widget transactionMenuDropDown() {
           width: double.infinity,
           child: GetBuilder<CustomAppBarController>(
             builder: (controller) => VButton(
-              "Purchasing",
-              onPressed: () {},
+              "Purchase",
+              onPressed: () {
+                VNavigation().toPurchasePage();
+                controller.updateDropdownTransaction();
+              },
               onHover: (p0) {
                 controller.updateDropdownTransaction();
               },
@@ -32,7 +36,10 @@ Widget transactionMenuDropDown() {
           child: GetBuilder<CustomAppBarController>(
             builder: (controller) => VButton(
               "Sales",
-              onPressed: () {},
+              onPressed: () {
+                VNavigation().toSalesPage();
+                controller.updateDropdownTransaction();
+              },
               onHover: (p0) {
                 controller.updateDropdownTransaction();
               },

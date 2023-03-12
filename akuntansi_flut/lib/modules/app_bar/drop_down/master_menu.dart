@@ -20,6 +20,7 @@ Widget masterMenuDropDown() {
               "Item",
               onPressed: () {
                 VNavigation().toItemPage();
+                controller.updateDropdownMaster();
               },
               onHover: (p0) {
                 controller.updateDropdownMaster();
@@ -37,6 +38,7 @@ Widget masterMenuDropDown() {
               "Item Category",
               onPressed: () {
                 VNavigation().toItemCategoryPage();
+                controller.updateDropdownMaster();
               },
               onHover: (p0) {
                 controller.updateDropdownMaster();
@@ -54,6 +56,7 @@ Widget masterMenuDropDown() {
               "Supplier",
               onPressed: () {
                 VNavigation().toSupplierPage();
+                controller.updateDropdownMaster();
               },
               onHover: (p0) {
                 controller.updateDropdownMaster();
@@ -71,6 +74,7 @@ Widget masterMenuDropDown() {
               "Customer",
               onPressed: () {
                 VNavigation().toCustomerPage();
+                controller.updateDropdownMaster();
               },
               onHover: (p0) {
                 controller.updateDropdownMaster();

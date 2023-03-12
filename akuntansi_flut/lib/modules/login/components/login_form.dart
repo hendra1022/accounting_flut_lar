@@ -16,6 +16,7 @@ class LoginForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<LoginController>(
       builder: (controller) => Form(
+        key: controller.formKey,
         child: Column(
           children: [
             VInputText(
@@ -35,6 +36,12 @@ class LoginForm extends StatelessWidget {
                   color: VColor.secondary,
                 ),
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Username can't be empty";
+                }
+                return null;
+              },
             ),
             SizedBox(
               height: marginMedium.h,
@@ -56,6 +63,12 @@ class LoginForm extends StatelessWidget {
                   color: VColor.secondary,
                 ),
               ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Password can't be empty";
+                }
+                return null;
+              },
             ),
             SizedBox(height: paddingMedium.h),
             SizedBox(
@@ -67,6 +80,7 @@ class LoginForm extends StatelessWidget {
                 textPadding: marginExtraLarge,
                 centerText: true,
                 onPressed: () async {
+                  if (controller.formKey.currentState!.validate()) {}
                   await controller.doLogin();
                 },
               ),
