@@ -75,7 +75,7 @@ class ItemPage extends StatelessWidget {
                   VText(
                     "Item",
                     fontSize: textSizeMedium,
-                    color: VColor.white,
+                    color: VColor.black,
                   ),
                 ],
               ),

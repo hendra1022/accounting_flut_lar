@@ -8,6 +8,25 @@ import '../../../utils/widgets/v_widgets.dart';
 import '../item.dart';
 
 Widget buildTableItem() {
+  DataColumn tableColumn<T>(
+    ItemController controller,
+    String title,
+    Comparable<T> Function(ItemModel user)? sortBy, {
+    double minWidth = 100.0,
+  }) {
+    return DataColumn(
+      label: SizedBox(
+        width: minWidth,
+        child: VText(
+          title,
+          align: TextAlign.left,
+          overflow: TextOverflow.clip,
+        ),
+      ),
+      onSort: sortBy != null ? (columnIndex, ascending) => controller.sortData(sortBy, columnIndex, ascending) : null,
+    );
+  }
+
   return GetBuilder<ItemController>(
     builder: (controller) => controller.isLoading
         ? const VLoadingPage()
@@ -40,24 +59,5 @@ Widget buildTableItem() {
               ),
             ),
           ),
-  );
-}
-
-DataColumn tableColumn<T>(
-  ItemController controller,
-  String title,
-  Comparable<T> Function(ItemModel user)? sortBy, {
-  double minWidth = 100.0,
-}) {
-  return DataColumn(
-    label: SizedBox(
-      width: minWidth,
-      child: VText(
-        title,
-        align: TextAlign.left,
-        overflow: TextOverflow.clip,
-      ),
-    ),
-    onSort: sortBy != null ? (columnIndex, ascending) => controller.sortData(sortBy, columnIndex, ascending) : null,
   );
 }

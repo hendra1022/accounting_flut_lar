@@ -6,6 +6,7 @@ import '../../../utils/constants.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../../app_bar/custom_app_bar.dart';
+import 'component/item_create_table_builder.dart';
 import 'item_create.dart';
 
 class ItemCreatePage extends StatelessWidget {
@@ -34,6 +35,8 @@ class ItemCreatePage extends StatelessWidget {
             child: ListView(
               children: [
                 _inputForm(),
+                SizedBox(height: marginExtraLarge),
+                _variantForm(),
               ],
             ),
           ),
@@ -149,6 +152,7 @@ class ItemCreatePage extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: VInputText(
+                  autoFocus: false,
                   hint: title,
                   textCapitalization: TextCapitalization.none,
                   textInputAction: TextInputAction.next,
@@ -294,6 +298,7 @@ class ItemCreatePage extends StatelessWidget {
       padding: EdgeInsets.all(paddingMedium),
       width: double.infinity,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: GetBuilder<ItemCreateController>(
@@ -303,10 +308,17 @@ class ItemCreatePage extends StatelessWidget {
                   children: [
                     inputField(controller.nameTextController, "Name"),
                     SizedBox(height: marginMedium),
-                    inputField(controller.nameTextController, "Code"),
-                    SizedBox(height: marginMedium),
-                    inputField(controller.hppTextController, "HPP"),
-                    SizedBox(height: marginMedium),
+                    Visibility(
+                      visible: !controller.isHaveVariant,
+                      child: Column(
+                        children: [
+                          inputField(controller.nameTextController, "Code"),
+                          SizedBox(height: marginMedium),
+                          inputField(controller.hppTextController, "HPP"),
+                          SizedBox(height: marginMedium),
+                        ],
+                      ),
+                    ),
                     inputPicker(
                       "Item Category",
                       controller.isCategoryPicked,
@@ -347,27 +359,32 @@ class ItemCreatePage extends StatelessWidget {
             width: marginExtraLarge,
           ),
           Expanded(
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const VText("Item Picture"),
-                  SizedBox(height: marginSmall),
-                  SizedBox(
-                    width: 150,
-                    child: VButton(
-                      "Browser",
-                      leftIcon: const Icon(Icons.file_download),
-                      onPressed: () {},
-                    ),
+            child: GetBuilder<ItemCreateController>(
+              builder: (controller) => Visibility(
+                visible: !controller.isHaveVariant,
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const VText("Item Picture"),
+                      SizedBox(height: marginSmall),
+                      SizedBox(
+                        width: 150,
+                        child: VButton(
+                          "Browser",
+                          leftIcon: const Icon(Icons.file_download),
+                          onPressed: () {},
+                        ),
+                      ),
+                      SizedBox(
+                        height: marginMedium,
+                      ),
+                      active(),
+                    ],
                   ),
-                  SizedBox(
-                    height: marginMedium,
-                  ),
-                  active(),
-                ],
+                ),
               ),
             ),
           ),
@@ -377,6 +394,33 @@ class ItemCreatePage extends StatelessWidget {
   }
 
   Widget _variantForm() {
-    return Container();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        GetBuilder<ItemCreateController>(
+          builder: (controller) => Align(
+            alignment: Alignment.topRight,
+            child: Visibility(
+              visible: controller.isHaveVariant,
+              child: SizedBox(
+                width: 150,
+                child: VButton(
+                  "Add Variant",
+                  leftIcon: const Icon(
+                    Icons.add,
+                    color: VColor.white,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: marginMedium,
+        ),
+        buildTableItem(),
+      ],
+    );
   }
 }

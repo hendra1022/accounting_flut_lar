@@ -646,7 +646,7 @@ class VButton extends StatelessWidget {
     super.key,
     this.textColor = VColor.white,
     this.textColorDisabled = VColor.grey1,
-    this.buttonColor = VColor.primary,
+    this.buttonColor = VColor.secondary,
     this.buttonColorDisabled = VColor.primaryOpacity,
     @required this.onPressed,
     this.onHover,
