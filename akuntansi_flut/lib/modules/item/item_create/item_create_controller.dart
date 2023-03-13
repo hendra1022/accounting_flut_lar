@@ -98,7 +98,6 @@ class ItemCreateController extends BaseController {
               minWidth: Get.width * (5 / 100),
             ),
             child: Checkbox(
-              activeColor: VColor.grey1,
               value: itemList[index].active == "1" ? true : false,
               onChanged: (value) => {},
             ),

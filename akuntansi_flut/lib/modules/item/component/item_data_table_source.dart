@@ -90,7 +90,9 @@ class ItemDataTableSource extends DataTableSource {
                 ),
                 IconButton(
                   hoverColor: VColor.transparant,
-                  onPressed: () {},
+                  onPressed: () {
+                    VNavigation().toItemCreatePage();
+                  },
                   icon: const Icon(Icons.edit, color: VColor.blue),
                 ),
               ],
