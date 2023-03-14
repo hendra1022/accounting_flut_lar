@@ -5,6 +5,8 @@ import '../../utils/constants.dart';
 import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
 import '../app_bar/custom_app_bar.dart';
+import 'component/filter.dart';
+import 'component/item_category_table_builder.dart';
 
 class ItemCategoryPage extends StatelessWidget {
   const ItemCategoryPage({super.key});
@@ -30,7 +32,13 @@ class ItemCategoryPage extends StatelessWidget {
           ),
           Expanded(
             child: ListView(
-              children: const [],
+              children: [
+                itemCategoryFilter(),
+                SizedBox(
+                  height: marginMedium,
+                ),
+                buildTableItemCategory(),
+              ],
             ),
           ),
         ],
