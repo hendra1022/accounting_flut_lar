@@ -53,6 +53,19 @@ class VNavigation {
     Get.toNamed(RoutesPath.itemCreate);
   }
 
+  toItemCategoryDetailPage(int itemId) {
+    Get.toNamed(
+      RoutesPath.itemCategoryDetail,
+      arguments: {
+        PrefConst.keyArgsCatId: itemId,
+      },
+    );
+  }
+
+  toItemCategoryCreatePage() {
+    Get.toNamed(RoutesPath.itemCreate);
+  }
+
   // offToSearchResultPage(String keyword, String categoryId) {
   //   Get.offNamed(
   //     RoutesPath.searchResultPage,

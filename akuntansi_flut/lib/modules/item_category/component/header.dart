@@ -1,53 +1,16 @@
 import 'package:akuntansi_flut/commons/routes/app_navigation.dart';
-import 'package:akuntansi_flut/modules/app_bar/custom_app_bar_widget.dart';
-import 'package:akuntansi_flut/modules/item/component/item_table_builder.dart';
-import 'package:akuntansi_flut/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../utils/v_color.dart';
-import '../../utils/widgets/v_widgets.dart';
-import 'component/item_filter.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/v_color.dart';
+import '../../../utils/widgets/v_widgets.dart';
 
-class ItemPage extends StatelessWidget {
-  const ItemPage({super.key});
+class ItemCategoryHeader extends StatelessWidget {
+  const ItemCategoryHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _body(),
-      appBar: customAppBar(),
-      backgroundColor: VColor.background,
-    );
-  }
-
-  Widget _body() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(paddingSmall),
-      child: Column(
-        children: [
-          _header(),
-          const SizedBox(
-            height: marginSmall,
-          ),
-          Expanded(
-            child: ListView(
-              children: const [
-                ItemFilter(),
-                SizedBox(
-                  height: marginSmall,
-                ),
-                ItemTable(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _header() {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
@@ -73,7 +36,7 @@ class ItemPage extends StatelessWidget {
                     color: VColor.white,
                   ),
                   const VText(
-                    "Item",
+                    "Item Category",
                     fontSize: textSizeMedium,
                     color: VColor.black,
                   ),
@@ -83,7 +46,7 @@ class ItemPage extends StatelessWidget {
                 height: marginSuperSmall,
               ),
               const VText(
-                "Item",
+                "Item Category",
                 fontSize: textSizeLarge,
                 color: VColor.white,
               ),
@@ -99,7 +62,7 @@ class ItemPage extends StatelessWidget {
                   color: VColor.white,
                 ),
                 onPressed: () {
-                  VNavigation().toItemCreatePage();
+                  VNavigation().toItemCategoryCreatePage();
                 },
               )
             ],

@@ -21,13 +21,11 @@ class APage extends StatelessWidget {
   Widget _body() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(paddingSmall),
+      padding: const EdgeInsets.all(paddingSmall),
       child: Column(
         children: [
-          _header(),
-          SizedBox(
-            height: marginSmall,
-          ),
+          const Header(),
+          const SizedBox(height: marginSmall),
           Expanded(
             child: ListView(
               children: const [],
@@ -37,12 +35,17 @@ class APage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _header() {
+class Header extends StatelessWidget {
+  const Header({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
-      padding: EdgeInsets.all(paddingMedium),
+      decoration: const BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
+      padding: const EdgeInsets.all(paddingMedium),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -63,17 +66,17 @@ class APage extends StatelessWidget {
                     Icons.arrow_right,
                     color: VColor.white,
                   ),
-                  VText(
+                  const VText(
                     "Sales",
                     fontSize: textSizeMedium,
                     color: VColor.white,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: marginSuperSmall,
               ),
-              VText(
+              const VText(
                 "Sales",
                 fontSize: textSizeLarge,
                 color: VColor.white,

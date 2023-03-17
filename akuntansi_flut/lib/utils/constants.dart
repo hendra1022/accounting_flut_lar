@@ -10,6 +10,7 @@ class PrefConst {
   static const String keyPassword = 'password';
 
   static const String keyArgsItemId = 'item_id';
+  static const String keyArgsCatId = 'cat_id';
 }
 
 class SettingsConstants {
@@ -22,35 +23,35 @@ class TypeChatMessage {
   static const sticker = "sticker";
 }
 
-double mobileSize = 576;
-double webSize = 992;
+const double mobileSize = 576;
+const double webSize = 992;
 
-double textSizeSuperSmall = 9.0;
-double textSizeSmall = 11.0;
-double textSizeMedium = 13.0;
-double textSizeLarge = 16.0;
-double textSizeExtraLarge = 18.0;
-double textSizeSuperLarge = 21.0;
+const double textSizeSuperSmall = 9.0;
+const double textSizeSmall = 11.0;
+const double textSizeMedium = 13.0;
+const double textSizeLarge = 16.0;
+const double textSizeExtraLarge = 18.0;
+const double textSizeSuperLarge = 21.0;
 
-double radiusSmall = 8.0;
-double radiusMedium = 10.0;
-double radiusLarge = 12.0;
-double radiusExtraLarge = 16.0;
-double radiusSuperLarge = 20.0;
-double radiusMax = 25.0;
+const double radiusSmall = 8.0;
+const double radiusMedium = 10.0;
+const double radiusLarge = 12.0;
+const double radiusExtraLarge = 16.0;
+const double radiusSuperLarge = 20.0;
+const double radiusMax = 25.0;
 
-double paddingSuperSmall = 5.0;
-double paddingSmall = 10.0;
-double paddingMedium = 14.0;
-double paddingLarge = 18.0;
-double paddingExtraLarge = 24.0;
+const double paddingSuperSmall = 5.0;
+const double paddingSmall = 10.0;
+const double paddingMedium = 14.0;
+const double paddingLarge = 18.0;
+const double paddingExtraLarge = 24.0;
 
-double marginSuperSmall = 5.0;
-double marginSmall = 10.0;
-double marginMedium = 14.0;
-double marginLarge = 18.0;
-double marginExtraLarge = 24.0;
-double marginViewTop = 30.0;
+const double marginSuperSmall = 5.0;
+const double marginSmall = 10.0;
+const double marginMedium = 14.0;
+const double marginLarge = 18.0;
+const double marginExtraLarge = 24.0;
+const double marginViewTop = 30.0;
 
 double imageSizeIcon = 7.0;
 double imageSizeBack = 15.0;

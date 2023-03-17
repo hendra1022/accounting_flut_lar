@@ -7,6 +7,8 @@ import '../../modules/item/item.dart';
 import '../../modules/item/item_create/item_create.dart';
 import '../../modules/item/item_detail/item_detail.dart';
 import '../../modules/item_category/item_category.dart';
+import '../../modules/item_category/item_category_create/item_category_create.dart';
+import '../../modules/item_category/item_category_detail/item_category_detail.dart';
 import '../../modules/login/login.dart';
 import '../../modules/purchase/purchase.dart';
 import '../../modules/sales/sales.dart';
@@ -76,6 +78,16 @@ class AppPages {
       name: RoutesPath.itemCreate,
       page: () => const ItemCreatePage(),
       binding: ItemCreateBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.itemCategoryDetail,
+      page: () => const ItemCategoryDetailPage(),
+      binding: ItemCategoryBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.itemCategoryCreate,
+      page: () => const ItemCategoryCreatePage(),
+      binding: ItemCategoryCreateBinding(),
     ),
   ];
 }

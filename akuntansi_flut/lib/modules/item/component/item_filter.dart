@@ -8,61 +8,66 @@ import '../item.dart';
 import 'filter_by_dropdown.dart';
 import 'item_category_dropdown.dart';
 
-Widget itemFilter() {
-  return Container(
-    padding: EdgeInsets.only(left: marginMedium),
-    width: 500,
-    decoration: BoxDecoration(
-      color: VColor.white,
-      borderRadius: BorderRadius.all(
-        Radius.circular(radiusMedium),
+class ItemFilter extends StatelessWidget {
+  const ItemFilter({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: marginMedium),
+      width: 500,
+      decoration: const BoxDecoration(
+        color: VColor.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(radiusMedium),
+        ),
       ),
-    ),
-    child: GetBuilder<ItemController>(
-      builder: (controller) => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              const VText("Item Category"),
-              SizedBox(
-                width: marginMedium,
-              ),
-              itemCategoryDropdown(controller),
-            ],
-          ),
-          SizedBox(
-            height: marginMedium,
-          ),
-          Row(
-            children: [
-              filterByDropdown(controller),
-              SizedBox(
-                width: marginSmall,
-              ),
-              SizedBox(
-                width: 250,
-                child: VInputText(
-                  hint: "Search item by ${controller.selectedFilterBy}",
-                  textEditingController: controller.itemSearchController,
-                  autoFocus: false,
+      child: GetBuilder<ItemController>(
+        builder: (controller) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                const VText("Item Category"),
+                const SizedBox(
+                  width: marginMedium,
                 ),
-              ),
-              SizedBox(
-                width: marginSmall,
-              ),
-              VButton(
-                "Filter",
-                leftIcon: const Icon(
-                  Icons.search,
-                  color: VColor.white,
+                itemCategoryDropdown(controller),
+              ],
+            ),
+            const SizedBox(
+              height: marginMedium,
+            ),
+            Row(
+              children: [
+                filterByDropdown(controller),
+                const SizedBox(
+                  width: marginSmall,
                 ),
-                onPressed: () {},
-              )
-            ],
-          )
-        ],
+                SizedBox(
+                  width: 250,
+                  child: VInputText(
+                    hint: "Search item by ${controller.selectedFilterBy}",
+                    textEditingController: controller.itemSearchController,
+                    autoFocus: false,
+                  ),
+                ),
+                const SizedBox(
+                  width: marginSmall,
+                ),
+                VButton(
+                  "Filter",
+                  leftIcon: const Icon(
+                    Icons.search,
+                    color: VColor.white,
+                  ),
+                  onPressed: () {},
+                )
+              ],
+            )
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }

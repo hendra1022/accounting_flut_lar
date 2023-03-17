@@ -8,7 +8,7 @@ import '../item.dart';
 
 Widget filterByDropdown(ItemController controller) {
   return DropdownButton2(
-    hint: Padding(
+    hint: const Padding(
       padding: EdgeInsets.only(left: paddingSuperSmall),
       child: VText(
         'Select Item',
@@ -21,7 +21,7 @@ Widget filterByDropdown(ItemController controller) {
           (item) => DropdownMenuItem<String>(
             value: item,
             child: Padding(
-              padding: EdgeInsets.only(left: paddingSuperSmall),
+              padding: const EdgeInsets.only(left: paddingSuperSmall),
               child: VText(
                 item,
                 fontSize: textSizeMedium,
