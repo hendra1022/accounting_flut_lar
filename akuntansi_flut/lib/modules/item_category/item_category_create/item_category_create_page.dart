@@ -5,6 +5,7 @@ import '../../../utils/constants.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../../app_bar/custom_app_bar.dart';
+import 'item_category_create.dart';
 
 class ItemCategoryCreatePage extends StatelessWidget {
   const ItemCategoryCreatePage({super.key});
@@ -97,14 +98,35 @@ class Header extends StatelessWidget {
           ),
           Column(
             children: [
-              VButton(
-                "CREATE",
-                buttonColor: VColor.secondary,
-                leftIcon: const Icon(
-                  Icons.add,
-                  color: VColor.white,
-                ),
-                onPressed: () {},
+              Row(
+                children: [
+                  GetBuilder<ItemCategoryCreateController>(
+                    builder: (controller) => VButton(
+                      "Save",
+                      buttonColor: VColor.secondary,
+                      leftIcon: const Icon(
+                        Icons.save,
+                        color: VColor.white,
+                      ),
+                      onPressed: () async {
+                        // await controller.onSave();
+                      },
+                    ),
+                  ),
+                  const SizedBox(width: marginMedium),
+                  VButton(
+                    "Cancel",
+                    buttonColor: VColor.white,
+                    textColor: VColor.black,
+                    leftIcon: const Icon(
+                      Icons.close,
+                      color: VColor.black,
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  )
+                ],
               )
             ],
           )

@@ -24,18 +24,18 @@ class ItemCreatePage extends StatelessWidget {
   Widget _body() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(paddingSmall),
+      padding: const EdgeInsets.all(paddingSmall),
       child: Column(
         children: [
           _header(),
-          SizedBox(
+          const SizedBox(
             height: marginSmall,
           ),
           Expanded(
             child: ListView(
               children: [
                 _inputForm(),
-                SizedBox(height: marginExtraLarge),
+                const SizedBox(height: marginExtraLarge),
                 _variantForm(),
               ],
             ),
@@ -48,8 +48,8 @@ class ItemCreatePage extends StatelessWidget {
   Widget _header() {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
-      padding: EdgeInsets.all(paddingMedium),
+      decoration: const BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
+      padding: const EdgeInsets.all(paddingMedium),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -82,17 +82,17 @@ class ItemCreatePage extends StatelessWidget {
                     Icons.arrow_right,
                     color: VColor.white,
                   ),
-                  VText(
+                  const VText(
                     "Create",
                     fontSize: textSizeMedium,
                     color: VColor.black,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: marginSuperSmall,
               ),
-              VText(
+              const VText(
                 "Master Item Create",
                 fontSize: textSizeLarge,
                 color: VColor.white,
@@ -103,7 +103,7 @@ class ItemCreatePage extends StatelessWidget {
             children: [
               GetBuilder<ItemCreateController>(
                 builder: (controller) => VButton(
-                  "Save",
+                  "Master Item Categryo Create",
                   buttonColor: VColor.secondary,
                   leftIcon: const Icon(
                     Icons.save,
@@ -114,7 +114,7 @@ class ItemCreatePage extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(width: marginMedium),
+              const SizedBox(width: marginMedium),
               VButton(
                 "Cancel",
                 buttonColor: VColor.white,
@@ -144,7 +144,7 @@ class ItemCreatePage extends StatelessWidget {
               flex: 1,
               child: VText(title),
             ),
-            SizedBox(
+            const SizedBox(
               width: marginMedium,
             ),
             Expanded(
@@ -185,7 +185,7 @@ class ItemCreatePage extends StatelessWidget {
               flex: 1,
               child: VText(title),
             ),
-            SizedBox(
+            const SizedBox(
               width: marginMedium,
             ),
             Expanded(
@@ -208,7 +208,7 @@ class ItemCreatePage extends StatelessWidget {
                     ),
                     Visibility(
                       visible: isVisible,
-                      child: SizedBox(
+                      child: const SizedBox(
                         width: marginMedium,
                       ),
                     ),
@@ -235,7 +235,7 @@ class ItemCreatePage extends StatelessWidget {
               flex: 1,
               child: VText("Have Variant"),
             ),
-            SizedBox(
+            const SizedBox(
               width: marginMedium,
             ),
             Expanded(
@@ -269,7 +269,7 @@ class ItemCreatePage extends StatelessWidget {
               flex: 1,
               child: VText("Active"),
             ),
-            SizedBox(
+            const SizedBox(
               width: marginMedium,
             ),
             Expanded(
@@ -295,7 +295,7 @@ class ItemCreatePage extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.all(paddingMedium),
+      padding: const EdgeInsets.all(paddingMedium),
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -307,15 +307,15 @@ class ItemCreatePage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     inputField(controller.nameTextController, "Name"),
-                    SizedBox(height: marginMedium),
+                    const SizedBox(height: marginMedium),
                     Visibility(
                       visible: !controller.isHaveVariant,
                       child: Column(
                         children: [
                           inputField(controller.nameTextController, "Code"),
-                          SizedBox(height: marginMedium),
+                          const SizedBox(height: marginMedium),
                           inputField(controller.hppTextController, "HPP"),
-                          SizedBox(height: marginMedium),
+                          const SizedBox(height: marginMedium),
                         ],
                       ),
                     ),
@@ -328,7 +328,7 @@ class ItemCreatePage extends StatelessWidget {
                         controller.update();
                       },
                     ),
-                    SizedBox(height: marginMedium),
+                    const SizedBox(height: marginMedium),
                     inputPicker(
                       "Customer Tax",
                       controller.isCustoemrTaxPicked,
@@ -338,7 +338,7 @@ class ItemCreatePage extends StatelessWidget {
                         controller.update();
                       },
                     ),
-                    SizedBox(height: marginMedium),
+                    const SizedBox(height: marginMedium),
                     inputPicker(
                       "Supplier Tax",
                       controller.isSupplierTaxPicked,
@@ -348,14 +348,14 @@ class ItemCreatePage extends StatelessWidget {
                         controller.update();
                       },
                     ),
-                    SizedBox(height: marginExtraLarge),
+                    const SizedBox(height: marginExtraLarge),
                     haveVariant(),
                   ],
                 ),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: marginExtraLarge,
           ),
           Expanded(
@@ -369,7 +369,7 @@ class ItemCreatePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const VText("Item Picture"),
-                      SizedBox(height: marginSmall),
+                      const SizedBox(height: marginSmall),
                       SizedBox(
                         width: 150,
                         child: VButton(
@@ -378,7 +378,7 @@ class ItemCreatePage extends StatelessWidget {
                           onPressed: () {},
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: marginMedium,
                       ),
                       active(),
@@ -416,7 +416,7 @@ class ItemCreatePage extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
+        const SizedBox(
           height: marginMedium,
         ),
         buildTableItem(),

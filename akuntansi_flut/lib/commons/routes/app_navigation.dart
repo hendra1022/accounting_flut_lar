@@ -63,7 +63,7 @@ class VNavigation {
   }
 
   toItemCategoryCreatePage() {
-    Get.toNamed(RoutesPath.itemCreate);
+    Get.toNamed(RoutesPath.itemCategoryCreate);
   }
 
   // offToSearchResultPage(String keyword, String categoryId) {
