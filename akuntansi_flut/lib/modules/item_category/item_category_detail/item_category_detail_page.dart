@@ -1,4 +1,3 @@
-import 'package:akuntansi_flut/commons/routes/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -56,7 +55,7 @@ class Header extends StatelessWidget {
               Row(
                 children: [
                   VText(
-                    "Item Category Detail - Category 1",
+                    "Dashboard",
                     fontSize: textSizeMedium,
                     color: VColor.white,
                     onPressed: () {
@@ -72,7 +71,7 @@ class Header extends StatelessWidget {
                     fontSize: textSizeMedium,
                     color: VColor.white,
                     onPressed: () {
-                      VNavigation().toItemCategoryDetailPage(1);
+                      Get.back();
                     },
                   ),
                 ],
@@ -81,7 +80,7 @@ class Header extends StatelessWidget {
                 height: marginSuperSmall,
               ),
               const VText(
-                "Sales",
+                "Item Category Detail - Category 1",
                 fontSize: textSizeLarge,
                 color: VColor.white,
               ),

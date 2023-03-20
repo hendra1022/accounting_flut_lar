@@ -30,7 +30,7 @@ class ItemCategoryTable extends StatelessWidget {
                   primary: true,
                   columnSpacing: 10,
                   horizontalMargin: 10,
-                  rowsPerPage: 15,
+                  rowsPerPage: controller.dataSource.rowCount >= 15 ? 15 : controller.dataSource.rowCount,
                   showCheckboxColumn: false,
                   columns: [
                     tableColumn(controller, "Code", (user) => user.code!, minWidth: Get.width * (4 / 100)),

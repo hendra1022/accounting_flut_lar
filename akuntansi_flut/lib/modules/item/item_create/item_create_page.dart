@@ -103,7 +103,7 @@ class ItemCreatePage extends StatelessWidget {
             children: [
               GetBuilder<ItemCreateController>(
                 builder: (controller) => VButton(
-                  "Master Item Categryo Create",
+                  "Save",
                   buttonColor: VColor.secondary,
                   leftIcon: const Icon(
                     Icons.save,

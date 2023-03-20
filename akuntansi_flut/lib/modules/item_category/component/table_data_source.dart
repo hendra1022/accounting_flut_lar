@@ -11,7 +11,7 @@ import '../../../utils/widgets/v_widgets.dart';
 class ItemCategoryDataTableSource extends DataTableSource {
   // Generate some made-up data
   final List<ItemModel> _data = List.generate(
-    50,
+    10,
     (index) => ItemModel(
       id: index.toString(),
       code: index.toString(),
@@ -81,14 +81,14 @@ class ItemCategoryDataTableSource extends DataTableSource {
                 IconButton(
                   hoverColor: VColor.transparant,
                   onPressed: () {
-                    VNavigation().toItemDetailPage(int.parse(_data[index].id!));
+                    VNavigation().toItemCategoryDetailPage(int.parse(_data[index].id!));
                   },
                   icon: const Icon(Icons.ads_click, color: VColor.black),
                 ),
                 IconButton(
                   hoverColor: VColor.transparant,
                   onPressed: () {
-                    VNavigation().toItemCreatePage();
+                    VNavigation().toItemCategoryCreatePage();
                   },
                   icon: const Icon(Icons.edit, color: VColor.blue),
                 ),

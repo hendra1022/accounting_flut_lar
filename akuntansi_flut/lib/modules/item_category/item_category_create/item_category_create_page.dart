@@ -29,7 +29,9 @@ class ItemCategoryCreatePage extends StatelessWidget {
           const SizedBox(height: marginSmall),
           Expanded(
             child: ListView(
-              children: const [],
+              children: const [
+                InputForm(),
+              ],
             ),
           ),
         ],
@@ -90,7 +92,7 @@ class Header extends StatelessWidget {
                 height: marginSuperSmall,
               ),
               const VText(
-                "Sales",
+                "Master Item Category Create",
                 fontSize: textSizeLarge,
                 color: VColor.white,
               ),
@@ -109,7 +111,7 @@ class Header extends StatelessWidget {
                         color: VColor.white,
                       ),
                       onPressed: () async {
-                        // await controller.onSave();
+                        controller.createItemCategory();
                       },
                     ),
                   ),
@@ -130,6 +132,120 @@ class Header extends StatelessWidget {
               )
             ],
           )
+        ],
+      ),
+    );
+  }
+}
+
+class InputForm extends StatelessWidget {
+  const InputForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(paddingMedium),
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: GetBuilder<ItemCategoryCreateController>(
+              builder: (controller) => Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    inputField(controller.codeController, "Code"),
+                    const SizedBox(height: marginMedium),
+                    inputField(controller.nameController, "Name"),
+                    const SizedBox(height: marginMedium),
+                    active(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: marginExtraLarge,
+          ),
+          Expanded(
+            child: Container(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget inputField(TextEditingController controller, String title) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: VInputText(
+                autoFocus: false,
+                hint: title,
+                textCapitalization: TextCapitalization.none,
+                textInputAction: TextInputAction.next,
+                filled: true,
+                fillColor: VColor.white,
+                hintTextColor: VColor.grey1,
+                textEditingController: controller,
+                keyboardType: TextInputType.text,
+                textPadding: paddingSuperSmall,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "$title can't be empty";
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget active() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          const Expanded(
+            flex: 1,
+            child: VText("Active"),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: GetBuilder<ItemCategoryCreateController>(
+                  builder: (controller) => VCheckbox(
+                    isChecked: controller.isActive,
+                    onChanged: (value) {
+                      controller.updateActive();
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
