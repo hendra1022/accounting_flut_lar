@@ -13,7 +13,7 @@ class ItemCategoryFilter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: marginMedium),
+      padding: const EdgeInsets.all(marginMedium),
       width: 500,
       decoration: const BoxDecoration(
         color: VColor.white,

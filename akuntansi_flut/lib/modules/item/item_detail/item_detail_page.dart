@@ -23,11 +23,11 @@ class ItemDetailPage extends StatelessWidget {
   Widget _body() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(paddingSmall),
+      padding: const EdgeInsets.all(paddingSmall),
       child: Column(
         children: [
           _header(),
-          SizedBox(
+          const SizedBox(
             height: marginSmall,
           ),
           Expanded(
@@ -45,8 +45,8 @@ class ItemDetailPage extends StatelessWidget {
   Widget _header() {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
-      padding: EdgeInsets.all(paddingMedium),
+      decoration: const BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
+      padding: const EdgeInsets.all(paddingMedium),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -77,10 +77,10 @@ class ItemDetailPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: marginSuperSmall,
               ),
-              VText(
+              const VText(
                 "Master Item View - Item 0",
                 fontSize: textSizeLarge,
                 color: VColor.white,
@@ -102,7 +102,7 @@ class ItemDetailPage extends StatelessWidget {
                       Get.back();
                     },
                   ),
-                  SizedBox(width: marginMedium),
+                  const SizedBox(width: marginMedium),
                   VButton(
                     "Update",
                     buttonColor: VColor.secondary,
@@ -114,7 +114,7 @@ class ItemDetailPage extends StatelessWidget {
                       VNavigation().toItemCreatePage();
                     },
                   ),
-                  SizedBox(width: marginMedium),
+                  const SizedBox(width: marginMedium),
                   VButton(
                     "Delete",
                     buttonColor: VColor.red,
@@ -143,7 +143,7 @@ class ItemDetailPage extends StatelessWidget {
               flex: 1,
               child: VText(title),
             ),
-            SizedBox(
+            const SizedBox(
               width: marginMedium,
             ),
             Expanded(
@@ -167,7 +167,7 @@ class ItemDetailPage extends StatelessWidget {
               flex: 1,
               child: VText("Have Variant"),
             ),
-            SizedBox(
+            const SizedBox(
               width: marginMedium,
             ),
             Expanded(
@@ -199,7 +199,7 @@ class ItemDetailPage extends StatelessWidget {
               flex: 1,
               child: VText("Active"),
             ),
-            SizedBox(
+            const SizedBox(
               width: marginMedium,
             ),
             Expanded(
@@ -223,7 +223,7 @@ class ItemDetailPage extends StatelessWidget {
     }
 
     return Container(
-      padding: EdgeInsets.all(paddingMedium),
+      padding: const EdgeInsets.all(paddingMedium),
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,21 +232,21 @@ class ItemDetailPage extends StatelessWidget {
             child: Column(
               children: [
                 detailField("Code", "Code Item"),
-                SizedBox(height: marginExtraLarge),
+                const SizedBox(height: marginExtraLarge),
                 detailField("Name", "Item Name"),
-                SizedBox(height: marginExtraLarge),
+                const SizedBox(height: marginExtraLarge),
                 detailField("Item Category", "Code Item"),
-                SizedBox(height: marginExtraLarge),
+                const SizedBox(height: marginExtraLarge),
                 detailField("Customer Tax", "Pajak Pertambahan 0% (0%)"),
-                SizedBox(height: marginExtraLarge),
+                const SizedBox(height: marginExtraLarge),
                 detailField("Supplier Tax", "Pajak Pertambahan 0% (0%)"),
-                SizedBox(height: marginExtraLarge),
+                const SizedBox(height: marginExtraLarge),
                 haveVariant(),
-                SizedBox(height: marginExtraLarge),
+                const SizedBox(height: marginExtraLarge),
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: marginExtraLarge,
           ),
           Expanded(
@@ -255,7 +255,7 @@ class ItemDetailPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const VText("Item Picture"),
-                SizedBox(height: marginExtraLarge),
+                const SizedBox(height: marginExtraLarge),
                 Container(
                   width: 150,
                   height: 150,
@@ -266,7 +266,7 @@ class ItemDetailPage extends StatelessWidget {
                   ),
                   child: const Center(child: VText("Item Image")),
                 ),
-                SizedBox(height: marginExtraLarge),
+                const SizedBox(height: marginExtraLarge),
                 active(),
               ],
             ),

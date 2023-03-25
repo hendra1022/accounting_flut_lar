@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
+import '../../modules/customer/create/customer_create.dart';
 import '../../modules/customer/customer.dart';
+import '../../modules/customer/detail/customer_detail.dart';
 import '../../modules/dashboard/dashboard.dart';
 import '../../modules/item/item.dart';
 import '../../modules/item/item_create/item_create.dart';
@@ -82,12 +84,22 @@ class AppPages {
     GetPage(
       name: RoutesPath.itemCategoryDetail,
       page: () => const ItemCategoryDetailPage(),
-      binding: ItemCategoryBinding(),
+      binding: ItemCategoryDetailBinding(),
     ),
     GetPage(
       name: RoutesPath.itemCategoryCreate,
       page: () => const ItemCategoryCreatePage(),
       binding: ItemCategoryCreateBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.customerDetail,
+      page: () => const CustomerDetailPage(),
+      binding: CustomerDetailBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.customerCreate,
+      page: () => const CustomerCreatePage(),
+      binding: CustomerCreateBinding(),
     ),
   ];
 }

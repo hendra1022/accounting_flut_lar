@@ -11,6 +11,7 @@ class PrefConst {
 
   static const String keyArgsItemId = 'item_id';
   static const String keyArgsCatId = 'cat_id';
+  static const String keyArgsCusId = 'cus_id';
 }
 
 class SettingsConstants {

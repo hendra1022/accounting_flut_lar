@@ -1,3 +1,5 @@
+import 'package:akuntansi_flut/modules/customer/component/table_builder.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,6 +7,7 @@ import '../../utils/constants.dart';
 import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
 import '../app_bar/custom_app_bar.dart';
+import 'customer.dart';
 
 class CustomerPage extends StatelessWidget {
   const CustomerPage({super.key});
@@ -21,28 +24,39 @@ class CustomerPage extends StatelessWidget {
   Widget _body() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(paddingSmall),
+      padding: const EdgeInsets.all(paddingSmall),
       child: Column(
         children: [
-          _header(),
-          SizedBox(
+          const Header(),
+          const SizedBox(
             height: marginSmall,
           ),
           Expanded(
             child: ListView(
-              children: const [],
+              children: const [
+                Filter(),
+                SizedBox(
+                  height: marginMedium,
+                ),
+                CustomerTable(),
+              ],
             ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _header() {
+class Header extends StatelessWidget {
+  const Header({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
-      padding: EdgeInsets.all(paddingMedium),
+      decoration: const BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
+      padding: const EdgeInsets.all(paddingMedium),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -63,17 +77,17 @@ class CustomerPage extends StatelessWidget {
                     Icons.arrow_right,
                     color: VColor.white,
                   ),
-                  VText(
+                  const VText(
                     "Customer",
                     fontSize: textSizeMedium,
-                    color: VColor.white,
+                    color: VColor.black,
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: marginSuperSmall,
               ),
-              VText(
+              const VText(
                 "Customer",
                 fontSize: textSizeLarge,
                 color: VColor.white,
@@ -95,6 +109,166 @@ class CustomerPage extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class Filter extends StatelessWidget {
+  const Filter({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(color: VColor.white),
+      padding: const EdgeInsets.all(marginMedium),
+      child: Wrap(
+        children: [
+          statusWidget(),
+          const SizedBox(
+            width: 50,
+          ),
+          filterByDropdown(),
+        ],
+      ),
+    );
+  }
+
+  Widget statusWidget() {
+    return SizedBox(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const VText(
+            "Status",
+            fontSize: textSizeLarge,
+            isBold: true,
+          ),
+          GetBuilder<CustomerController>(
+            builder: (controller) => DropdownButton2(
+              hint: const Padding(
+                padding: EdgeInsets.only(left: paddingSuperSmall),
+                child: VText(
+                  'Select Item',
+                  fontSize: textSizeMedium,
+                  color: VColor.grey1,
+                ),
+              ),
+              items: controller.filterStatusItems
+                  .map(
+                    (item) => DropdownMenuItem<String>(
+                      value: item,
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: paddingSuperSmall),
+                        child: VText(
+                          item,
+                          fontSize: textSizeMedium,
+                        ),
+                      ),
+                    ),
+                  )
+                  .toList(),
+              value: controller.selectedFilterStatus,
+              onChanged: (value) {
+                controller.selectedFilterStatus = value as String;
+                controller.update();
+              },
+              buttonStyleData: const ButtonStyleData(
+                height: 40,
+                width: 100,
+              ),
+              menuItemStyleData: const MenuItemStyleData(
+                height: 40,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget filterByDropdown() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const VText(
+          "Filtered by",
+          fontSize: textSizeLarge,
+          isBold: true,
+        ),
+        Container(
+          width: 500,
+          decoration: const BoxDecoration(
+            color: VColor.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(radiusMedium),
+            ),
+          ),
+          child: GetBuilder<CustomerController>(
+            builder: (controller) => Row(
+              children: [
+                DropdownButton2(
+                  hint: const Padding(
+                    padding: EdgeInsets.only(left: paddingSuperSmall),
+                    child: VText(
+                      'Select Item',
+                      fontSize: textSizeMedium,
+                      color: VColor.grey1,
+                    ),
+                  ),
+                  items: controller.filterByItems
+                      .map(
+                        (item) => DropdownMenuItem<String>(
+                          value: item,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: paddingSuperSmall),
+                            child: VText(
+                              item,
+                              fontSize: textSizeMedium,
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  value: controller.selectedFilterBy,
+                  onChanged: (value) {
+                    controller.selectedFilterBy = value as String;
+                    controller.update();
+                  },
+                  buttonStyleData: const ButtonStyleData(
+                    height: 40,
+                    width: 100,
+                  ),
+                  menuItemStyleData: const MenuItemStyleData(
+                    height: 40,
+                  ),
+                ),
+                const SizedBox(
+                  width: marginSmall,
+                ),
+                SizedBox(
+                  width: 250,
+                  child: VInputText(
+                    hint: "Search item by ${controller.selectedFilterBy}",
+                    textEditingController: controller.itemSearchController,
+                    autoFocus: false,
+                  ),
+                ),
+                const SizedBox(
+                  width: marginSmall,
+                ),
+                VButton(
+                  "Filter",
+                  leftIcon: const Icon(
+                    Icons.search,
+                    color: VColor.white,
+                  ),
+                  onPressed: () {},
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
