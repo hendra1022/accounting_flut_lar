@@ -5,6 +5,7 @@ import '../../../utils/constants.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../../app_bar/custom_app_bar.dart';
+import 'customer_create.dart';
 
 class CustomerCreatePage extends StatelessWidget {
   const CustomerCreatePage({super.key});
@@ -28,7 +29,9 @@ class CustomerCreatePage extends StatelessWidget {
           const SizedBox(height: marginSmall),
           Expanded(
             child: ListView(
-              children: const [],
+              children: const [
+                InputForm(),
+              ],
             ),
           ),
         ],
@@ -78,7 +81,11 @@ class Header extends StatelessWidget {
                     Icons.arrow_right,
                     color: VColor.white,
                   ),
-                  const VText("Customer", fontSize: textSizeMedium, color: VColor.black),
+                  const VText(
+                    "Create",
+                    fontSize: textSizeMedium,
+                    color: VColor.black,
+                  ),
                 ],
               ),
               const SizedBox(
@@ -91,19 +98,168 @@ class Header extends StatelessWidget {
               ),
             ],
           ),
-          Column(
+          Row(
             children: [
-              VButton(
-                "CREATE",
-                buttonColor: VColor.secondary,
-                leftIcon: const Icon(
-                  Icons.add,
-                  color: VColor.white,
+              GetBuilder<CustomerCreateController>(
+                builder: (controller) => VButton(
+                  "Save",
+                  buttonColor: VColor.secondary,
+                  leftIcon: const Icon(
+                    Icons.save,
+                    color: VColor.white,
+                  ),
+                  onPressed: () async {
+                    await controller.onSave();
+                  },
                 ),
-                onPressed: () {},
+              ),
+              const SizedBox(width: marginMedium),
+              VButton(
+                "Cancel",
+                buttonColor: VColor.white,
+                textColor: VColor.black,
+                leftIcon: const Icon(
+                  Icons.close,
+                  color: VColor.black,
+                ),
+                onPressed: () {
+                  Get.back();
+                },
               )
             ],
           )
+        ],
+      ),
+    );
+  }
+}
+
+class InputForm extends StatelessWidget {
+  const InputForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(paddingMedium),
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: GetBuilder<CustomerCreateController>(
+              builder: (controller) => Form(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    inputField(controller.codeTextController, "Code"),
+                    const SizedBox(height: marginMedium),
+                    inputField(controller.nameTextController, "Name"),
+                    const SizedBox(height: marginMedium),
+                    inputField(controller.addressTextController, "Address"),
+                    const SizedBox(height: marginMedium),
+                    inputField(controller.emailTextController, "Email"),
+                    const SizedBox(height: marginMedium),
+                    inputField(controller.phoneTextController, "Phone"),
+                    const SizedBox(height: marginMedium),
+                    inputField(controller.descTextController, "Description"),
+                    const SizedBox(height: marginMedium),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(
+            width: marginExtraLarge,
+          ),
+          Expanded(
+            child: GetBuilder<CustomerCreateController>(
+              builder: (controller) => SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    active(),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget inputField(TextEditingController controller, String title) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: VInputText(
+                autoFocus: false,
+                hint: title,
+                textCapitalization: TextCapitalization.none,
+                textInputAction: TextInputAction.next,
+                filled: true,
+                fillColor: VColor.white,
+                hintTextColor: VColor.grey1,
+                textEditingController: controller,
+                keyboardType: TextInputType.text,
+                textPadding: paddingSuperSmall,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "$title can't be empty";
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget active() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          const Expanded(
+            flex: 1,
+            child: VText("Active"),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: GetBuilder<CustomerCreateController>(
+                  builder: (controller) => VCheckbox(
+                    isChecked: controller.isActive,
+                    onChanged: (value) {
+                      controller.updateIsActive();
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

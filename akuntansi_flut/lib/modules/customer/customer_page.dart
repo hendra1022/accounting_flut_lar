@@ -1,3 +1,4 @@
+import 'package:akuntansi_flut/commons/routes/app_navigation.dart';
 import 'package:akuntansi_flut/modules/customer/component/table_builder.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +104,9 @@ class Header extends StatelessWidget {
                   Icons.add,
                   color: VColor.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  VNavigation().toCustomerCreatePage();
+                },
               )
             ],
           )

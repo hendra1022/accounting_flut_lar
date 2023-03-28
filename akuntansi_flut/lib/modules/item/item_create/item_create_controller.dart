@@ -110,7 +110,7 @@ class ItemCreateController extends BaseController {
               minWidth: Get.width * (10 / 100),
             ),
             child: Container(
-              margin: EdgeInsets.symmetric(vertical: marginSuperSmall),
+              margin: const EdgeInsets.symmetric(vertical: marginSuperSmall),
               width: 150,
               child: VButton(
                 "Browser",

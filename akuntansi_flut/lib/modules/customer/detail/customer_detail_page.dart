@@ -5,6 +5,7 @@ import '../../../utils/constants.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../../app_bar/custom_app_bar.dart';
+import 'customer_detail.dart';
 
 class CustomerDetailPage extends StatelessWidget {
   const CustomerDetailPage({super.key});
@@ -28,7 +29,9 @@ class CustomerDetailPage extends StatelessWidget {
           const SizedBox(height: marginSmall),
           Expanded(
             child: ListView(
-              children: const [],
+              children: const [
+                DetailItem(),
+              ],
             ),
           ),
         ],
@@ -74,6 +77,15 @@ class Header extends StatelessWidget {
                       Get.back();
                     },
                   ),
+                  const Icon(
+                    Icons.arrow_right,
+                    color: VColor.white,
+                  ),
+                  const VText(
+                    "View",
+                    fontSize: textSizeMedium,
+                    color: VColor.black,
+                  ),
                 ],
               ),
               const SizedBox(
@@ -99,6 +111,110 @@ class Header extends StatelessWidget {
               )
             ],
           )
+        ],
+      ),
+    );
+  }
+}
+
+class DetailItem extends StatelessWidget {
+  const DetailItem({super.key});
+
+  Widget detailField(String title, String field) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: VText(field),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(paddingMedium),
+      width: double.infinity,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                detailField("Code", "Code Item"),
+                const SizedBox(height: marginExtraLarge),
+                detailField("Name", "Item Name"),
+                const SizedBox(height: marginExtraLarge),
+                detailField("Address", "Code Item"),
+                const SizedBox(height: marginExtraLarge),
+                detailField("Email", "Code Item"),
+                const SizedBox(height: marginExtraLarge),
+                detailField("Phone", "Code Item"),
+                const SizedBox(height: marginExtraLarge),
+                detailField("Customer Type", "Code Item"),
+                const SizedBox(height: marginExtraLarge),
+                detailField("Description", "Code Item"),
+              ],
+            ),
+          ),
+          const SizedBox(
+            width: marginExtraLarge,
+          ),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                active(),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget active() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          const Expanded(
+            flex: 1,
+            child: VText("Active"),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: GetBuilder<CustomerDetailController>(
+                  builder: (controller) => VCheckbox(
+                    isChecked: controller.isActive,
+                    onChanged: (value) {},
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
