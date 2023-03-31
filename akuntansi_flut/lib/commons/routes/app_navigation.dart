@@ -79,13 +79,16 @@ class VNavigation {
     Get.toNamed(RoutesPath.customerCreate);
   }
 
-  // offToSearchResultPage(String keyword, String categoryId) {
-  //   Get.offNamed(
-  //     RoutesPath.searchResultPage,
-  //     arguments: {
-  //       PrefConst.keyArgSearchKeyword: keyword,
-  //       PrefConst.keyArgsSelectedCatId: categoryId,
-  //     },
-  //   );
-  // }
+  toSupplierDetailPage(int suppId) {
+    Get.toNamed(
+      RoutesPath.customerDetail,
+      arguments: {
+        PrefConst.keyArgsSupId: suppId,
+      },
+    );
+  }
+
+  toSupplierCreatePage() {
+    Get.toNamed(RoutesPath.customerCreate);
+  }
 }
