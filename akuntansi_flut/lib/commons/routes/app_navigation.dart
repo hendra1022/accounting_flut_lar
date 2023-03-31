@@ -81,7 +81,7 @@ class VNavigation {
 
   toSupplierDetailPage(int suppId) {
     Get.toNamed(
-      RoutesPath.customerDetail,
+      RoutesPath.supplierDetail,
       arguments: {
         PrefConst.keyArgsSupId: suppId,
       },
@@ -89,6 +89,6 @@ class VNavigation {
   }
 
   toSupplierCreatePage() {
-    Get.toNamed(RoutesPath.customerCreate);
+    Get.toNamed(RoutesPath.supplierCreate);
   }
 }

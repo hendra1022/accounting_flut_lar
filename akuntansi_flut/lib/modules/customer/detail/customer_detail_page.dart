@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../commons/routes/app_navigation.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
@@ -100,14 +101,42 @@ class Header extends StatelessWidget {
           ),
           Column(
             children: [
-              VButton(
-                "CREATE",
-                buttonColor: VColor.secondary,
-                leftIcon: const Icon(
-                  Icons.add,
-                  color: VColor.white,
-                ),
-                onPressed: () {},
+              Row(
+                children: [
+                  VButton(
+                    "Back",
+                    buttonColor: VColor.platinum,
+                    leftIcon: const Icon(
+                      Icons.list,
+                      color: VColor.white,
+                    ),
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
+                  const SizedBox(width: marginMedium),
+                  VButton(
+                    "Update",
+                    buttonColor: VColor.secondary,
+                    leftIcon: const Icon(
+                      Icons.edit,
+                      color: VColor.white,
+                    ),
+                    onPressed: () {
+                      VNavigation().toCustomerCreatePage();
+                    },
+                  ),
+                  const SizedBox(width: marginMedium),
+                  VButton(
+                    "Delete",
+                    buttonColor: VColor.red,
+                    leftIcon: const Icon(
+                      Icons.delete,
+                      color: VColor.white,
+                    ),
+                    onPressed: () {},
+                  ),
+                ],
               )
             ],
           )
