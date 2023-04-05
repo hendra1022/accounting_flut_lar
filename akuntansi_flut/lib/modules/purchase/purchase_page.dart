@@ -1,3 +1,4 @@
+import 'package:akuntansi_flut/modules/purchase/component/table_builder.dart';
 import 'package:akuntansi_flut/modules/purchase/purchase.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -34,69 +35,13 @@ class PurchasePage extends StatelessWidget {
             child: ListView(
               children: const [
                 Filter(),
+                SizedBox(
+                  height: marginMedium,
+                ),
+                PurchaseTable(),
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _header() {
-    return Container(
-      width: double.infinity,
-      decoration: const BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
-      padding: const EdgeInsets.all(paddingMedium),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  VText(
-                    "Dashboard",
-                    fontSize: textSizeMedium,
-                    color: VColor.white,
-                    onPressed: () {
-                      Get.back();
-                    },
-                  ),
-                  const Icon(
-                    Icons.arrow_right,
-                    color: VColor.white,
-                  ),
-                  const VText(
-                    "Purchase",
-                    fontSize: textSizeMedium,
-                    color: VColor.white,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: marginSuperSmall,
-              ),
-              const VText(
-                "Purchase",
-                fontSize: textSizeLarge,
-                color: VColor.white,
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              VButton(
-                "CREATE",
-                buttonColor: VColor.secondary,
-                leftIcon: const Icon(
-                  Icons.add,
-                  color: VColor.white,
-                ),
-                onPressed: () {},
-              )
-            ],
-          )
         ],
       ),
     );

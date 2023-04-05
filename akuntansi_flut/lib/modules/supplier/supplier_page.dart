@@ -105,7 +105,7 @@ class Header extends StatelessWidget {
                   color: VColor.white,
                 ),
                 onPressed: () {
-                  VNavigation().toSupplierCreatePage();
+                  VNavigation().toCustomerCreatePage();
                 },
               )
             ],

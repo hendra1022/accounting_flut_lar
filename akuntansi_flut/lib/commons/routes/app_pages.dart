@@ -13,6 +13,8 @@ import '../../modules/item_category/item_category.dart';
 import '../../modules/item_category/item_category_create/item_category_create.dart';
 import '../../modules/item_category/item_category_detail/item_category_detail.dart';
 import '../../modules/login/login.dart';
+import '../../modules/purchase/create/purchase_create.dart';
+import '../../modules/purchase/detail/purchase_detail.dart';
 import '../../modules/purchase/purchase.dart';
 import '../../modules/sales/sales.dart';
 import '../../modules/supplier/detail/supplier_detail.dart';
@@ -112,6 +114,16 @@ class AppPages {
       name: RoutesPath.supplierCreate,
       page: () => const SupplierCreatePage(),
       binding: SupplierCreateBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.purchaseDetail,
+      page: () => const PurchaseDetailPage(),
+      binding: PurchaseDetailBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.purchaseCreate,
+      page: () => const PurchaseCreatePage(),
+      binding: PurchaseCreateBinding(),
     ),
   ];
 }

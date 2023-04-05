@@ -1,12 +1,12 @@
+import 'package:akuntansi_flut/modules/purchase/component/table_data_source.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../commons/base_controller.dart';
 import '../../services/model/item_model.dart';
-import '../customer/component/table_data_source.dart';
 
 class PurchaseController extends BaseController {
-  final CustomerDataTableSource dataSource = CustomerDataTableSource();
+  final PurchaseDataTableSource dataSource = PurchaseDataTableSource();
 
   // filter by name
   String selectedFilterBy = 'Document No';

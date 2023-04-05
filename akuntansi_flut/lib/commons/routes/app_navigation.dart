@@ -91,4 +91,17 @@ class VNavigation {
   toSupplierCreatePage() {
     Get.toNamed(RoutesPath.supplierCreate);
   }
+
+  toPurchaseDetailPage(int purcId) {
+    Get.toNamed(
+      RoutesPath.purchaseDetail,
+      arguments: {
+        PrefConst.keyArgsPurcId: purcId,
+      },
+    );
+  }
+
+  toPurchaseCreatePage() {
+    Get.toNamed(RoutesPath.purchaseCreate);
+  }
 }
