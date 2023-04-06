@@ -4,6 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../commons/routes/app_navigation.dart';
 import '../../utils/constants.dart';
 import '../../utils/v_color.dart';
 import '../../utils/widgets/v_widgets.dart';
@@ -104,7 +105,7 @@ class Header extends StatelessWidget {
                   color: VColor.white,
                 ),
                 onPressed: () {
-                  // VNavigation().toCustomerCreatePage();
+                  VNavigation().toPurchaseCreatePage();
                 },
               )
             ],

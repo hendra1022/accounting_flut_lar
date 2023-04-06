@@ -6,6 +6,7 @@ import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../../app_bar/custom_app_bar.dart';
 import 'purchase_create.dart';
+import 'table.dart';
 
 class PurchaseCreatePage extends StatelessWidget {
   const PurchaseCreatePage({super.key});
@@ -31,6 +32,11 @@ class PurchaseCreatePage extends StatelessWidget {
             child: ListView(
               children: const [
                 InputForm(),
+                Divider(
+                  thickness: 2,
+                  color: VColor.black,
+                ),
+                PurchaseLineForm(),
               ],
             ),
           ),
@@ -70,7 +76,7 @@ class Header extends StatelessWidget {
                     color: VColor.white,
                   ),
                   VText(
-                    "Supplier",
+                    "Purchase",
                     fontSize: textSizeMedium,
                     color: VColor.white,
                     onPressed: () {
@@ -92,7 +98,7 @@ class Header extends StatelessWidget {
                 height: marginSuperSmall,
               ),
               const VText(
-                "Supplier Master Create",
+                "Purchase Create",
                 fontSize: textSizeLarge,
                 color: VColor.white,
               ),
@@ -151,18 +157,11 @@ class InputForm extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    inputField(controller.codeTextController, "Code"),
+                    inputField(controller.codeTextController, "Document No"),
                     const SizedBox(height: marginMedium),
-                    inputField(controller.nameTextController, "Name"),
+                    inputField(controller.nameTextController, "Supplier Name"),
                     const SizedBox(height: marginMedium),
-                    inputField(controller.addressTextController, "Address"),
-                    const SizedBox(height: marginMedium),
-                    inputField(controller.emailTextController, "Email"),
-                    const SizedBox(height: marginMedium),
-                    inputField(controller.phoneTextController, "Phone"),
-                    const SizedBox(height: marginMedium),
-                    inputField(controller.descTextController, "Description"),
-                    const SizedBox(height: marginMedium),
+                    transactionDate(),
                   ],
                 ),
               ),
@@ -178,9 +177,7 @@ class InputForm extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    active(),
-                  ],
+                  children: const [],
                 ),
               ),
             ),
@@ -231,35 +228,81 @@ class InputForm extends StatelessWidget {
     );
   }
 
-  Widget active() {
-    return SizedBox(
-      width: double.infinity,
-      child: Row(
-        children: [
-          const Expanded(
-            flex: 1,
-            child: VText("Active"),
-          ),
-          const SizedBox(
-            width: marginMedium,
-          ),
-          Expanded(
-            flex: 2,
-            child: SizedBox(
-              width: double.infinity,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: GetBuilder<PurchaseCreateController>(
-                  builder: (controller) => VCheckbox(
-                    isChecked: controller.isActive,
-                    onChanged: (value) {
-                      controller.updateIsActive();
-                    },
-                  ),
+  Widget transactionDate() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Expanded(
+            child: Padding(
+          padding: EdgeInsets.only(top: marginMedium),
+          child: VText("Transaction Date"),
+        )),
+        const SizedBox(
+          width: marginMedium,
+        ),
+        Expanded(
+          flex: 2,
+          child: Padding(
+            padding: const EdgeInsets.only(top: marginMedium),
+            child: GetBuilder<PurchaseCreateController>(
+              builder: (controller) => GestureDetector(
+                onTap: () => showDatePickerStartDate(controller),
+                child: VText(
+                  controller.startDateView,
+                  decoration: TextDecoration.underline,
                 ),
               ),
             ),
           ),
+        ),
+      ],
+    );
+  }
+
+  Future<void> showDatePickerStartDate(PurchaseCreateController controller) async {
+    final DateTime? picked = await showDatePicker(
+      context: Get.context!,
+      initialDate: controller.startDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2030),
+    );
+    if (picked != null && picked != controller.startDate) {
+      controller.updateStartDate(picked);
+    }
+  }
+}
+
+class PurchaseLineForm extends StatelessWidget {
+  const PurchaseLineForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(paddingMedium),
+      width: double.infinity,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const VText(
+                "Purchase Item",
+                fontSize: textSizeLarge,
+              ),
+              VButton(
+                "Create",
+                leftIcon: const Icon(
+                  Icons.add,
+                  color: VColor.white,
+                ),
+                onPressed: () {},
+              )
+            ],
+          ),
+          const SizedBox(
+            height: marginMedium,
+          ),
+          const PurchaseLineTable(),
         ],
       ),
     );
