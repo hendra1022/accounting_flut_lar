@@ -8,7 +8,7 @@ import '../item.dart';
 Widget itemCategoryDropdown(ItemController controller) {
   return DropdownButton2<String>(
     isExpanded: true,
-    hint: Padding(
+    hint: const Padding(
       padding: EdgeInsets.only(left: paddingSuperSmall),
       child: VText(
         'All Category',
@@ -20,7 +20,7 @@ Widget itemCategoryDropdown(ItemController controller) {
           (item) => DropdownMenuItem(
             value: item,
             child: Padding(
-              padding: EdgeInsets.only(left: paddingSuperSmall),
+              padding: const EdgeInsets.only(left: paddingSuperSmall),
               child: VText(
                 item,
                 fontSize: textSizeMedium,

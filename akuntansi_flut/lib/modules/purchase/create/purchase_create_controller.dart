@@ -14,18 +14,22 @@ class PurchaseCreateController extends BaseController {
   TextEditingController phoneTextController = TextEditingController();
   TextEditingController descTextController = TextEditingController();
 
-  final PurchaseLineDataTableSource dataSource = PurchaseLineDataTableSource();
-
   // filter by date
   DateTime startDate = DateTime.now();
   String startDateView = "";
 
-  bool isActive = true;
+  // price line
+  final PurchaseLineDataTableSource dataSource = PurchaseLineDataTableSource();
+  bool isAddItemFormShown = true;
+
+  TextEditingController priceTextController = TextEditingController();
+  TextEditingController qtyTextController = TextEditingController();
 
   @override
   Future<void> onInit() async {
     isLoading = true;
     startDateView = DateFormat("dd-MM-yyyy").format(startDate);
+    qtyTextController.text = "0";
     isLoading = false;
     update();
 
@@ -36,11 +40,6 @@ class PurchaseCreateController extends BaseController {
     dataSource.sort<T>(getField, ascending);
   }
 
-  void updateIsActive() {
-    isActive = !isActive;
-    update();
-  }
-
   Future<void> onSave() async {
     Get.back();
   }
@@ -48,6 +47,13 @@ class PurchaseCreateController extends BaseController {
   void updateStartDate(DateTime temp) {
     startDate = temp;
     startDateView = DateFormat("dd-MM-yyyy").format(startDate);
+    update();
+  }
+
+  void updateAddItemFormVisible() {
+    isAddItemFormShown = !isAddItemFormShown;
+    priceTextController.text = "0";
+    qtyTextController.text = "0";
     update();
   }
 }

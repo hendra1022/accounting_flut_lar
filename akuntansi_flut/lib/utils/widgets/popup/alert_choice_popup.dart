@@ -18,7 +18,7 @@ class AlertChoicePopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(paddingExtraLarge),
+      padding: const EdgeInsets.all(paddingExtraLarge),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -32,7 +32,7 @@ class AlertChoicePopup extends StatelessWidget {
               isBold: true,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: marginLarge,
           ),
           Align(
@@ -45,7 +45,7 @@ class AlertChoicePopup extends StatelessWidget {
               isBold: false,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: marginExtraLarge,
           ),
           VButtonBorder(
@@ -58,7 +58,7 @@ class AlertChoicePopup extends StatelessWidget {
             borderColor: VColor.grey1,
             onPressed: () => onPressedCancel!(),
           ),
-          SizedBox(
+          const SizedBox(
             height: marginMedium,
           ),
           VButton(
@@ -68,7 +68,7 @@ class AlertChoicePopup extends StatelessWidget {
             textPadding: paddingMedium,
             onPressed: () => onPressedOk!(),
           ),
-          SizedBox(
+          const SizedBox(
             height: marginMedium,
           ),
         ],

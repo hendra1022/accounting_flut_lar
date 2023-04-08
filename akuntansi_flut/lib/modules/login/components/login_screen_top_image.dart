@@ -21,7 +21,7 @@ class LoginScreenTopImage extends StatelessWidget {
             const Spacer(),
           ],
         ),
-        SizedBox(height: paddingMedium * 2),
+        const SizedBox(height: paddingMedium * 2),
       ],
     );
   }

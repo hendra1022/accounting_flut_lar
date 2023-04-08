@@ -411,7 +411,7 @@ class VEmptyCart extends StatelessWidget {
 
   Widget _emptyCart() {
     return Padding(
-      padding: EdgeInsets.all(paddingExtraLarge),
+      padding: const EdgeInsets.all(paddingExtraLarge),
       child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -683,30 +683,32 @@ class VButton extends StatelessWidget {
                 align: textAlign,
               )
             : Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   leftIcon == null
                       ? Container()
                       : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             leftIcon!,
-                            SizedBox(
+                            const SizedBox(
                               width: marginSuperSmall,
                             )
                           ],
                         ),
-                  VText(
-                    title,
-                    isBold: true,
-                    color: !disabled ? textColor : textColorDisabled,
-                    align: textAlign,
-                  ),
+                  title != ""
+                      ? VText(
+                          title,
+                          isBold: true,
+                          color: !disabled ? textColor : textColorDisabled,
+                          align: textAlign,
+                        )
+                      : Container(),
                   rightIcon == null
                       ? Container()
                       : Row(
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               width: marginSuperSmall,
                             ),
                             rightIcon!
@@ -1203,7 +1205,7 @@ class VIconButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: colorBackground,
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(radiusLarge),
         ),
       ),

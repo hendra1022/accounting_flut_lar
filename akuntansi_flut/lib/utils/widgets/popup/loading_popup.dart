@@ -13,7 +13,7 @@ class LoadingPopup extends StatelessWidget {
       child: Material(
         borderRadius: BorderRadius.circular(radiusMedium),
         child: Container(
-          padding: EdgeInsets.all(paddingExtraLarge),
+          padding: const EdgeInsets.all(paddingExtraLarge),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -22,15 +22,15 @@ class LoadingPopup extends StatelessWidget {
               SizedBox(
                 width: imageSizeMedium,
                 height: imageSizeMedium,
-                child: CircularProgressIndicator(
+                child: const CircularProgressIndicator(
                   strokeWidth: paddingSuperSmall,
-                  valueColor: const AlwaysStoppedAnimation<Color>(VColor.secondary),
+                  valueColor: AlwaysStoppedAnimation<Color>(VColor.secondary),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: marginLarge,
               ),
-              VText(
+              const VText(
                 "Loading",
                 color: VColor.black,
                 isBold: true,

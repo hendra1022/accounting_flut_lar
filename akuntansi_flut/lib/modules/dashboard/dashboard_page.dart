@@ -20,7 +20,7 @@ class DashboardPage extends StatelessWidget {
   _body() {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.all(paddingSmall),
+      padding: const EdgeInsets.all(paddingSmall),
       child: Column(
         children: [
           _header(),
@@ -32,28 +32,28 @@ class DashboardPage extends StatelessWidget {
   Widget _header() {
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
-      padding: EdgeInsets.all(paddingMedium),
+      decoration: const BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
+      padding: const EdgeInsets.all(paddingMedium),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            children: [
+            children: const [
               VText(
                 "Dashboard",
                 fontSize: textSizeMedium,
                 color: VColor.white,
               ),
-              const Icon(
+              Icon(
                 Icons.arrow_right,
                 color: VColor.primary,
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: marginSuperSmall,
           ),
-          VText(
+          const VText(
             "Dashboard",
             fontSize: textSizeLarge,
             color: VColor.white,

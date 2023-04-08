@@ -58,7 +58,7 @@ class CustomBarChart extends StatelessWidget {
               SizedBox(
                 height: marginExtraLarge.h,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(radiusLarge)),
+                  borderRadius: const BorderRadius.all(Radius.circular(radiusLarge)),
                   child: LinearProgressIndicator(
                     backgroundColor: barBackgroundColor,
                     valueColor: AlwaysStoppedAnimation<Color>(value! >= 1 ? VColor.green : barValueColor!),

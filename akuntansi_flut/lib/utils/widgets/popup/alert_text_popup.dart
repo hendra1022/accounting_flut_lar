@@ -13,7 +13,7 @@ class AlertTextPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(paddingExtraLarge),
+      padding: const EdgeInsets.all(paddingExtraLarge),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -27,7 +27,7 @@ class AlertTextPopup extends StatelessWidget {
               isBold: true,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: marginLarge,
           ),
           Align(
@@ -39,7 +39,7 @@ class AlertTextPopup extends StatelessWidget {
               isBold: false,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: marginExtraLarge,
           ),
           VButton(

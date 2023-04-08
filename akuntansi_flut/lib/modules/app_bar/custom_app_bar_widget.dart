@@ -11,9 +11,9 @@ import '../../utils/widgets/v_widgets.dart';
 
 AppBar customAppBar() {
   return AppBar(
-    leading: Padding(
+    leading: const Padding(
       padding: EdgeInsets.all(marginMedium),
-      child: const Icon(
+      child: Icon(
         Icons.home,
         color: VColor.black,
       ),
@@ -21,7 +21,7 @@ AppBar customAppBar() {
     leadingWidth: 20,
     title: Row(
       children: [
-        SizedBox(
+        const SizedBox(
           width: marginMedium,
         ),
         SizedBox(
@@ -84,7 +84,7 @@ AppBar customAppBar() {
     ),
     actions: [
       Container(
-        margin: EdgeInsets.only(right: marginMedium),
+        margin: const EdgeInsets.only(right: marginMedium),
         height: 50,
         child: Center(
           child: GetBuilder<CustomAppBarController>(

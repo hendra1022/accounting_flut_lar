@@ -290,19 +290,247 @@ class PurchaseLineForm extends StatelessWidget {
                 fontSize: textSizeLarge,
               ),
               VButton(
-                "Create",
+                "Add Item",
                 leftIcon: const Icon(
                   Icons.add,
                   color: VColor.white,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.find<PurchaseCreateController>().updateAddItemFormVisible();
+                },
               )
             ],
           ),
           const SizedBox(
             height: marginMedium,
           ),
+          GetBuilder<PurchaseCreateController>(
+            builder: (controller) => Visibility(
+              visible: controller.isAddItemFormShown,
+              child: const AddNewItemForm(),
+            ),
+          ),
           const PurchaseLineTable(),
+        ],
+      ),
+    );
+  }
+}
+
+class AddNewItemForm extends StatelessWidget {
+  const AddNewItemForm({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 800,
+      decoration: BoxDecoration(
+        color: VColor.white,
+        borderRadius: BorderRadius.circular(radiusExtraLarge),
+      ),
+      padding: const EdgeInsets.all(paddingMedium),
+      margin: const EdgeInsets.only(bottom: marginMedium),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Expanded(child: VText("Item Name")),
+              Expanded(
+                flex: 2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const VText("Item 1"),
+                    const SizedBox(
+                      width: marginMedium,
+                    ),
+                    VButton(
+                      "",
+                      onPressed: () {},
+                      buttonColor: VColor.primary,
+                      leftIcon: const Icon(
+                        Icons.search,
+                        color: VColor.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: marginSmall,
+          ),
+          GetBuilder<PurchaseCreateController>(
+            builder: (controller) => inputField(controller.priceTextController, "Price"),
+          ),
+          const SizedBox(
+            height: marginSmall,
+          ),
+          GetBuilder<PurchaseCreateController>(
+            builder: (controller) => qtyField(controller.qtyTextController, "Quantity"),
+          ),
+          const SizedBox(
+            height: marginLarge,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              VButton(
+                "Close",
+                onPressed: () {},
+                buttonColor: VColor.red,
+              ),
+              const SizedBox(
+                width: marginMedium,
+              ),
+              VButton(
+                "Add",
+                onPressed: () {},
+                buttonColor: VColor.green,
+              ),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget inputField(TextEditingController controller, String title) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: VInputText(
+                autoFocus: false,
+                hint: title,
+                textCapitalization: TextCapitalization.none,
+                textInputAction: TextInputAction.next,
+                filled: true,
+                fillColor: VColor.white,
+                hintTextColor: VColor.grey1,
+                textEditingController: controller,
+                keyboardType: TextInputType.text,
+                filledBorderColor: VColor.primary,
+                textPadding: paddingSuperSmall,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "$title can't be empty";
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget qtyField(TextEditingController controller, String title) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Container(
+                //   decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.circular(radiusLarge)),
+                //   padding: const EdgeInsets.all(paddingSuperSmall),
+                //   child: const Icon(
+                //     Icons.add,
+                //     color: VColor.white,
+                //   ),
+                // ),
+                VButton(
+                  "",
+                  onPressed: () {},
+                  buttonColor: VColor.primary,
+                  leftIcon: const Icon(
+                    Icons.add,
+                    color: VColor.white,
+                  ),
+                ),
+                const SizedBox(
+                  width: marginMedium,
+                ),
+                SizedBox(
+                  width: 200,
+                  child: VInputText(
+                    autoFocus: false,
+                    hint: "0",
+                    textCapitalization: TextCapitalization.none,
+                    textInputAction: TextInputAction.next,
+                    filled: true,
+                    fillColor: VColor.white,
+                    hintTextColor: VColor.grey1,
+                    textEditingController: controller,
+                    keyboardType: TextInputType.number,
+                    filledBorderColor: VColor.primary,
+                    textPadding: paddingSuperSmall,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "$title can't be empty";
+                      } else if (int.tryParse(value) == null) {
+                        return "Quantity must be number";
+                      }
+                      return null;
+                    },
+                    onChanged: (value) {
+                      if (value.isEmpty) {
+                        controller.text = "0";
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  width: marginMedium,
+                ),
+
+                VButton(
+                  "",
+                  onPressed: () {},
+                  buttonColor: VColor.primary,
+                  leftIcon: const Icon(
+                    Icons.remove,
+                    color: VColor.white,
+                  ),
+                ),
+
+                // Container(
+                //   decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.circular(radiusLarge)),
+                //   padding: const EdgeInsets.all(paddingSuperSmall),
+                //   child: const Icon(
+                //     Icons.remove,
+                //     color: VColor.white,
+                //   ),
+                // ),
+              ],
+            ),
+          ),
         ],
       ),
     );
