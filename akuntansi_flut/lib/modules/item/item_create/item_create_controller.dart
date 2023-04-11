@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:akuntansi_flut/utils/constants.dart';
+import 'package:akuntansi_flut/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,6 +25,7 @@ class ItemCreateController extends BaseController {
   bool isCustoemrTaxPicked = false;
   bool isSupplierTaxPicked = false;
   bool isActive = true;
+  bool isFormShow = false;
 
   List<DataRow> dataRow = List<DataRow>.empty(growable: true);
   final List<ItemModel> itemList = List.generate(
@@ -64,6 +66,7 @@ class ItemCreateController extends BaseController {
 
   void updateIsHaveVariant() {
     isHaveVariant = !isHaveVariant;
+    isFormShow = false;
     update();
   }
 
@@ -72,16 +75,25 @@ class ItemCreateController extends BaseController {
     update();
   }
 
-  DataRow getRow(
-    int index,
-  ) {
-    DataCell dataCell(String? text, double width) {
+  void updateIsFormShow() {
+    isFormShow = !isFormShow;
+    update();
+  }
+
+  DataRow getRow(int index) {
+    DataCell dataCell(
+      String? text,
+      double width, {
+      bool isMoney = false,
+    }) {
       return DataCell(
         Container(
           constraints: BoxConstraints(minWidth: width),
-          // width: width,
           padding: const EdgeInsets.only(right: 5),
-          child: VText(text ?? "null", align: TextAlign.left),
+          child: VText(
+            isMoney ? (text ?? "0").thousandSeparator : (text ?? "-"),
+            align: isMoney ? TextAlign.right : TextAlign.left,
+          ),
         ),
       );
     }
@@ -89,8 +101,10 @@ class ItemCreateController extends BaseController {
     return DataRow(
       color: index % 2 == 1 ? MaterialStateColor.resolveWith((states) => VColor.grey4Opacity) : MaterialStateColor.resolveWith((states) => VColor.transparant),
       cells: [
-        dataCell(itemList[index].code, Get.width * (30 / 100)),
-        dataCell(itemList[index].name, Get.width * (30 / 100)),
+        dataCell(itemList[index].code, Get.width * (4 / 100)),
+        dataCell(itemList[index].name, Get.width * (24 / 100)),
+        dataCell(itemList[index].minPrice, Get.width * (6 / 100), isMoney: true),
+        dataCell(itemList[index].price, Get.width * (4 / 100), isMoney: true),
         DataCell(
           Container(
             padding: const EdgeInsets.only(right: 5),

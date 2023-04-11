@@ -158,7 +158,7 @@ class InputForm extends StatelessWidget {
                     inputField(controller.codeController, "Code"),
                     const SizedBox(height: marginMedium),
                     inputField(controller.nameController, "Name"),
-                    const SizedBox(height: marginMedium),
+                    const SizedBox(height: marginExtraLarge),
                     active(),
                   ],
                 ),
