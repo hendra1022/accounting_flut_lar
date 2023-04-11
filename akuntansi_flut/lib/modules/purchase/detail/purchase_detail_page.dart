@@ -6,7 +6,7 @@ import '../../../utils/constants.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../../app_bar/custom_app_bar.dart';
-import 'purchase_detail.dart';
+import 'table.dart';
 
 class PurchaseDetailPage extends StatelessWidget {
   const PurchaseDetailPage({super.key});
@@ -32,6 +32,7 @@ class PurchaseDetailPage extends StatelessWidget {
             child: ListView(
               children: const [
                 DetailItem(),
+                PurchaseLineTable(),
               ],
             ),
           ),
@@ -184,19 +185,12 @@ class DetailItem extends StatelessWidget {
           Expanded(
             child: Column(
               children: [
-                detailField("Code", "Code Item"),
+                detailField("Document No", "123"),
                 const SizedBox(height: marginExtraLarge),
-                detailField("Name", "Item Name"),
+                detailField("Supplier Name", "123"),
                 const SizedBox(height: marginExtraLarge),
-                detailField("Address", "Code Item"),
+                detailField("Transaction Date", "123"),
                 const SizedBox(height: marginExtraLarge),
-                detailField("Email", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Phone", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Supplier Type", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Description", "Code Item"),
               ],
             ),
           ),
@@ -207,41 +201,7 @@ class DetailItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                active(),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget active() {
-    return SizedBox(
-      width: double.infinity,
-      child: Row(
-        children: [
-          const Expanded(
-            flex: 1,
-            child: VText("Active"),
-          ),
-          const SizedBox(
-            width: marginMedium,
-          ),
-          Expanded(
-            flex: 2,
-            child: SizedBox(
-              width: double.infinity,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: GetBuilder<PurchaseDetailController>(
-                  builder: (controller) => VCheckbox(
-                    isChecked: controller.isActive,
-                    onChanged: (value) {},
-                  ),
-                ),
-              ),
+              children: const [],
             ),
           ),
         ],

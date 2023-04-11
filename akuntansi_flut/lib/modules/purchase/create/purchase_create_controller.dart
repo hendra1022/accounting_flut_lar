@@ -20,7 +20,7 @@ class PurchaseCreateController extends BaseController {
 
   // price line
   final PurchaseLineDataTableSource dataSource = PurchaseLineDataTableSource();
-  bool isAddItemFormShown = true;
+  bool isAddItemFormShown = false;
 
   TextEditingController priceTextController = TextEditingController();
   TextEditingController qtyTextController = TextEditingController();
