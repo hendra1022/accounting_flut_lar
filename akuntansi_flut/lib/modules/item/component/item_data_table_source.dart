@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:akuntansi_flut/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -55,15 +56,14 @@ class ItemDataTableSource extends DataTableSource {
         dataCell(_data[index].code, Get.width * (2 / 100), flex: 1),
         dataCell(_data[index].name, Get.width * (12 / 100), flex: 6),
         dataCell(_data[index].categoryName, Get.width * (8 / 100), flex: 4),
-        dataCell(_data[index].minPrice, Get.width * (6 / 100), flex: 2),
-        dataCell(_data[index].price, Get.width * (4 / 100), flex: 2),
+        dataCell(_data[index].minPrice, Get.width * (6 / 100), flex: 2, isMoney: true),
+        dataCell(_data[index].price, Get.width * (4 / 100), flex: 2, isMoney: true),
         DataCell(
           Container(
             padding: const EdgeInsets.only(right: 5),
             constraints: BoxConstraints(
               minWidth: Get.width * (4 / 100),
             ),
-            // width: Get.width * (2 / 100),
             child: Checkbox(
               activeColor: VColor.grey1,
               value: _data[index].active == "1" ? true : false,
@@ -77,7 +77,6 @@ class ItemDataTableSource extends DataTableSource {
             constraints: BoxConstraints(
               minWidth: Get.width * (4 / 100),
             ),
-            // width: Get.width * (4 / 100),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -103,13 +102,20 @@ class ItemDataTableSource extends DataTableSource {
     );
   }
 
-  DataCell dataCell(String? text, double width, {int flex = 1}) {
+  DataCell dataCell(
+    String? text,
+    double width, {
+    int flex = 1,
+    bool isMoney = false,
+  }) {
     return DataCell(
       Container(
         constraints: BoxConstraints(minWidth: width),
-        // width: width,
         padding: const EdgeInsets.only(right: 5),
-        child: VText(text ?? "null", align: TextAlign.left),
+        child: VText(
+          isMoney ? (text ?? "0").thousandSeparator : (text ?? "-"),
+          align: isMoney ? TextAlign.right : TextAlign.left,
+        ),
       ),
     );
   }

@@ -4,26 +4,6 @@ extension StringExtension on String {
   String get currency => NumberFormat.simpleCurrency(locale: 'id_ID', decimalDigits: 0).format(double.parse(this));
 
   String get currencyInt => NumberFormat.simpleCurrency(locale: 'id_ID', decimalDigits: 0).format(int.parse(this));
-
-  String get formatedNewLine {
-    return replaceAll("\\n", "\n");
-  }
-
-  String get formatPhoneNumberToZero {
-    return replaceFirst("+62", "0").replaceFirst("62", "0");
-  }
-
-  String get formatPhoneNumberTo62 {
-    return replaceFirst("0", "+62");
-  }
-
-  String get formatPhoneToEmpty {
-    return replaceFirst("+62", "").replaceFirst("62", "").replaceFirst("0", "");
-  }
-
-  String get addPhone62 {
-    return "62$this";
-  }
 }
 
 extension DoublePrecision on double {
@@ -52,7 +32,11 @@ extension StringCurrency on String {
 
 extension StringNumberFormat on String {
   String get thousandSeparator {
-    return NumberFormat('#,###').format(int.parse(this));
+    try {
+      return NumberFormat('#,###').format(int.parse(this));
+    } catch (_) {
+      return NumberFormat('#,###').format(double.parse(this));
+    }
   }
 }
 
