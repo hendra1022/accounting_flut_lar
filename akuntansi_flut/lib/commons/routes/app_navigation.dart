@@ -104,4 +104,17 @@ class VNavigation {
   toPurchaseCreatePage() {
     Get.toNamed(RoutesPath.purchaseCreate);
   }
+
+  toSalesDetailPage(int salesId) {
+    Get.toNamed(
+      RoutesPath.salesDetail,
+      arguments: {
+        PrefConst.keyArgsSalesId: salesId,
+      },
+    );
+  }
+
+  toSalesCreatePage() {
+    Get.toNamed(RoutesPath.salesCreate);
+  }
 }

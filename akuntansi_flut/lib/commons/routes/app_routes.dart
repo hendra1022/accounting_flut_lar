@@ -26,4 +26,7 @@ abstract class RoutesPath {
 
   static const purchaseDetail = '/purchase-detail';
   static const purchaseCreate = '/purchase-create';
+
+  static const salesDetail = '/sales-detail';
+  static const salesCreate = '/sales-create';
 }

@@ -1,3 +1,4 @@
+import 'package:akuntansi_flut/modules/sales/detail/sales_detail.dart';
 import 'package:akuntansi_flut/modules/supplier/create/supplier_create.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ import '../../modules/login/login.dart';
 import '../../modules/purchase/create/purchase_create.dart';
 import '../../modules/purchase/detail/purchase_detail.dart';
 import '../../modules/purchase/purchase.dart';
+import '../../modules/sales/create/sales_create.dart';
 import '../../modules/sales/sales.dart';
 import '../../modules/supplier/detail/supplier_detail.dart';
 import '../../modules/supplier/supplier.dart';
@@ -124,6 +126,16 @@ class AppPages {
       name: RoutesPath.purchaseCreate,
       page: () => const PurchaseCreatePage(),
       binding: PurchaseCreateBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.salesDetail,
+      page: () => const SalesDetailPage(),
+      binding: SalesDetailBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.purchaseCreate,
+      page: () => const SalesCreatePage(),
+      binding: SalesCreateBinding(),
     ),
   ];
 }
