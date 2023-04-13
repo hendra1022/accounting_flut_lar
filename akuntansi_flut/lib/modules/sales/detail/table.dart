@@ -1,14 +1,13 @@
 import 'dart:math';
 
-import 'package:akuntansi_flut/modules/Sales/detail/Sales_detail.dart';
 import 'package:akuntansi_flut/utils/v_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../commons/routes/app_navigation.dart';
 import '../../../services/model/item_model.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/widgets/v_widgets.dart';
+import 'sales_detail.dart';
 
 class SalesLineTable extends StatelessWidget {
   const SalesLineTable({super.key});
@@ -140,16 +139,7 @@ class SalesLineDataTableSource extends DataTableSource {
               children: [
                 IconButton(
                   hoverColor: VColor.transparant,
-                  onPressed: () {
-                    VNavigation().toSalesDetailPage(int.parse(_data[index].id!));
-                  },
-                  icon: const Icon(Icons.ads_click, color: VColor.black),
-                ),
-                IconButton(
-                  hoverColor: VColor.transparant,
-                  onPressed: () {
-                    VNavigation().toSalesCreatePage();
-                  },
+                  onPressed: () {},
                   icon: const Icon(Icons.edit, color: VColor.blue),
                 ),
               ],

@@ -38,8 +38,10 @@ class PurchaseLineTable extends StatelessWidget {
                   showCheckboxColumn: false,
                   columns: [
                     tableColumn(controller, "Code", (user) => user.code!, minWidth: Get.width * (4 / 100)),
-                    tableColumn(controller, "Name", (user) => user.name!, minWidth: Get.width * (24 / 100)),
-                    tableColumn(controller, "Active", (user) => user.active!, minWidth: Get.width * (8 / 100)),
+                    tableColumn(controller, "Item Name", (user) => user.name!, minWidth: Get.width * (24 / 100)),
+                    tableColumn(controller, "Item Category", (user) => user.active!, minWidth: Get.width * (8 / 100)),
+                    tableColumn(controller, "Price", (user) => user.active!, minWidth: Get.width * (8 / 100)),
+                    tableColumn(controller, "Qty", (user) => user.active!, minWidth: Get.width * (8 / 100)),
                     tableColumn(controller, " ", null, minWidth: Get.width * (8 / 100)),
                   ],
                 ),
@@ -112,27 +114,16 @@ class PurchaseLineDataTableSource extends DataTableSource {
     return DataRow(
       color: index % 2 == 1 ? MaterialStateColor.resolveWith((states) => VColor.grey4Opacity) : MaterialStateColor.resolveWith((states) => VColor.transparant),
       cells: [
-        dataCell(_data[index].code, Get.width * (2 / 100), flex: 1),
-        dataCell(_data[index].name, Get.width * (12 / 100), flex: 6),
+        dataCell(_data[index].code, Get.width * (4 / 100), flex: 1),
+        dataCell(_data[index].name, Get.width * (24 / 100), flex: 6),
+        dataCell(_data[index].categoryName, Get.width * (8 / 100), flex: 6),
+        dataCell(_data[index].price, Get.width * (8 / 100), flex: 6),
+        dataCell(_data[index].qty, Get.width * (8 / 100), flex: 6),
         DataCell(
           Container(
             padding: const EdgeInsets.only(right: 5),
             constraints: BoxConstraints(
-              minWidth: Get.width * (4 / 100),
-            ),
-            // width: Get.width * (2 / 100),
-            child: Checkbox(
-              activeColor: VColor.grey1,
-              value: _data[index].active == "1" ? true : false,
-              onChanged: (value) => {},
-            ),
-          ),
-        ),
-        DataCell(
-          Container(
-            padding: const EdgeInsets.only(right: 5),
-            constraints: BoxConstraints(
-              minWidth: Get.width * (4 / 100),
+              minWidth: Get.width * (8 / 100),
             ),
             // width: Get.width * (4 / 100),
             child: Row(

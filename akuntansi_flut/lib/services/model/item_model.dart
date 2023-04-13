@@ -7,6 +7,7 @@ class ItemModel {
   String? active;
   String? minPrice;
   String? price;
+  String? qty;
   String? createdDate;
   String? updatedDate;
 
@@ -21,6 +22,7 @@ class ItemModel {
     active = json['active'];
     minPrice = json['min_price'];
     price = json['price'];
+    qty = json['qty'];
     createdDate = json['created_date'];
     updatedDate = json['updated_date'];
   }
@@ -35,6 +37,7 @@ class ItemModel {
     data['active'] = active;
     data['min_price'] = minPrice;
     data['price'] = price;
+    data['qty'] = qty;
     data['created_date'] = createdDate;
     data['updated_date'] = updatedDate;
     return data;

@@ -133,7 +133,7 @@ class AppPages {
       binding: SalesDetailBinding(),
     ),
     GetPage(
-      name: RoutesPath.purchaseCreate,
+      name: RoutesPath.salesCreate,
       page: () => const SalesCreatePage(),
       binding: SalesCreateBinding(),
     ),
