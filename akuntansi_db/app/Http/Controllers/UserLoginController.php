@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateUserLoginRequest;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class UserLoginController extends Controller
 {
@@ -17,7 +18,7 @@ class UserLoginController extends Controller
     public function index()
     {
         try {
-            $userLogins = UserLogin::latest()->paginate(    10);
+            $userLogins = UserLogin::latest()->paginate(10);
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
@@ -127,5 +128,17 @@ class UserLoginController extends Controller
             'data' => $userLogin,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
+    }
+
+    public function coba_get($test)
+    {
+        $salaries = DB::table('user_logins')
+        ->select(["*","id as abc"])
+        ->where('id','=',$test)
+        // ->join('companies', 'salaries.company_id', '=', 'companies.id')
+        // ->groupBy('companies.id')
+        // ->orderByDesc('avg_salary')
+        ->get();
+        return $salaries;
     }
 }
