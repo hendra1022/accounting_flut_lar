@@ -130,11 +130,13 @@ class UserLoginController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
-    public function coba_get($test)
+    public function coba_get(Request $request)
     {
+        $user_id = $request->id;
+        
         $salaries = DB::table('user_logins')
         ->select(["*","id as abc"])
-        ->where('id','=',$test)
+        ->where('id','=',$user_id)
         // ->join('companies', 'salaries.company_id', '=', 'companies.id')
         // ->groupBy('companies.id')
         // ->orderByDesc('avg_salary')
