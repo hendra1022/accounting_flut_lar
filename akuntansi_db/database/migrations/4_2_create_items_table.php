@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('is_active')->default("1");
             $table->string('have_child')->default("0");
-            $table->foreign('parent_id')->references('id')->on('items')->onDelete('cascade')->nullable();
+            $table->bigInteger('parent_id');
             $table->timestamps();
         });
     }

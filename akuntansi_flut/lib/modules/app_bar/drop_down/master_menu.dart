@@ -85,6 +85,24 @@ Widget masterMenuDropDown() {
             ),
           ),
         ),
+        SizedBox(
+          width: double.infinity,
+          child: GetBuilder<CustomAppBarController>(
+            builder: (controller) => VButton(
+              "Customer Type",
+              onPressed: () {
+                VNavigation().toCustomerTypePage();
+                controller.updateDropdownMaster();
+              },
+              onHover: (p0) {
+                controller.updateDropdownMaster();
+              },
+              textPadding: marginExtraLarge,
+              buttonColor: VColor.white,
+              textColor: VColor.black,
+            ),
+          ),
+        ),
       ],
     ),
   );

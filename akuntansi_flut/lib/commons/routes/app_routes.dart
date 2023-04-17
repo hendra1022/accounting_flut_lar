@@ -6,6 +6,7 @@ abstract class RoutesPath {
   static const login = '/login';
   static const dashboard = '/dashboard';
   static const customer = '/customer';
+  static const customerType = '/customer-type';
   static const supplier = '/supplier';
   static const item = '/item';
   static const itemCategory = '/item-category';
@@ -20,6 +21,9 @@ abstract class RoutesPath {
 
   static const customerDetail = '/customer-detail';
   static const customerCreate = '/customer-create';
+
+  static const customerTypeDetail = '/customer-type-detail';
+  static const customerTypeCreate = '/customer-type-create';
 
   static const supplierDetail = '/supplier-detail';
   static const supplierCreate = '/supplier-create';

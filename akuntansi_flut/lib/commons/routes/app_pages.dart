@@ -1,3 +1,5 @@
+import 'package:akuntansi_flut/modules/customer_type/create/customer_type_create.dart';
+import 'package:akuntansi_flut/modules/customer_type/detail/customer_type_detail.dart';
 import 'package:akuntansi_flut/modules/sales/detail/sales_detail.dart';
 import 'package:akuntansi_flut/modules/supplier/create/supplier_create.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +8,7 @@ import 'package:get/get.dart';
 import '../../modules/customer/create/customer_create.dart';
 import '../../modules/customer/customer.dart';
 import '../../modules/customer/detail/customer_detail.dart';
+import '../../modules/customer_type/customer_type.dart';
 import '../../modules/dashboard/dashboard.dart';
 import '../../modules/item/item.dart';
 import '../../modules/item/item_create/item_create.dart';
@@ -51,6 +54,11 @@ class AppPages {
       name: RoutesPath.customer,
       page: () => const CustomerPage(),
       binding: CustomerBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.customerType,
+      page: () => const CustomerTypePage(),
+      binding: CustomerTypeBinding(),
     ),
     GetPage(
       name: RoutesPath.item,
@@ -106,6 +114,16 @@ class AppPages {
       name: RoutesPath.customerCreate,
       page: () => const CustomerCreatePage(),
       binding: CustomerCreateBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.customerTypeDetail,
+      page: () => const CustomerTypeDetailPage(),
+      binding: CustomerTypeDetailBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.customerTypeCreate,
+      page: () => const CustomerTypeCreatePage(),
+      binding: CustomerTypeCreateBinding(),
     ),
     GetPage(
       name: RoutesPath.supplierDetail,

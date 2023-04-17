@@ -32,6 +32,10 @@ class VNavigation {
     Get.offNamedUntil(RoutesPath.customer, (route) => route.settings.name == RoutesPath.dashboard);
   }
 
+  toCustomerTypePage() {
+    Get.offNamedUntil(RoutesPath.customerType, (route) => route.settings.name == RoutesPath.dashboard);
+  }
+
   toPurchasePage() {
     Get.offNamedUntil(RoutesPath.purchase, (route) => route.settings.name == RoutesPath.dashboard);
   }
@@ -77,6 +81,19 @@ class VNavigation {
 
   toCustomerCreatePage() {
     Get.toNamed(RoutesPath.customerCreate);
+  }
+
+  toCustomerTypeDetailPage(int custTypeId) {
+    Get.toNamed(
+      RoutesPath.customerTypeDetail,
+      arguments: {
+        PrefConst.keyArgsCusId: custTypeId,
+      },
+    );
+  }
+
+  toCustomerTypeCreatePage() {
+    Get.toNamed(RoutesPath.customerTypeCreate);
   }
 
   toSupplierDetailPage(int suppId) {

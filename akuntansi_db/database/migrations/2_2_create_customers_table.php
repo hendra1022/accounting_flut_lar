@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone')->nullable();
             $table->string('is_active');
-            $table->foreign('ct_id')->references('id')->on('customer_type')->onDelete('cascade');
+            $table->bigInteger('ct_id');
             $table->timestamps();
         });
     }

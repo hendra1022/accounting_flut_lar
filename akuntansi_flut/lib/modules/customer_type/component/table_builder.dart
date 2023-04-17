@@ -1,0 +1,77 @@
+import 'package:akuntansi_flut/utils/v_color.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import '../../../services/model/response/customer_type_list_response.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/widgets/v_widgets.dart';
+import '../customer_type.dart';
+
+class CustomerTypeTable extends StatefulWidget {
+  const CustomerTypeTable({super.key});
+
+  @override
+  State<CustomerTypeTable> createState() => _CustomerTypeTableState();
+}
+
+class _CustomerTypeTableState extends State<CustomerTypeTable> {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<CustomerTypeController>(
+      builder: (controller) => controller.isLoading
+          ? const VLoadingPage()
+          : controller.dataSource.rowCount <= 0
+              ? const Center(
+                  child: VText("Data is Empty"),
+                )
+              : Container(
+                  decoration: const BoxDecoration(
+                    color: VColor.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(radiusMedium),
+                    ),
+                  ),
+                  child: Theme(
+                    data: Theme.of(Get.context!).copyWith(cardColor: VColor.white, dividerColor: VColor.primary),
+                    child: PaginatedDataTable(
+                      source: controller.dataSource,
+                      primary: true,
+                      columnSpacing: 10,
+                      horizontalMargin: 10,
+                      rowsPerPage: controller.dataSource.getRowPerPageCustom(),
+                      initialFirstRowIndex: (controller.page - 1) * controller.dataSource.rowPerPage,
+                      showCheckboxColumn: false,
+                      onPageChanged: (value) {
+                        controller.changePage(value ~/ controller.dataSource.rowPerPage + 1, false);
+                      },
+                      columns: [
+                        tableColumn(controller, "ID", (customerType) => customerType.id!, minWidth: Get.width * (5 / 100)),
+                        tableColumn(controller, "Name", (customerType) => customerType.name!, minWidth: Get.width * (25 / 100)),
+                        tableColumn(controller, "Active", (customerType) => customerType.active!, minWidth: Get.width * (5 / 100)),
+                        tableColumn(controller, " ", null, minWidth: Get.width * (5 / 100)),
+                      ],
+                    ),
+                  ),
+                ),
+    );
+  }
+
+  DataColumn tableColumn<T>(
+    CustomerTypeController controller,
+    String title,
+    Comparable<T> Function(CustomerType user)? sortBy, {
+    double minWidth = 100.0,
+  }) {
+    return DataColumn(
+      label: SizedBox(
+        width: minWidth,
+        child: VText(
+          title,
+          align: TextAlign.left,
+          overflow: TextOverflow.clip,
+        ),
+      ),
+      onSort: sortBy != null ? (columnIndex, ascending) => controller.sortData(sortBy, columnIndex, ascending) : null,
+    );
+  }
+}

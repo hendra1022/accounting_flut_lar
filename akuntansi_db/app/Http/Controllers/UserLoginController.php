@@ -12,37 +12,28 @@ use Illuminate\Support\Facades\DB;
 
 class UserLoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         try {
-            $userLogins = UserLogin::latest()->paginate(10);
+            $data = UserLogin::latest()->paginate(10);
+
+            return response()->json([
+                'data' => $data,
+                'message' => 'Succeed'
+            ], JsonResponse::HTTP_OK);
         } catch (Exception $e) {
+
             return response()->json([
                 'data' => [],
-                'message'=>$e->getMessage()
+                'message' => $e->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        return response()->json([
-            'data' => $userLogins,
-            'message' => 'Succeed'
-        ], JsonResponse::HTTP_OK);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreUserLoginRequest $request)
     {
         try {
@@ -51,7 +42,7 @@ class UserLoginController extends Controller
                 'email' => 'required',
                 'password' => 'required',
             ]);
-    
+
             $user = UserLogin::create($request->all());
 
             return response()->json([
@@ -61,71 +52,58 @@ class UserLoginController extends Controller
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
-                'message'=>$e->getMessage()
+                'message' => $e->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(UserLogin $userLogin)
+    public function show(UserLogin $data)
     {
         return response()->json([
-            'data' => $userLogin,
+            'data' => $data,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(UserLogin $userLogin)
     {
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateUserLoginRequest $request, UserLogin $userLogin)
+    public function update(UpdateUserLoginRequest $request, UserLogin $data)
     {
-        
         try {
             $request->validate([
                 'title' => 'required',
                 'body' => 'required',
             ]);
-    
-            $userLogin->update($request->all());
+
+            $data->update($request->all());
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
-                'message'=>$e->getMessage()
+                'message' => $e->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
-            'data' => $userLogin,
+            'data' => $data,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(UserLogin $userLogin)
+    public function destroy(UserLogin $data)
     {
         try {
-            $userLogin->delete();
+            $data->delete();
         } catch (Exception $e) {
             return response()->json([
                 'data' => [],
-                'message'=>$e->getMessage()
+                'message' => $e->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
-            'data' => $userLogin,
+            'data' => $data,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
@@ -133,14 +111,14 @@ class UserLoginController extends Controller
     public function coba_get(Request $request)
     {
         $user_id = $request->id;
-        
+
         $salaries = DB::table('user_logins')
-        ->select(["*","id as abc"])
-        ->where('id','=',$user_id)
-        // ->join('companies', 'salaries.company_id', '=', 'companies.id')
-        // ->groupBy('companies.id')
-        // ->orderByDesc('avg_salary')
-        ->get();
+            ->select(["*", "id as abc"])
+            ->where('id', '=', $user_id)
+            // ->join('companies', 'salaries.company_id', '=', 'companies.id')
+            // ->groupBy('companies.id')
+            // ->orderByDesc('avg_salary')
+            ->get();
         return $salaries;
     }
 }
