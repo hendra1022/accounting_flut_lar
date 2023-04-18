@@ -1,3 +1,4 @@
+import 'package:akuntansi_flut/commons/routes/app_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -109,7 +110,7 @@ class Header extends StatelessWidget {
                     color: VColor.white,
                   ),
                   onPressed: () async {
-                    await controller.onSave();
+                    await controller.createCustomer();
                   },
                 ),
               ),
@@ -151,9 +152,26 @@ class InputForm extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    inputField(controller.codeTextController, "Code"),
-                    const SizedBox(height: marginMedium),
                     inputField(controller.nameTextController, "Name"),
+                    const SizedBox(height: marginMedium),
+                    inputPicker(
+                      "Customer Type",
+                      controller.customerType.id == null ? false : true,
+                      controller.custTypeNameController,
+                      onPressed: () {
+                        VNavigation().toCustomerTypeLookup(
+                          callback: (p0) {
+                            if (p0 != null) {
+                              if (p0[PrefConst.keyArgsCustType] != null) {
+                                controller.customerType = p0[PrefConst.keyArgsCustType];
+                                controller.custTypeNameController.text = controller.customerType.name ?? "";
+                                controller.update();
+                              }
+                            }
+                          },
+                        );
+                      },
+                    ),
                     const SizedBox(height: marginMedium),
                     inputField(controller.addressTextController, "Address"),
                     const SizedBox(height: marginMedium),
@@ -231,8 +249,59 @@ class InputForm extends StatelessWidget {
     );
   }
 
-  Widget active() {
+  Widget inputPicker(String title, bool isVisible, TextEditingController controller, {void Function()? onPressed}) {
     return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: isVisible,
+                    child: Expanded(
+                      child: VInputText(
+                        autoFocus: false,
+                        textEditingController: controller,
+                        readOnly: true,
+                        filled: true,
+                        fillColor: VColor.white,
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: isVisible,
+                    child: const SizedBox(
+                      width: marginMedium,
+                    ),
+                  ),
+                  VIconButton(
+                    Icons.search,
+                    colorBackground: VColor.secondary,
+                    onPressed: onPressed,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget active() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: paddingMedium),
       width: double.infinity,
       child: Row(
         children: [

@@ -9,6 +9,8 @@ class PrefConst {
   static const String keyUsername = 'username';
   static const String keyPassword = 'password';
 
+  static const String keyArgsIsCreate = 'is_create';
+
   static const String keyArgsItemId = 'item_id';
   static const String keyArgsCatId = 'cat_id';
   static const String keyArgsCusId = 'cus_id';
@@ -16,6 +18,8 @@ class PrefConst {
   static const String keyArgsSupId = 'sup_id';
   static const String keyArgsPurcId = 'purc_id';
   static const String keyArgsSalesId = 'sales_id';
+
+  static const String keyArgsCustType = 'customer_type';
 }
 
 class SettingsConstants {

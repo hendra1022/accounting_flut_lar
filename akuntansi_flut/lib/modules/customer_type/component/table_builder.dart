@@ -2,7 +2,7 @@ import 'package:akuntansi_flut/utils/v_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../services/model/response/customer_type_list_response.dart';
+import '../../../services/model/customer_type.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../customer_type.dart';

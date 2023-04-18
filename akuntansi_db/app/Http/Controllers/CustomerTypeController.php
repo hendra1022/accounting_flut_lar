@@ -15,14 +15,15 @@ class CustomerTypeController extends Controller
     public function index()
     {
         try {
-            $data = CustomerType::latest()->paginate(25);
+            $data = DB::table('customer_types')->select()->get();
+
+            $data = (['data' => $data]);
 
             return response()->json([
                 'result' => $data,
                 'message' => 'Succeed'
             ], JsonResponse::HTTP_OK);
         } catch (Exception $e) {
-
             return response()->json([
                 'result' => [],
                 'message' => $e->getMessage()
@@ -45,30 +46,38 @@ class CustomerTypeController extends Controller
             $user = CustomerType::create($request->all());
 
             return response()->json([
-                'data' => $user,
+                'result' => $user,
                 'message' => 'Succeed'
             ], JsonResponse::HTTP_OK);
         } catch (Exception $e) {
             return response()->json([
-                'data' => [],
+                'result' => [],
                 'message' => $e->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function show(CustomerType $data)
+    public function show($id)
     {
-        return response()->json([
-            'data' => $data,
-            'message' => 'Succeed'
-        ], JsonResponse::HTTP_OK);
+        try {
+            $data = CustomerType::findOrFail($id);
+            return response()->json([
+                'result' => $data,
+                'message' => 'Succeed'
+            ], JsonResponse::HTTP_OK);
+        } catch (Exception $e) {
+            return response()->json([
+                'result' => [],
+                'message' => $e->getMessage()
+            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function edit(CustomerType $CustomerType)
     {
     }
 
-    public function update(UpdateCustomerTypeRequest $request, CustomerType $data)
+    public function update(UpdateCustomerTypeRequest $request, $id)
     {
         try {
             $request->validate([
@@ -76,33 +85,34 @@ class CustomerTypeController extends Controller
                 'active' => 'required',
             ]);
 
+            $data = CustomerType::findOrFail($id);
             $data->update($request->all());
         } catch (Exception $e) {
             return response()->json([
-                'data' => [],
+                'result' => [],
                 'message' => $e->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
-            'data' => $data,
+            'result' => $data,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
 
-    public function destroy(CustomerType $data)
+    public function destroy($id)
     {
         try {
-            $data->delete();
+            $data = CustomerType::findOrFail($id)->delete();
         } catch (Exception $e) {
             return response()->json([
-                'data' => [],
+                'result' => [],
                 'message' => $e->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         return response()->json([
-            'data' => $data,
+            'result' => $data,
             'message' => 'Succeed'
         ], JsonResponse::HTTP_OK);
     }
@@ -110,24 +120,28 @@ class CustomerTypeController extends Controller
     public function indexByParam(Request $request)
     {
         try {
+            $data = DB::table('customer_types')->select();
+
             $isActive = $request->is_active;
+            if ($isActive == "1" || $isActive == "0") {
+                $data = $data->where("active", "=", $isActive);
+            }
+
+            $search = $request->search;
+            if ($search != null) {
+                $data = $data->where("name", "like", "%{$search}%");
+            }
 
             $rowPerPage = $request->row_per_page;
             if ($rowPerPage == null) {
                 $rowPerPage = 10;
+                $data = $data->paginate($rowPerPage);
+            } else if ($rowPerPage == "0") {
+                $data = $data->get();
+                $data = (['data' => $data]);
+            } else {
+                $data = $data->paginate($rowPerPage);
             }
-
-            $search = $request->search;
-
-            // $data = CustomerType::latest()->paginate($rowPerPage);
-            $data = DB::table('customer_types')->select();
-            if ($isActive == "1" || $isActive == "0") {
-                $data = $data->where("active", "=", $isActive);
-            }
-            if ($search != null) {
-                $data = $data->where("name", "like", "%{$search}%");
-            }
-            $data = $data->paginate($rowPerPage);
 
             return response()->json([
                 'result' => $data,

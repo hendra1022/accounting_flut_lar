@@ -1,6 +1,8 @@
-class CustomerTypeListResponse {
+import '../customer.dart';
+
+class CustomerListResponse {
   int? currentPage;
-  List<CustomerType>? customerTypeList;
+  List<Customer>? customerList;
   String? firstPageUrl;
   int? from;
   int? lastPage;
@@ -12,9 +14,9 @@ class CustomerTypeListResponse {
   int? to;
   int? total;
 
-  CustomerTypeListResponse(
+  CustomerListResponse(
       {this.currentPage,
-      this.customerTypeList,
+      this.customerList,
       this.firstPageUrl,
       this.from,
       this.lastPage,
@@ -26,12 +28,12 @@ class CustomerTypeListResponse {
       this.to,
       this.total});
 
-  CustomerTypeListResponse.fromJson(Map<String, dynamic> json) {
+  CustomerListResponse.fromJson(Map<String, dynamic> json) {
     currentPage = json['current_page'];
     if (json['data'] != null) {
-      customerTypeList = <CustomerType>[];
+      customerList = <Customer>[];
       json['data'].forEach((v) {
-        customerTypeList!.add(CustomerType.fromJson(v));
+        customerList!.add(Customer.fromJson(v));
       });
     }
     firstPageUrl = json['first_page_url'];
@@ -49,8 +51,8 @@ class CustomerTypeListResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['current_page'] = currentPage;
-    if (customerTypeList != null) {
-      data['data'] = customerTypeList!.map((v) => v.toJson()).toList();
+    if (customerList != null) {
+      data['data'] = customerList!.map((v) => v.toJson()).toList();
     }
     data['first_page_url'] = firstPageUrl;
     data['from'] = from;
@@ -62,34 +64,6 @@ class CustomerTypeListResponse {
     data['prev_page_url'] = prevPageUrl;
     data['to'] = to;
     data['total'] = total;
-    return data;
-  }
-}
-
-class CustomerType {
-  int? id;
-  String? name;
-  String? createdAt;
-  String? updatedAt;
-  String? active;
-
-  CustomerType({this.id, this.name, this.createdAt, this.updatedAt, this.active});
-
-  CustomerType.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    active = json['active'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    data['active'] = active;
     return data;
   }
 }

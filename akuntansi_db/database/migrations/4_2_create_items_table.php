@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->string('code')->unique();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('phone');
-            $table->string('is_active')->default("1");
+            $table->string('active', 1)->default("1");
             $table->string('have_child')->default("0");
             $table->bigInteger('parent_id');
             $table->timestamps();

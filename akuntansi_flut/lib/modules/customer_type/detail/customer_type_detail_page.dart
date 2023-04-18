@@ -71,7 +71,7 @@ class Header extends StatelessWidget {
                     color: VColor.white,
                   ),
                   VText(
-                    "Customer",
+                    "Customer Type",
                     fontSize: textSizeMedium,
                     color: VColor.white,
                     onPressed: () {
@@ -92,10 +92,12 @@ class Header extends StatelessWidget {
               const SizedBox(
                 height: marginSuperSmall,
               ),
-              const VText(
-                "Customer Master - Customer A",
-                fontSize: textSizeLarge,
-                color: VColor.white,
+              GetBuilder<CustomerTypeDetailController>(
+                builder: (controller) => VText(
+                  "Customer Type Master - ${controller.customerType.name ?? '-'}",
+                  fontSize: textSizeLarge,
+                  color: VColor.white,
+                ),
               ),
             ],
           ),
@@ -115,26 +117,32 @@ class Header extends StatelessWidget {
                     },
                   ),
                   const SizedBox(width: marginMedium),
-                  VButton(
-                    "Update",
-                    buttonColor: VColor.secondary,
-                    leftIcon: const Icon(
-                      Icons.edit,
-                      color: VColor.white,
+                  GetBuilder<CustomerTypeDetailController>(
+                    builder: (controller) => VButton(
+                      "Update",
+                      buttonColor: VColor.secondary,
+                      leftIcon: const Icon(
+                        Icons.edit,
+                        color: VColor.white,
+                      ),
+                      onPressed: () {
+                        VNavigation().toCustomerTypeCreatePage(custTypeId: controller.customerType.id ?? 0);
+                      },
                     ),
-                    onPressed: () {
-                      VNavigation().toCustomerCreatePage();
-                    },
                   ),
                   const SizedBox(width: marginMedium),
-                  VButton(
-                    "Delete",
-                    buttonColor: VColor.red,
-                    leftIcon: const Icon(
-                      Icons.delete,
-                      color: VColor.white,
+                  GetBuilder<CustomerTypeDetailController>(
+                    builder: (controller) => VButton(
+                      "Delete",
+                      buttonColor: VColor.red,
+                      leftIcon: const Icon(
+                        Icons.delete,
+                        color: VColor.white,
+                      ),
+                      onPressed: () {
+                        controller.deleteData();
+                      },
                     ),
-                    onPressed: () {},
                   ),
                 ],
               )
@@ -175,45 +183,38 @@ class DetailItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(paddingMedium),
-      width: double.infinity,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Column(
-              children: [
-                detailField("Code", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Name", "Item Name"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Address", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Email", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Phone", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Customer Type", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Description", "Code Item"),
-              ],
+    return GetBuilder<CustomerTypeDetailController>(
+      builder: (controller) => controller.isLoading
+          ? const VLoadingPage()
+          : Container(
+              padding: const EdgeInsets.all(paddingMedium),
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        detailField("Name", controller.customerType.name ?? "-"),
+                        const SizedBox(height: marginExtraLarge),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    width: marginExtraLarge,
+                  ),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        active(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            width: marginExtraLarge,
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                active(),
-              ],
-            ),
-          ),
-        ],
-      ),
     );
   }
 

@@ -1,4 +1,4 @@
-import 'package:akuntansi_flut/services/model/response/customer_type_list_response.dart';
+import 'package:akuntansi_flut/services/model/customer_type.dart';
 import 'package:flutter/material.dart';
 
 import '../../commons/base_controller.dart';

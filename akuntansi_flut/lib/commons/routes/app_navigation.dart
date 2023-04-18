@@ -87,13 +87,19 @@ class VNavigation {
     Get.toNamed(
       RoutesPath.customerTypeDetail,
       arguments: {
-        PrefConst.keyArgsCusId: custTypeId,
+        PrefConst.keyArgsCusTypeId: custTypeId,
       },
     );
   }
 
-  toCustomerTypeCreatePage() {
-    Get.toNamed(RoutesPath.customerTypeCreate);
+  toCustomerTypeCreatePage({int custTypeId = 0}) {
+    Get.toNamed(RoutesPath.customerTypeCreate, arguments: {
+      PrefConst.keyArgsCusTypeId: custTypeId,
+    });
+  }
+
+  toCustomerTypeLookup({required Function(dynamic) callback}) {
+    Get.toNamed(RoutesPath.customerTypeLookUp)!.then(callback);
   }
 
   toSupplierDetailPage(int suppId) {

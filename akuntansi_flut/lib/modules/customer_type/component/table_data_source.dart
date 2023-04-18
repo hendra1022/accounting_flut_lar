@@ -1,11 +1,12 @@
 import 'dart:developer' as dev;
 
-import 'package:akuntansi_flut/services/model/response/customer_type_list_response.dart';
+import 'package:akuntansi_flut/services/model/response/customer_type_list.dart';
 import 'package:akuntansi_flut/services/repository/customer_type_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../commons/routes/app_navigation.dart';
+import '../../../services/model/customer_type.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 
@@ -32,7 +33,7 @@ class CustomerTypeDataTableSource extends DataTableSource {
       if (reset) {
         customerTypeList.clear();
       }
-      var response = await CustomerTypeRepo().getAllData(page, rowPerPage: rowPerPage, search: search, active: active);
+      var response = await CustomerTypeRepo().getAllDataBy(page, rowPerPage: rowPerPage, search: search, active: active);
       if (response.code == 200) {
         _data = response.data ?? CustomerTypeListResponse();
         customerTypeList.addAll(_data.customerTypeList ?? []);
@@ -100,7 +101,7 @@ class CustomerTypeDataTableSource extends DataTableSource {
                 IconButton(
                   hoverColor: VColor.transparant,
                   onPressed: () {
-                    VNavigation().toCustomerTypeCreatePage();
+                    VNavigation().toCustomerTypeCreatePage(custTypeId: customerTypeList[index].id!);
                   },
                   icon: const Icon(Icons.edit, color: VColor.blue),
                 ),

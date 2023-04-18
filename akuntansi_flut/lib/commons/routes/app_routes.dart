@@ -24,6 +24,7 @@ abstract class RoutesPath {
 
   static const customerTypeDetail = '/customer-type-detail';
   static const customerTypeCreate = '/customer-type-create';
+  static const customerTypeLookUp = '/customer-type-lookup';
 
   static const supplierDetail = '/supplier-detail';
   static const supplierCreate = '/supplier-create';

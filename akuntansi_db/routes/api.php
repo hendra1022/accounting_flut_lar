@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
@@ -14,4 +15,10 @@ Route::controller(CustomerTypeController::class)->group(function () {
     // Route::get('/customer_type/id', 'coba_get');
     Route::get('/customer_type/filter', 'indexByParam');
     Route::resource('customer_type', CustomerTypeController::class);
+});
+
+Route::controller(CustomerController::class)->group(function () {
+    // Route::get('/customer_type/id', 'coba_get');
+    Route::get('/customer/filter', 'indexByParam');
+    Route::resource('customer', CustomerController::class);
 });

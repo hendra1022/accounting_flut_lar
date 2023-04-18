@@ -1,5 +1,6 @@
 import 'package:akuntansi_flut/modules/customer_type/create/customer_type_create.dart';
 import 'package:akuntansi_flut/modules/customer_type/detail/customer_type_detail.dart';
+import 'package:akuntansi_flut/modules/customer_type/lookup/customer_type_lookup.dart';
 import 'package:akuntansi_flut/modules/sales/detail/sales_detail.dart';
 import 'package:akuntansi_flut/modules/supplier/create/supplier_create.dart';
 import 'package:flutter/cupertino.dart';
@@ -124,6 +125,11 @@ class AppPages {
       name: RoutesPath.customerTypeCreate,
       page: () => const CustomerTypeCreatePage(),
       binding: CustomerTypeCreateBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.customerTypeLookUp,
+      page: () => const CustomerTypeLookUpPage(),
+      binding: CustomerTypeLookUpBinding(),
     ),
     GetPage(
       name: RoutesPath.supplierDetail,
