@@ -1,10 +1,10 @@
 import 'package:akuntansi_flut/commons/base_response.dart';
+import 'package:akuntansi_flut/services/model/customer.dart';
+import 'package:akuntansi_flut/services/model/response/customer_list.dart';
 
 import '../api_client.dart';
 import '../api_url.dart';
-import '../model/customer.dart';
 import '../model/request/customer.dart';
-import '../model/response/customer_list.dart';
 
 class CustomerRepo extends ApiClient {
   CustomerRepo._privateConstructor();
@@ -32,7 +32,38 @@ class CustomerRepo extends ApiClient {
     }
   }
 
-  Future<BaseResponse<CustomerListResponse>> getAllData(int page, {int rowPerPage = 25, String search = "", String active = "1"}) async {
+  Future<String> updateData(int id, CustomerRequest request) async {
+    var res = await put(
+      url: "${ApiUrl.customer}/$id",
+      body: request.toJson(),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    if (res!.statusCode == 500) {
+      return "Nama ada yang sama";
+    } else if (res.statusCode == 200) {
+      return "Success";
+    } else {
+      return "Something Wrong, ${res.statusCode}";
+    }
+  }
+
+  Future<String> deleteData(int id) async {
+    var res = await delete(
+      url: "${ApiUrl.customer}/$id",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    if (res!.statusCode == 200) {
+      return "Success";
+    } else {
+      return "Something Wrong, ${res.statusCode}";
+    }
+  }
+
+  Future<BaseResponse<CustomerListResponse>> getAllDataBy(int page, {int rowPerPage = 25, String search = "", String active = "1"}) async {
     var res = await get(
       url: ApiUrl.customerFilter,
       params: {

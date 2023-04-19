@@ -79,8 +79,10 @@ class VNavigation {
     );
   }
 
-  toCustomerCreatePage() {
-    Get.toNamed(RoutesPath.customerCreate);
+  toCustomerCreatePage({int custId = 0}) {
+    Get.toNamed(RoutesPath.customerCreate, arguments: {
+      PrefConst.keyArgsCusId: custId,
+    });
   }
 
   toCustomerTypeDetailPage(int custTypeId) {

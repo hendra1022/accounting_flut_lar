@@ -18,7 +18,6 @@ Route::controller(CustomerTypeController::class)->group(function () {
 });
 
 Route::controller(CustomerController::class)->group(function () {
-    // Route::get('/customer_type/id', 'coba_get');
     Route::get('/customer/filter', 'indexByParam');
     Route::resource('customer', CustomerController::class);
 });

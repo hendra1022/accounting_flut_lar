@@ -1,6 +1,8 @@
+
 import 'package:akuntansi_flut/services/model/customer_type.dart';
 import 'package:akuntansi_flut/services/model/request/customer.dart';
 import 'package:akuntansi_flut/services/repository/customer_repo.dart';
+import 'package:akuntansi_flut/services/repository/customer_type_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -51,6 +53,13 @@ class CustomerCreateController extends BaseController {
       var response = await CustomerRepo().getDataById(cusId);
       if (response.code == 200) {
         customer = response.data ?? Customer();
+
+        var responseCustomerType = await CustomerTypeRepo().getDataById(customer.ctId!);
+        if (responseCustomerType.code == 200) {
+          customerType = responseCustomerType.data ?? CustomerType();
+          fillData();
+          update();
+        }
       }
     } catch (e) {
       print("error : $e");
@@ -60,11 +69,24 @@ class CustomerCreateController extends BaseController {
   void fillData() {
     isActive = customer.active == "1" ? true : false;
     nameTextController.text = customer.name ?? "";
+    addressTextController.text = customer.address ?? "";
+    emailTextController.text = customer.email ?? "";
+    phoneTextController.text = customer.phone ?? "";
+    descTextController.text = customer.description ?? "";
+    custTypeNameController.text = customerType.name ?? "";
   }
 
   void updateIsActive() {
     isActive = !isActive;
     update();
+  }
+
+  Future<void> onSave() async {
+    if (cusId == 0) {
+      await createCustomer();
+    } else {
+      await updateCustomer();
+    }
   }
 
   Future<void> createCustomer() async {
@@ -95,6 +117,56 @@ class CustomerCreateController extends BaseController {
             phone: phoneTextController.text,
             ctId: customerType.id.toString());
         var response = await CustomerRepo().createData(requestBody);
+        if (response == "Success") {
+          ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
+              content: VText(
+            "Success",
+            color: VColor.white,
+          )));
+          Get.back();
+          VNavigation().toCustomerPage();
+        } else {
+          ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+              content: VText(
+            response,
+            color: VColor.white,
+          )));
+          Get.back();
+        }
+      }
+    } catch (e) {
+      VPopup().alertText("Error", "$e");
+    }
+  }
+
+  Future<void> updateCustomer() async {
+    try {
+      VPopup().loading();
+
+      if (customer.id == 0) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
+            content: VText(
+          "All field must be filled!",
+          color: VColor.white,
+        )));
+        Get.back();
+      } else if (num.tryParse(phoneTextController.text) == null) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
+            content: VText(
+          "Phone must be only contain number!",
+          color: VColor.white,
+        )));
+        Get.back();
+      } else {
+        var requestBody = CustomerRequest(
+            name: nameTextController.text,
+            active: isActive ? "1" : "0",
+            address: addressTextController.text,
+            description: descTextController.text,
+            email: emailTextController.text,
+            phone: phoneTextController.text,
+            ctId: customerType.id.toString());
+        var response = await CustomerRepo().updateData(cusId, requestBody);
         if (response == "Success") {
           ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
               content: VText(

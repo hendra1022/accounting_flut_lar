@@ -110,7 +110,7 @@ class Header extends StatelessWidget {
                     color: VColor.white,
                   ),
                   onPressed: () async {
-                    await controller.createCustomer();
+                    await controller.onSave();
                   },
                 ),
               ),

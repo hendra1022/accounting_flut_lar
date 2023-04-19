@@ -81,7 +81,7 @@ class CustomerController extends Controller
     {
     }
 
-    public function update(UpdateCustomerRequest $request, Customer $data)
+    public function update(UpdateCustomerRequest $request, $id)
     {
         try {
             $request->validate([
@@ -89,6 +89,7 @@ class CustomerController extends Controller
                 'active' => 'required',
             ]);
 
+            $data = Customer::findOrFail($id);
             $data->update($request->all());
         } catch (Exception $e) {
             return response()->json([
@@ -103,10 +104,10 @@ class CustomerController extends Controller
         ], JsonResponse::HTTP_OK);
     }
 
-    public function destroy(Customer $data)
+    public function destroy($id)
     {
         try {
-            $data->delete();
+            $data = Customer::findOrFail($id)->delete();
         } catch (Exception $e) {
             return response()->json([
                 'result' => [],
@@ -123,24 +124,28 @@ class CustomerController extends Controller
     public function indexByParam(Request $request)
     {
         try {
+            $data = DB::table('customers')->select();
+
             $isActive = $request->is_active;
+            if ($isActive == "1" || $isActive == "0") {
+                $data = $data->where("active", "=", $isActive);
+            }
+
+            $search = $request->search;
+            if ($search != null) {
+                $data = $data->where("name", "like", "%{$search}%");
+            }
 
             $rowPerPage = $request->row_per_page;
             if ($rowPerPage == null) {
                 $rowPerPage = 10;
+                $data = $data->paginate($rowPerPage);
+            } else if ($rowPerPage == "0") {
+                $data = $data->get();
+                $data = (['data' => $data]);
+            } else {
+                $data = $data->paginate($rowPerPage);
             }
-
-            $search = $request->search;
-
-            // $data = Customer::latest()->paginate($rowPerPage);
-            $data = DB::table('customer')->select();
-            if ($isActive == "1" || $isActive == "0") {
-                $data = $data->where("active", "=", $isActive);
-            }
-            if ($search != null) {
-                $data = $data->where("name", "like", "%{$search}%");
-            }
-            $data = $data->paginate($rowPerPage);
 
             return response()->json([
                 'result' => $data,

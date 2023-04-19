@@ -127,14 +127,18 @@ class Header extends StatelessWidget {
                     },
                   ),
                   const SizedBox(width: marginMedium),
-                  VButton(
-                    "Delete",
-                    buttonColor: VColor.red,
-                    leftIcon: const Icon(
-                      Icons.delete,
-                      color: VColor.white,
+                  GetBuilder<CustomerDetailController>(
+                    builder: (controller) => VButton(
+                      "Delete",
+                      buttonColor: VColor.red,
+                      leftIcon: const Icon(
+                        Icons.delete,
+                        color: VColor.white,
+                      ),
+                      onPressed: () {
+                        controller.deleteData();
+                      },
                     ),
-                    onPressed: () {},
                   ),
                 ],
               )
@@ -182,22 +186,22 @@ class DetailItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Column(
-              children: [
-                detailField("Code", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Name", "Item Name"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Address", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Email", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Phone", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Customer Type", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Description", "Code Item"),
-              ],
+            child: GetBuilder<CustomerDetailController>(
+              builder: (controller) => Column(
+                children: [
+                  detailField("Name", controller.customer.name ?? ""),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Address", controller.customer.address ?? ""),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Email", controller.customer.email ?? ""),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Phone", controller.customer.phone ?? ""),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Customer Type", controller.customerType.name ?? ""),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Description", controller.customer.description ?? ""),
+                ],
+              ),
             ),
           ),
           const SizedBox(
