@@ -34,13 +34,13 @@ class CustomerTypePage extends StatelessWidget {
           const SizedBox(
             height: marginSmall,
           ),
+          const Filter(),
+          const SizedBox(
+            height: marginMedium,
+          ),
           Expanded(
             child: ListView(
               children: const [
-                Filter(),
-                SizedBox(
-                  height: marginMedium,
-                ),
                 CustomerTypeTable(),
               ],
             ),
@@ -124,6 +124,7 @@ class Filter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       decoration: const BoxDecoration(color: VColor.white),
       padding: const EdgeInsets.all(marginMedium),
       child: Wrap(

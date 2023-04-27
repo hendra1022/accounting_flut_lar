@@ -17,31 +17,45 @@ class VNavigation {
   }
 
   toItemPage() {
-    Get.offNamedUntil(RoutesPath.item, (route) => route.settings.name == RoutesPath.dashboard);
+    if (Get.currentRoute != RoutesPath.item) {
+      Get.offNamedUntil(RoutesPath.item, (route) => route.settings.name == RoutesPath.dashboard);
+    }
   }
 
   toItemCategoryPage() {
-    Get.offNamedUntil(RoutesPath.itemCategory, (route) => route.settings.name == RoutesPath.dashboard);
+    if (Get.currentRoute != RoutesPath.itemCategory) {
+      Get.offNamedUntil(RoutesPath.itemCategory, (route) => route.settings.name == RoutesPath.dashboard);
+    }
   }
 
   toSupplierPage() {
-    Get.offNamedUntil(RoutesPath.supplier, (route) => route.settings.name == RoutesPath.dashboard);
+    if (Get.currentRoute != RoutesPath.supplier) {
+      Get.offNamedUntil(RoutesPath.supplier, (route) => route.settings.name == RoutesPath.dashboard);
+    }
   }
 
   toCustomerPage() {
-    Get.offNamedUntil(RoutesPath.customer, (route) => route.settings.name == RoutesPath.dashboard);
+    if (Get.currentRoute != RoutesPath.customer) {
+      Get.offNamedUntil(RoutesPath.customer, (route) => route.settings.name == RoutesPath.dashboard);
+    }
   }
 
   toCustomerTypePage() {
-    Get.offNamedUntil(RoutesPath.customerType, (route) => route.settings.name == RoutesPath.dashboard);
+    if (Get.currentRoute != RoutesPath.customerType) {
+      Get.offNamedUntil(RoutesPath.customerType, (route) => route.settings.name == RoutesPath.dashboard);
+    }
   }
 
   toPurchasePage() {
-    Get.offNamedUntil(RoutesPath.purchase, (route) => route.settings.name == RoutesPath.dashboard);
+    if (Get.currentRoute != RoutesPath.purchase) {
+      Get.offNamedUntil(RoutesPath.purchase, (route) => route.settings.name == RoutesPath.dashboard);
+    }
   }
 
   toSalesPage() {
-    Get.offNamedUntil(RoutesPath.sales, (route) => route.settings.name == RoutesPath.dashboard);
+    if (Get.currentRoute != RoutesPath.sales) {
+      Get.offNamedUntil(RoutesPath.sales, (route) => route.settings.name == RoutesPath.dashboard);
+    }
   }
 
   toItemDetailPage(int itemId) {
@@ -113,8 +127,10 @@ class VNavigation {
     );
   }
 
-  toSupplierCreatePage() {
-    Get.toNamed(RoutesPath.supplierCreate);
+  toSupplierCreatePage({int suppId = 0}) {
+    Get.toNamed(RoutesPath.supplierCreate, arguments: {
+      PrefConst.keyArgsSupId: suppId,
+    });
   }
 
   toPurchaseDetailPage(int purcId) {

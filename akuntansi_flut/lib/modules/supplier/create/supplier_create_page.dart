@@ -27,12 +27,16 @@ class SupplierCreatePage extends StatelessWidget {
         children: [
           const Header(),
           const SizedBox(height: marginSmall),
-          Expanded(
-            child: ListView(
-              children: const [
-                InputForm(),
-              ],
-            ),
+          GetBuilder<SupplierCreateController>(
+            builder: (controller) => controller.isLoading
+                ? const VLoadingPage()
+                : Expanded(
+                    child: ListView(
+                      children: const [
+                        InputForm(),
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),
@@ -151,8 +155,6 @@ class InputForm extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    inputField(controller.codeTextController, "Code"),
-                    const SizedBox(height: marginMedium),
                     inputField(controller.nameTextController, "Name"),
                     const SizedBox(height: marginMedium),
                     inputField(controller.addressTextController, "Address"),

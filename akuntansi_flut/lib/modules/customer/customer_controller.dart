@@ -16,11 +16,11 @@ class CustomerController extends BaseController {
   ];
 
   // filter by name
-  String selectedFilterBy = 'Code';
+  String selectedFilterBy = 'Name';
   final TextEditingController itemSearchController = TextEditingController();
   final List<String> filterByItems = [
-    'Code',
     'Name',
+    'Code',
   ];
 
   // table

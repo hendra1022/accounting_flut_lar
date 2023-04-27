@@ -28,12 +28,16 @@ class CustomerCreatePage extends StatelessWidget {
         children: [
           const Header(),
           const SizedBox(height: marginSmall),
-          Expanded(
-            child: ListView(
-              children: const [
-                InputForm(),
-              ],
-            ),
+          GetBuilder<CustomerCreateController>(
+            builder: (controller) => controller.isLoading
+                ? const VLoadingPage()
+                : Expanded(
+                    child: ListView(
+                      children: const [
+                        InputForm(),
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),

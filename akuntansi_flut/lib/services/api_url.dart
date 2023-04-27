@@ -11,4 +11,7 @@ class ApiUrl {
 
   static const customer = "${baseUrl}customer";
   static const customerFilter = "$customer/filter";
+
+  static const supplier = "${baseUrl}supplier";
+  static const supplierFilter = "$supplier/filter";
 }

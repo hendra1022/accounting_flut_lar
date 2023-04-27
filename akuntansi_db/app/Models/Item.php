@@ -12,7 +12,7 @@ class Item extends Model
     protected $fillable = [
         'name',
         'phone',
-        'is_active',
+        'active',
         'have_child',
         'parent_id',
     ];

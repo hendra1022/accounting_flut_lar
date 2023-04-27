@@ -28,12 +28,16 @@ class SupplierDetailPage extends StatelessWidget {
         children: [
           const Header(),
           const SizedBox(height: marginSmall),
-          Expanded(
-            child: ListView(
-              children: const [
-                DetailItem(),
-              ],
-            ),
+          GetBuilder<SupplierDetailController>(
+            builder: (controller) => controller.isLoading
+                ? const VLoadingPage()
+                : Expanded(
+                    child: ListView(
+                      children: const [
+                        DetailItem(),
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),
@@ -182,22 +186,20 @@ class DetailItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Column(
-              children: [
-                detailField("Code", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Name", "Item Name"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Address", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Email", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Phone", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Supplier Type", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Description", "Code Item"),
-              ],
+            child: GetBuilder<SupplierDetailController>(
+              builder: (controller) => Column(
+                children: [
+                  detailField("Name", controller.supplier.name ?? "-"),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Address", controller.supplier.address ?? "-"),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Email", controller.supplier.email ?? "-"),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Phone", controller.supplier.phone ?? "-"),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Description", controller.supplier.description ?? "-"),
+                ],
+              ),
             ),
           ),
           const SizedBox(

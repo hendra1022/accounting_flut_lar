@@ -32,13 +32,13 @@ class CustomerPage extends StatelessWidget {
           const SizedBox(
             height: marginSmall,
           ),
+          const Filter(),
+          const SizedBox(
+            height: marginMedium,
+          ),
           Expanded(
             child: ListView(
               children: const [
-                Filter(),
-                SizedBox(
-                  height: marginMedium,
-                ),
                 CustomerTable(),
               ],
             ),
@@ -122,6 +122,7 @@ class Filter extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       decoration: const BoxDecoration(color: VColor.white),
       padding: const EdgeInsets.all(marginMedium),
       child: Wrap(
@@ -209,45 +210,45 @@ class Filter extends StatelessWidget {
           child: GetBuilder<CustomerController>(
             builder: (controller) => Row(
               children: [
-                DropdownButton2(
-                  hint: const Padding(
-                    padding: EdgeInsets.only(left: paddingSuperSmall),
-                    child: VText(
-                      'Select Item',
-                      fontSize: textSizeMedium,
-                      color: VColor.grey1,
-                    ),
-                  ),
-                  items: controller.filterByItems
-                      .map(
-                        (item) => DropdownMenuItem<String>(
-                          value: item,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: paddingSuperSmall),
-                            child: VText(
-                              item,
-                              fontSize: textSizeMedium,
-                            ),
-                          ),
-                        ),
-                      )
-                      .toList(),
-                  value: controller.selectedFilterBy,
-                  onChanged: (value) {
-                    controller.selectedFilterBy = value as String;
-                    controller.update();
-                  },
-                  buttonStyleData: const ButtonStyleData(
-                    height: 40,
-                    width: 100,
-                  ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    height: 40,
-                  ),
-                ),
-                const SizedBox(
-                  width: marginSmall,
-                ),
+                // DropdownButton2(
+                //   hint: const Padding(
+                //     padding: EdgeInsets.only(left: paddingSuperSmall),
+                //     child: VText(
+                //       'Select Item',
+                //       fontSize: textSizeMedium,
+                //       color: VColor.grey1,
+                //     ),
+                //   ),
+                //   items: controller.filterByItems
+                //       .map(
+                //         (item) => DropdownMenuItem<String>(
+                //           value: item,
+                //           child: Padding(
+                //             padding: const EdgeInsets.only(left: paddingSuperSmall),
+                //             child: VText(
+                //               item,
+                //               fontSize: textSizeMedium,
+                //             ),
+                //           ),
+                //         ),
+                //       )
+                //       .toList(),
+                //   value: controller.selectedFilterBy,
+                //   onChanged: (value) {
+                //     controller.selectedFilterBy = value as String;
+                //     controller.update();
+                //   },
+                //   buttonStyleData: const ButtonStyleData(
+                //     height: 40,
+                //     width: 100,
+                //   ),
+                //   menuItemStyleData: const MenuItemStyleData(
+                //     height: 40,
+                //   ),
+                // ),
+                // const SizedBox(
+                //   width: marginSmall,
+                // ),
                 SizedBox(
                   width: 250,
                   child: VInputText(
@@ -265,7 +266,9 @@ class Filter extends StatelessWidget {
                     Icons.search,
                     color: VColor.white,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.changePage(1, true);
+                  },
                 )
               ],
             ),

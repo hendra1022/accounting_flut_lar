@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,9 @@ Route::controller(CustomerTypeController::class)->group(function () {
 Route::controller(CustomerController::class)->group(function () {
     Route::get('/customer/filter', 'indexByParam');
     Route::resource('customer', CustomerController::class);
+});
+
+Route::controller(SupplierController::class)->group(function () {
+    Route::get('/supplier/filter', 'indexByParam');
+    Route::resource('supplier', SupplierController::class);
 });

@@ -28,12 +28,16 @@ class CustomerDetailPage extends StatelessWidget {
         children: [
           const Header(),
           const SizedBox(height: marginSmall),
-          Expanded(
-            child: ListView(
-              children: const [
-                DetailItem(),
-              ],
-            ),
+          GetBuilder<CustomerDetailController>(
+            builder: (controller) => controller.isLoading
+                ? const VLoadingPage()
+                : Expanded(
+                    child: ListView(
+                      children: const [
+                        DetailItem(),
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),
@@ -197,7 +201,7 @@ class DetailItem extends StatelessWidget {
                   const SizedBox(height: marginExtraLarge),
                   detailField("Phone", controller.customer.phone ?? ""),
                   const SizedBox(height: marginExtraLarge),
-                  detailField("Customer Type", controller.customerType.name ?? ""),
+                  detailField("Customer Type", controller.customer.ctName ?? ""),
                   const SizedBox(height: marginExtraLarge),
                   detailField("Description", controller.customer.description ?? ""),
                 ],

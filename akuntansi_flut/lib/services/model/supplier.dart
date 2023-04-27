@@ -1,4 +1,4 @@
-class Customer {
+class Supplier {
   int? id;
   String? name;
   String? address;
@@ -7,26 +7,12 @@ class Customer {
   String? phone;
   String? active;
   String? description;
-  int? ctId;
-  String? ctName;
   String? createdAt;
   String? updatedAt;
 
-  Customer(
-      {this.id,
-      this.name,
-      this.address,
-      this.email,
-      this.emailVerifiedAt,
-      this.phone,
-      this.active,
-      this.description,
-      this.ctId,
-      this.ctName,
-      this.createdAt,
-      this.updatedAt});
+  Supplier({this.id, this.name, this.address, this.email, this.emailVerifiedAt, this.phone, this.active, this.description, this.createdAt, this.updatedAt});
 
-  Customer.fromJson(Map<String, dynamic> json) {
+  Supplier.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     address = json['address'];
@@ -35,8 +21,6 @@ class Customer {
     phone = json['phone'];
     active = json['active'];
     description = json['description'];
-    ctId = json['ct_id'];
-    ctName = json['ct_name'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -51,8 +35,6 @@ class Customer {
     data['phone'] = phone;
     data['active'] = active;
     data['description'] = description;
-    data['ct_id'] = ctId;
-    data['ct_name'] = ctName;
     data['created_at'] = createdAt;
     data['updated_at'] = updatedAt;
     return data;

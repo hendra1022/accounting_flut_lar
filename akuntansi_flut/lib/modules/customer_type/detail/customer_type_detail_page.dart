@@ -28,12 +28,16 @@ class CustomerTypeDetailPage extends StatelessWidget {
         children: [
           const Header(),
           const SizedBox(height: marginSmall),
-          Expanded(
-            child: ListView(
-              children: const [
-                DetailItem(),
-              ],
-            ),
+          GetBuilder<CustomerTypeDetailController>(
+            builder: (controller) => controller.isLoading
+                ? const VLoadingPage()
+                : Expanded(
+                    child: ListView(
+                      children: const [
+                        DetailItem(),
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),

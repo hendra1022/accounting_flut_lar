@@ -15,7 +15,9 @@ class CustomerController extends Controller
     public function index()
     {
         try {
-            $data = Customer::latest()->paginate(25);
+            $data = DB::table('customers')->select()->get();
+
+            $data = (['data' => $data]);
 
             return response()->json([
                 'result' => $data,
@@ -64,7 +66,10 @@ class CustomerController extends Controller
     public function show($id)
     {
         try {
-            $data = Customer::findOrFail($id);
+            // $data = Customer::findOrFail($id);
+
+            $data = DB::table('customers as c')->select(['c.*', 'ct.id as ct_id', 'ct.name as ct_name'])
+                ->leftJoin("customer_types as ct", "ct.id", "=", "c.ct_id")->where("c.id", "=", $id)->get()->first();
             return response()->json([
                 'result' => $data,
                 'message' => 'Succeed'
