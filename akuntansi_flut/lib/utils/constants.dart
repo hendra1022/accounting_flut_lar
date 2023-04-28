@@ -12,7 +12,7 @@ class PrefConst {
   static const String keyArgsIsCreate = 'is_create';
 
   static const String keyArgsItemId = 'item_id';
-  static const String keyArgsCatId = 'cat_id';
+  static const String keyArgsItemCatId = 'item_cat_id';
   static const String keyArgsCusId = 'cus_id';
   static const String keyArgsCusTypeId = 'cus_type_id';
   static const String keyArgsSupId = 'sup_id';

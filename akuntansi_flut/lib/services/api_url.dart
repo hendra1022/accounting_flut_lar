@@ -14,4 +14,10 @@ class ApiUrl {
 
   static const supplier = "${baseUrl}supplier";
   static const supplierFilter = "$supplier/filter";
+
+  static const itemCategory = "${baseUrl}item_category";
+  static const itemCategoryFilter = "$itemCategory/filter";
+
+  static const item = "${baseUrl}item";
+  static const itemFilter = "$item/filter";
 }

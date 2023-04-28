@@ -119,16 +119,18 @@ class Header extends StatelessWidget {
                     },
                   ),
                   const SizedBox(width: marginMedium),
-                  VButton(
-                    "Update",
-                    buttonColor: VColor.secondary,
-                    leftIcon: const Icon(
-                      Icons.edit,
-                      color: VColor.white,
+                  GetBuilder<SupplierDetailController>(
+                    builder: (controller) => VButton(
+                      "Update",
+                      buttonColor: VColor.secondary,
+                      leftIcon: const Icon(
+                        Icons.edit,
+                        color: VColor.white,
+                      ),
+                      onPressed: () {
+                        VNavigation().toSupplierCreatePage(suppId: controller.suppId);
+                      },
                     ),
-                    onPressed: () {
-                      VNavigation().toSupplierCreatePage();
-                    },
                   ),
                   const SizedBox(width: marginMedium),
                   VButton(

@@ -1,23 +1,23 @@
 import 'package:akuntansi_flut/commons/base_response.dart';
-import 'package:akuntansi_flut/services/model/customer_type.dart';
-import 'package:akuntansi_flut/services/model/request/customer_type.dart';
+import 'package:akuntansi_flut/services/model/item.dart';
+import 'package:akuntansi_flut/services/model/request/item.dart';
 
 import '../api_client.dart';
 import '../api_url.dart';
-import '../model/response/customer_type_list.dart';
+import '../model/response/item_list.dart';
 
-class CustomerTypeRepo extends ApiClient {
-  CustomerTypeRepo._privateConstructor();
+class ItemRepo extends ApiClient {
+  ItemRepo._privateConstructor();
 
-  static final CustomerTypeRepo instance = CustomerTypeRepo._privateConstructor();
+  static final ItemRepo instance = ItemRepo._privateConstructor();
 
-  factory CustomerTypeRepo() {
+  factory ItemRepo() {
     return instance;
   }
 
-  Future<String> createData(CustomerTypeRequest request) async {
+  Future<String> createData(ItemRequest request) async {
     var res = await post(
-      url: ApiUrl.customerType,
+      url: ApiUrl.item,
       body: request.toJson(),
       headers: {
         'Content-Type': 'application/json',
@@ -32,9 +32,9 @@ class CustomerTypeRepo extends ApiClient {
     }
   }
 
-  Future<String> updateData(int id, CustomerTypeRequest request) async {
+  Future<String> updateData(int id, ItemRequest request) async {
     var res = await put(
-      url: "${ApiUrl.customerType}/$id",
+      url: "${ApiUrl.item}/$id",
       body: request.toJson(),
       headers: {
         'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ class CustomerTypeRepo extends ApiClient {
 
   Future<String> deleteData(int id) async {
     var res = await delete(
-      url: "${ApiUrl.customerType}/$id",
+      url: "${ApiUrl.item}/$id",
       headers: {
         'Content-Type': 'application/json',
       },
@@ -63,31 +63,32 @@ class CustomerTypeRepo extends ApiClient {
     }
   }
 
-  Future<BaseResponse<CustomerTypeListResponse>> getAllDataBy(int page, {int rowPerPage = 25, String search = "", String active = "1"}) async {
+  Future<BaseResponse<ItemListResponse>> getAllDataBy(int page, {int rowPerPage = 25, String search = "", String active = "1", int itemCatId = 0}) async {
     var res = await get(
-      url: ApiUrl.customerTypeFilter,
+      url: ApiUrl.itemFilter,
       params: {
         "page": "$page",
         "row_per_page": "$rowPerPage",
         "search": search,
-        "active": active,
+        "is_active": active,
+        "item_cat_id": "$itemCatId",
       },
       headers: {
         'Content-Type': 'application/json',
       },
     );
     var json = responseHandler(res);
-    return BaseResponse.fromJsonMap(json, (data) => CustomerTypeListResponse.fromJson(data));
+    return BaseResponse.fromJsonMap(json, (data) => ItemListResponse.fromJson(data));
   }
 
-  Future<BaseResponse<CustomerType>> getDataById(int id) async {
+  Future<BaseResponse<Item>> getDataById(int id) async {
     var res = await get(
-      url: "${ApiUrl.customerType}/$id",
+      url: "${ApiUrl.item}/$id",
       headers: {
         'Content-Type': 'application/json',
       },
     );
     var json = responseHandler(res);
-    return BaseResponse.fromJsonMap(json, (data) => CustomerType.fromJson(data));
+    return BaseResponse.fromJsonMap(json, (data) => Item.fromJson(data));
   }
 }

@@ -67,21 +67,25 @@ class VNavigation {
     );
   }
 
-  toItemCreatePage() {
-    Get.toNamed(RoutesPath.itemCreate);
+  toItemCreatePage({int itemId = 0}) {
+    Get.toNamed(RoutesPath.itemCreate, arguments: {
+      PrefConst.keyArgsItemId: itemId,
+    });
   }
 
   toItemCategoryDetailPage(int itemId) {
     Get.toNamed(
       RoutesPath.itemCategoryDetail,
       arguments: {
-        PrefConst.keyArgsCatId: itemId,
+        PrefConst.keyArgsItemCatId: itemId,
       },
     );
   }
 
-  toItemCategoryCreatePage() {
-    Get.toNamed(RoutesPath.itemCategoryCreate);
+  toItemCategoryCreatePage({int itemCat = 0}) {
+    Get.toNamed(RoutesPath.itemCategoryCreate, arguments: {
+      PrefConst.keyArgsItemCatId: itemCat,
+    });
   }
 
   toCustomerDetailPage(int custId) {

@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
+use App\Http\Controllers\ItemCategoryController;
+use App\Http\Controllers\ItemController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
@@ -26,4 +28,14 @@ Route::controller(CustomerController::class)->group(function () {
 Route::controller(SupplierController::class)->group(function () {
     Route::get('/supplier/filter', 'indexByParam');
     Route::resource('supplier', SupplierController::class);
+});
+
+Route::controller(ItemCategoryController::class)->group(function () {
+    Route::get('/item_category/filter', 'indexByParam');
+    Route::resource('item_category', ItemCategoryController::class);
+});
+
+Route::controller(ItemController::class)->group(function () {
+    Route::get('/item/filter', 'indexByParam');
+    Route::resource('item', ItemController::class);
 });

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->string('phone');
             $table->string('active', 1)->default("1");
             $table->string('have_child')->default("0");
-            $table->bigInteger('parent_id');
+            $table->bigInteger('parent_id')->default("0");
+            $table->bigInteger('ic_id');
             $table->timestamps();
         });
     }

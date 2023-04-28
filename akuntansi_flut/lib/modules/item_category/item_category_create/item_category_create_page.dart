@@ -27,12 +27,16 @@ class ItemCategoryCreatePage extends StatelessWidget {
         children: [
           const Header(),
           const SizedBox(height: marginSmall),
-          Expanded(
-            child: ListView(
-              children: const [
-                InputForm(),
-              ],
-            ),
+          GetBuilder<ItemCategoryCreateController>(
+            builder: (controller) => controller.isLoading
+                ? const VLoadingPage()
+                : Expanded(
+                    child: ListView(
+                      children: const [
+                        InputForm(),
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),
@@ -111,7 +115,7 @@ class Header extends StatelessWidget {
                         color: VColor.white,
                       ),
                       onPressed: () async {
-                        controller.createItemCategory();
+                        controller.onSave();
                       },
                     ),
                   ),
@@ -155,9 +159,7 @@ class InputForm extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    inputField(controller.codeController, "Code"),
-                    const SizedBox(height: marginMedium),
-                    inputField(controller.nameController, "Name"),
+                    inputField(controller.nameTextController, "Name"),
                     const SizedBox(height: marginExtraLarge),
                     active(),
                   ],
@@ -239,7 +241,7 @@ class InputForm extends StatelessWidget {
                   builder: (controller) => VCheckbox(
                     isChecked: controller.isActive,
                     onChanged: (value) {
-                      controller.updateActive();
+                      controller.updateIsActive();
                     },
                   ),
                 ),

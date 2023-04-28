@@ -11,5 +11,6 @@ class CustomerType extends Model
 
     protected $fillable = [
         'name',
+        'active',
     ];
 }

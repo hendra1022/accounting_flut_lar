@@ -15,5 +15,6 @@ class Item extends Model
         'active',
         'have_child',
         'parent_id',
+        'ic_id',
     ];
 }

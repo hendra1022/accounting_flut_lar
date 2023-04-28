@@ -67,9 +67,9 @@ class CustomerController extends Controller
     {
         try {
             // $data = Customer::findOrFail($id);
-
             $data = DB::table('customers as c')->select(['c.*', 'ct.id as ct_id', 'ct.name as ct_name'])
                 ->leftJoin("customer_types as ct", "ct.id", "=", "c.ct_id")->where("c.id", "=", $id)->get()->first();
+
             return response()->json([
                 'result' => $data,
                 'message' => 'Succeed'
