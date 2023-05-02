@@ -31,16 +31,20 @@ class ItemCreatePage extends StatelessWidget {
           const SizedBox(
             height: marginSmall,
           ),
-          Expanded(
-            child: ListView(
-              children: [
-                _inputForm(),
-                const SizedBox(height: marginExtraLarge),
-                GetBuilder<ItemCreateController>(
-                  builder: (controller) => Visibility(visible: controller.isHaveVariant, child: const VariantForm()),
-                ),
-              ],
-            ),
+          GetBuilder<ItemCreateController>(
+            builder: (controller) => controller.isLoading
+                ? const VLoadingPage()
+                : Expanded(
+                    child: ListView(
+                      children: [
+                        _inputForm(),
+                        // const SizedBox(height: marginExtraLarge),
+                        // GetBuilder<ItemCreateController>(
+                        //   builder: (controller) => Visibility(visible: controller.isHaveVariant, child: const VariantForm()),
+                        // ),
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),
@@ -221,47 +225,25 @@ class ItemCreatePage extends StatelessWidget {
                   children: [
                     inputField(controller.nameTextController, "Name"),
                     const SizedBox(height: marginMedium),
-                    Visibility(
-                      visible: !controller.isHaveVariant,
-                      child: Column(
-                        children: [
-                          inputField(controller.nameTextController, "Code"),
-                          const SizedBox(height: marginMedium),
-                          inputField(controller.hppTextController, "HPP"),
-                          const SizedBox(height: marginExtraLarge),
-                        ],
-                      ),
-                    ),
                     inputPicker(
                       "Item Category",
-                      controller.isCategoryPicked,
+                      controller.itemCategory.id == null ? false : true,
                       controller.categoryTextController,
                       onPressed: () {
-                        controller.isCategoryPicked = !controller.isCategoryPicked;
-                        controller.update();
+                        VNavigation().toItemCategoryLookup(
+                          callback: (p0) {
+                            if (p0 != null) {
+                              if (p0[PrefConst.keyArgsItemCat] != null) {
+                                controller.itemCategory = p0[PrefConst.keyArgsItemCat];
+                                controller.categoryTextController.text = controller.itemCategory.name ?? "";
+                                controller.update();
+                              }
+                            }
+                          },
+                        );
                       },
                     ),
                     const SizedBox(height: marginExtraLarge),
-                    // inputPicker(
-                    //   "Customer Tax",
-                    //   controller.isCustoemrTaxPicked,
-                    //   controller.customerTaxTextController,
-                    //   onPressed: () {
-                    //     controller.isCustoemrTaxPicked = !controller.isCustoemrTaxPicked;
-                    //     controller.update();
-                    //   },
-                    // ),
-                    // const SizedBox(height: marginMedium),
-                    // inputPicker(
-                    //   "Supplier Tax",
-                    //   controller.isSupplierTaxPicked,
-                    //   controller.supplierTaxTextController,
-                    //   onPressed: () {
-                    //     controller.isSupplierTaxPicked = !controller.isSupplierTaxPicked;
-                    //     controller.update();
-                    //   },
-                    // ),
-                    // const SizedBox(height: marginExtraLarge),
                     haveVariant(),
                   ],
                 ),
@@ -486,18 +468,6 @@ class AddNewItemForm extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-          const SizedBox(
-            height: marginSmall,
-          ),
-          GetBuilder<ItemCreateController>(
-            builder: (controller) => inputField(controller.codeTextController, "Code"),
-          ),
-          const SizedBox(
-            height: marginSmall,
-          ),
-          GetBuilder<ItemCreateController>(
-            builder: (controller) => qtyField(controller.hppTextController, "HPP"),
           ),
           const SizedBox(
             height: marginLarge,

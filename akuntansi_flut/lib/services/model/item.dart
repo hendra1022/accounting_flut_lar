@@ -2,7 +2,6 @@ class Item {
   int? id;
   String? name;
   String? emailVerifiedAt;
-  String? phone;
   String? active;
   String? haveChild;
   int? parentId;
@@ -11,24 +10,12 @@ class Item {
   String? createdAt;
   String? updatedAt;
 
-  Item(
-      {this.id,
-      this.name,
-      this.emailVerifiedAt,
-      this.phone,
-      this.active,
-      this.haveChild,
-      this.parentId,
-      this.icId,
-      this.icName,
-      this.createdAt,
-      this.updatedAt});
+  Item({this.id, this.name, this.emailVerifiedAt, this.active, this.haveChild, this.parentId, this.icId, this.icName, this.createdAt, this.updatedAt});
 
   Item.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     emailVerifiedAt = json['email_verified_at'];
-    phone = json['phone'];
     active = json['active'];
     haveChild = json['have_child'];
     parentId = json['parent_id'];
@@ -43,7 +30,6 @@ class Item {
     data['id'] = id;
     data['name'] = name;
     data['email_verified_at'] = emailVerifiedAt;
-    data['phone'] = phone;
     data['active'] = active;
     data['have_child'] = haveChild;
     data['parent_id'] = parentId;

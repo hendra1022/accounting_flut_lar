@@ -88,6 +88,10 @@ class VNavigation {
     });
   }
 
+  toItemCategoryLookup({required Function(dynamic) callback}) {
+    Get.toNamed(RoutesPath.itemCategoryLookUp)!.then(callback);
+  }
+
   toCustomerDetailPage(int custId) {
     Get.toNamed(
       RoutesPath.customerDetail,

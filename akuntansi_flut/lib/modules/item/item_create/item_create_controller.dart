@@ -1,68 +1,35 @@
-import 'dart:math';
-
+import 'package:akuntansi_flut/services/model/item.dart';
+import 'package:akuntansi_flut/services/model/item_category.dart';
+import 'package:akuntansi_flut/services/model/request/item.dart';
+import 'package:akuntansi_flut/services/repository/item_category_repo.dart';
+import 'package:akuntansi_flut/services/repository/item_repo.dart';
 import 'package:akuntansi_flut/utils/constants.dart';
 import 'package:akuntansi_flut/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../commons/base_controller.dart';
-import '../../../services/model/item_model.dart';
+import '../../../commons/routes/app_navigation.dart';
 import '../../../utils/v_color.dart';
+import '../../../utils/widgets/v_popup.dart';
 import '../../../utils/widgets/v_widgets.dart';
 
 class ItemCreateController extends BaseController {
   final formKey = GlobalKey<FormState>();
 
-  TextEditingController codeTextController = TextEditingController();
   TextEditingController nameTextController = TextEditingController();
-  TextEditingController hppTextController = TextEditingController();
   TextEditingController categoryTextController = TextEditingController();
-  TextEditingController customerTaxTextController = TextEditingController();
-  TextEditingController supplierTaxTextController = TextEditingController();
 
   bool isHaveVariant = false;
-  bool isCategoryPicked = false;
-  bool isCustoemrTaxPicked = false;
-  bool isSupplierTaxPicked = false;
   bool isActive = true;
   bool isFormShow = false;
 
+  int itemId = 0;
+  Item item = Item();
+  ItemCategory itemCategory = ItemCategory();
+
+  List<Item> variantList = List<Item>.empty(growable: true);
   List<DataRow> dataRow = List<DataRow>.empty(growable: true);
-  final List<ItemModel> itemList = List.generate(
-    2,
-    (index) => ItemModel(
-      id: index.toString(),
-      code: index.toString(),
-      name: "item $index",
-      categoryId: "1",
-      categoryName: "Demo",
-      active: "1",
-      minPrice: "${Random().nextInt(50000)}",
-      price: "${Random().nextInt(50000)}",
-      createdDate: "2023-01-01",
-      updatedDate: "2023-01-01",
-    ),
-  );
-
-  @override
-  Future<void> onInit() async {
-    isLoading = true;
-    await Future.delayed(const Duration(seconds: 1));
-    await initLocalData();
-    isLoading = false;
-    update();
-    super.onInit();
-  }
-
-  Future<void> initLocalData() async {
-    for (var i = 0; i < itemList.length; i++) {
-      dataRow.add(getRow(i));
-    }
-  }
-
-  Future<void> onSave() async {
-    Get.back();
-  }
 
   void updateIsHaveVariant() {
     isHaveVariant = !isHaveVariant;
@@ -101,10 +68,8 @@ class ItemCreateController extends BaseController {
     return DataRow(
       color: index % 2 == 1 ? MaterialStateColor.resolveWith((states) => VColor.grey4Opacity) : MaterialStateColor.resolveWith((states) => VColor.transparant),
       cells: [
-        dataCell(itemList[index].code, Get.width * (4 / 100)),
-        dataCell(itemList[index].name, Get.width * (24 / 100)),
-        dataCell(itemList[index].minPrice, Get.width * (6 / 100), isMoney: true),
-        dataCell(itemList[index].price, Get.width * (4 / 100), isMoney: true),
+        dataCell(variantList[index].id.toString(), Get.width * (4 / 100)),
+        dataCell(variantList[index].name, Get.width * (24 / 100)),
         DataCell(
           Container(
             padding: const EdgeInsets.only(right: 5),
@@ -112,7 +77,7 @@ class ItemCreateController extends BaseController {
               minWidth: Get.width * (5 / 100),
             ),
             child: Checkbox(
-              value: itemList[index].active == "1" ? true : false,
+              value: variantList[index].active == "1" ? true : false,
               onChanged: (value) => {},
             ),
           ),
@@ -136,5 +101,136 @@ class ItemCreateController extends BaseController {
         ),
       ],
     );
+  }
+
+  @override
+  Future<void> onInit() async {
+    isLoading = true;
+    getArgumentData();
+    if (itemId != 0) {
+      await getData();
+    }
+    isLoading = false;
+    update();
+
+    super.onInit();
+  }
+
+  void getArgumentData() {
+    if (argumentData[PrefConst.keyArgsItemId] != null) {
+      itemId = argumentData[PrefConst.keyArgsItemId];
+    }
+  }
+
+  Future<void> getData() async {
+    try {
+      var response = await ItemRepo().getDataById(itemId);
+      if (response.code == 200) {
+        item = response.data ?? Item();
+        var responseItemCat = await ItemCategoryRepo().getDataById(item.icId!);
+        itemCategory = responseItemCat.data ?? ItemCategory();
+        fillData();
+      }
+    } catch (e) {
+      print("error : $e");
+    }
+  }
+
+  void fillData() {
+    isActive = item.active == "1" ? true : false;
+    nameTextController.text = item.name ?? "";
+    categoryTextController.text = item.icName ?? "";
+  }
+
+  Future<void> onSave() async {
+    if (itemId == 0) {
+      await createItem();
+    } else {
+      await updateItem();
+    }
+  }
+
+  Future<void> createItem() async {
+    try {
+      VPopup().loading();
+
+      if (itemCategory.id == 0 || itemCategory.id == null) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
+            content: VText(
+          "All field must be filled!",
+          color: VColor.white,
+        )));
+        Get.back();
+      } else {
+        var requestBody = ItemRequest(
+          name: nameTextController.text,
+          active: isActive ? "1" : "0",
+          haveChild: isHaveVariant ? "1" : "0",
+          parentId: "0",
+          icId: (itemCategory.id!).toString(),
+        );
+        var response = await ItemRepo().createData(requestBody);
+        if (response == "Success") {
+          ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
+              content: VText(
+            "Success",
+            color: VColor.white,
+          )));
+          Get.back();
+          VNavigation().toItemPage();
+        } else {
+          ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+              content: VText(
+            response,
+            color: VColor.white,
+          )));
+          Get.back();
+        }
+      }
+    } catch (e) {
+      VPopup().alertText("Error", "$e");
+    }
+  }
+
+  Future<void> updateItem() async {
+    try {
+      VPopup().loading();
+
+      if (itemCategory.id == 0) {
+        ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
+            content: VText(
+          "All field must be filled!",
+          color: VColor.white,
+        )));
+        Get.back();
+      } else {
+        var requestBody = ItemRequest(
+          name: nameTextController.text,
+          active: isActive ? "1" : "0",
+          haveChild: isHaveVariant ? "1" : "0",
+          parentId: "0",
+          icId: (itemCategory.id ?? 0).toString(),
+        );
+        var response = await ItemRepo().updateData(itemId, requestBody);
+        if (response == "Success") {
+          ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
+              content: VText(
+            "Success",
+            color: VColor.white,
+          )));
+          Get.back();
+          VNavigation().toItemPage();
+        } else {
+          ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+              content: VText(
+            response,
+            color: VColor.white,
+          )));
+          Get.back();
+        }
+      }
+    } catch (e) {
+      VPopup().alertText("Error", "$e");
+    }
   }
 }

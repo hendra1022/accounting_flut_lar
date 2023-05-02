@@ -63,7 +63,13 @@ class ItemRepo extends ApiClient {
     }
   }
 
-  Future<BaseResponse<ItemListResponse>> getAllDataBy(int page, {int rowPerPage = 25, String search = "", String active = "1", int itemCatId = 0}) async {
+  Future<BaseResponse<ItemListResponse>> getAllDataBy(
+    int page, {
+    int rowPerPage = 25,
+    String search = "",
+    String active = "1",
+    int itemCatId = 0,
+  }) async {
     var res = await get(
       url: ApiUrl.itemFilter,
       params: {

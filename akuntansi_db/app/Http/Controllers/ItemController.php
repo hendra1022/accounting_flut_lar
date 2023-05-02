@@ -41,7 +41,6 @@ class ItemController extends Controller
         try {
             $request->validate([
                 'name' => 'required',
-                'active' => 'required',
                 'ic_id' => 'required',
             ]);
 

@@ -1,4 +1,3 @@
-
 import 'package:akuntansi_flut/services/model/customer_type.dart';
 import 'package:akuntansi_flut/services/model/request/customer.dart';
 import 'package:akuntansi_flut/services/repository/customer_repo.dart';
@@ -93,14 +92,7 @@ class CustomerCreateController extends BaseController {
     try {
       VPopup().loading();
 
-      if (customer.id == 0) {
-        ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
-            content: VText(
-          "All field must be filled!",
-          color: VColor.white,
-        )));
-        Get.back();
-      } else if (num.tryParse(phoneTextController.text) == null) {
+      if (num.tryParse(phoneTextController.text) == null) {
         ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
             content: VText(
           "Phone must be only contain number!",
@@ -143,14 +135,7 @@ class CustomerCreateController extends BaseController {
     try {
       VPopup().loading();
 
-      if (customer.id == 0) {
-        ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
-            content: VText(
-          "All field must be filled!",
-          color: VColor.white,
-        )));
-        Get.back();
-      } else if (num.tryParse(phoneTextController.text) == null) {
+      if (num.tryParse(phoneTextController.text) == null) {
         ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
             content: VText(
           "Phone must be only contain number!",
