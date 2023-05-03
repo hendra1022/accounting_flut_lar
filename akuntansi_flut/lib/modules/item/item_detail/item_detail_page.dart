@@ -26,23 +26,32 @@ class ItemDetailPage extends StatelessWidget {
       padding: const EdgeInsets.all(paddingSmall),
       child: Column(
         children: [
-          _header(),
+          const Header(),
           const SizedBox(
             height: marginSmall,
           ),
-          Expanded(
-            child: ListView(
-              children: [
-                _detailItem(),
-              ],
-            ),
+          GetBuilder<ItemDetailController>(
+            builder: (controller) => controller.isLoading
+                ? const VLoadingPage()
+                : Expanded(
+                    child: ListView(
+                      children: const [
+                        DetailItem(),
+                      ],
+                    ),
+                  ),
           ),
         ],
       ),
     );
   }
+}
 
-  Widget _header() {
+class Header extends StatelessWidget {
+  const Header({super.key});
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.all(Radius.circular(radiusMedium))),
@@ -80,10 +89,12 @@ class ItemDetailPage extends StatelessWidget {
               const SizedBox(
                 height: marginSuperSmall,
               ),
-              const VText(
-                "Master Item View - Item 0",
-                fontSize: textSizeLarge,
-                color: VColor.white,
+              GetBuilder<ItemDetailController>(
+                builder: (controller) => VText(
+                  "Master Item View - ${controller.item.name ?? '-'}",
+                  fontSize: textSizeLarge,
+                  color: VColor.white,
+                ),
               ),
             ],
           ),
@@ -111,7 +122,7 @@ class ItemDetailPage extends StatelessWidget {
                       color: VColor.white,
                     ),
                     onPressed: () {
-                      VNavigation().toItemCreatePage();
+                      VNavigation().toItemCreatePage(itemId: Get.find<ItemDetailController>().itemId);
                     },
                   ),
                   const SizedBox(width: marginMedium),
@@ -132,118 +143,31 @@ class ItemDetailPage extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget _detailItem() {
-    Widget detailField(String title, String field) {
-      return SizedBox(
-        width: double.infinity,
-        child: Row(
-          children: [
-            Expanded(
-              flex: 1,
-              child: VText(title),
-            ),
-            const SizedBox(
-              width: marginMedium,
-            ),
-            Expanded(
-              flex: 2,
-              child: SizedBox(
-                width: double.infinity,
-                child: VText(field),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
+class DetailItem extends StatelessWidget {
+  const DetailItem({super.key});
 
-    Widget haveVariant() {
-      return SizedBox(
-        width: double.infinity,
-        child: Row(
-          children: [
-            const Expanded(
-              flex: 1,
-              child: VText("Have Variant"),
-            ),
-            const SizedBox(
-              width: marginMedium,
-            ),
-            Expanded(
-              flex: 2,
-              child: SizedBox(
-                width: double.infinity,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: GetBuilder<ItemDetailController>(
-                    builder: (controller) => VCheckbox(
-                      isChecked: controller.isHaveVariant,
-                      onChanged: (value) {},
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    Widget active() {
-      return SizedBox(
-        width: double.infinity,
-        child: Row(
-          children: [
-            const Expanded(
-              flex: 1,
-              child: VText("Active"),
-            ),
-            const SizedBox(
-              width: marginMedium,
-            ),
-            Expanded(
-              flex: 2,
-              child: SizedBox(
-                width: double.infinity,
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: GetBuilder<ItemDetailController>(
-                    builder: (controller) => VCheckbox(
-                      isChecked: controller.isActive,
-                      onChanged: (value) {},
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
+  @override
+  Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(paddingMedium),
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Column(
-              children: [
-                detailField("Code", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Name", "Item Name"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Item Category", "Code Item"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Customer Tax", "Pajak Pertambahan 0% (0%)"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Supplier Tax", "Pajak Pertambahan 0% (0%)"),
-                const SizedBox(height: marginExtraLarge),
-                haveVariant(),
-                const SizedBox(height: marginExtraLarge),
-              ],
+          GetBuilder<ItemDetailController>(
+            builder: (controller) => Expanded(
+              child: Column(
+                children: [
+                  detailField("Name", controller.item.name ?? "-"),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Item Category", controller.item.icName ?? "-"),
+                  const SizedBox(height: marginExtraLarge),
+                  // haveVariant(),
+                  // const SizedBox(height: marginExtraLarge),
+                ],
+              ),
             ),
           ),
           const SizedBox(
@@ -269,6 +193,94 @@ class ItemDetailPage extends StatelessWidget {
                 const SizedBox(height: marginExtraLarge),
                 active(),
               ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget detailField(String title, String field) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: VText(field),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget haveVariant() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          const Expanded(
+            flex: 1,
+            child: VText("Have Variant"),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: GetBuilder<ItemDetailController>(
+                  builder: (controller) => VCheckbox(
+                    isChecked: controller.isHaveVariant,
+                    onChanged: (value) {},
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget active() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          const Expanded(
+            flex: 1,
+            child: VText("Active"),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: double.infinity,
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: GetBuilder<ItemDetailController>(
+                  builder: (controller) => VCheckbox(
+                    isChecked: controller.isActive,
+                    onChanged: (value) {},
+                  ),
+                ),
+              ),
             ),
           ),
         ],

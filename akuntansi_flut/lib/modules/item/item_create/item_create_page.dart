@@ -244,7 +244,7 @@ class ItemCreatePage extends StatelessWidget {
                       },
                     ),
                     const SizedBox(height: marginExtraLarge),
-                    haveVariant(),
+                    // haveVariant(),
                   ],
                 ),
               ),
