@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('stock_histories', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('shl_id');
-            $table->mediumInteger('qty');
+            $table->mediumInteger('total_qty');
+            $table->mediumInteger('current_qty');
+            $table->bigInteger('item_price');
             $table->timestamps();
         });
     }

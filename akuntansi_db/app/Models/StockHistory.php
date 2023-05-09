@@ -9,6 +9,9 @@ class StockHistory extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'qty',
+        'shl_id',
+        'total_qty',
+        'current_qty',
+        'item_price',
     ];
 }
