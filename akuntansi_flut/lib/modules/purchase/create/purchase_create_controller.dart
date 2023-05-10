@@ -1,34 +1,35 @@
+import 'package:akuntansi_flut/services/model/item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../commons/base_controller.dart';
 import '../../../services/model/item_model.dart';
+import '../../../services/model/supplier.dart';
 import 'table.dart';
 
 class PurchaseCreateController extends BaseController {
-  TextEditingController codeTextController = TextEditingController();
-  TextEditingController nameTextController = TextEditingController();
-  TextEditingController addressTextController = TextEditingController();
-  TextEditingController emailTextController = TextEditingController();
-  TextEditingController phoneTextController = TextEditingController();
-  TextEditingController descTextController = TextEditingController();
+  TextEditingController supplierTextController = TextEditingController();
 
-  // filter by date
-  DateTime startDate = DateTime.now();
-  String startDateView = "";
+  Supplier supplier = Supplier();
+
+  // date
+  DateTime transactionDate = DateTime.now();
+  String transactionDateView = "";
 
   // price line
   final PurchaseLineDataTableSource dataSource = PurchaseLineDataTableSource();
   bool isAddItemFormShown = false;
 
+  Item item = Item();
+  TextEditingController itemTextController = TextEditingController();
   TextEditingController priceTextController = TextEditingController();
   TextEditingController qtyTextController = TextEditingController();
 
   @override
   Future<void> onInit() async {
     isLoading = true;
-    startDateView = DateFormat("dd-MM-yyyy").format(startDate);
+    transactionDateView = DateFormat("dd-MM-yyyy").format(transactionDate);
     qtyTextController.text = "0";
     isLoading = false;
     update();
@@ -45,8 +46,8 @@ class PurchaseCreateController extends BaseController {
   }
 
   void updateStartDate(DateTime temp) {
-    startDate = temp;
-    startDateView = DateFormat("dd-MM-yyyy").format(startDate);
+    transactionDate = temp;
+    transactionDateView = DateFormat("dd-MM-yyyy").format(transactionDate);
     update();
   }
 

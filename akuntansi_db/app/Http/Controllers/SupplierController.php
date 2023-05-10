@@ -41,11 +41,11 @@ class SupplierController extends Controller
         try {
             $request->validate([
                 'name' => 'required',
-                'address' => 'required',
-                'email' => 'required',
-                'phone' => 'required',
-                'description' => 'required',
-                'active' => 'required',
+                // 'address' => 'required',
+                // 'email' => 'required',
+                // 'phone' => 'required',
+                // 'description' => 'required',
+                // 'active' => 'required',
             ]);
 
             $user = Supplier::create($request->all());

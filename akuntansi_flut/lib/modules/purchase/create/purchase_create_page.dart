@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../commons/routes/app_navigation.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
@@ -157,9 +158,24 @@ class InputForm extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    inputField(controller.codeTextController, "Document No"),
-                    const SizedBox(height: marginMedium),
-                    inputField(controller.nameTextController, "Supplier Name"),
+                    inputPicker(
+                      "Supplier Name",
+                      controller.supplier.id == null ? false : true,
+                      controller.supplierTextController,
+                      onPressed: () {
+                        VNavigation().toSupplierLookUp(
+                          callback: (p0) {
+                            if (p0 != null) {
+                              if (p0[PrefConst.keyArgsSupplier] != null) {
+                                controller.supplier = p0[PrefConst.keyArgsSupplier];
+                                controller.supplierTextController.text = controller.supplier.name ?? "";
+                                controller.update();
+                              }
+                            }
+                          },
+                        );
+                      },
+                    ),
                     const SizedBox(height: marginMedium),
                     transactionDate(),
                   ],
@@ -228,6 +244,56 @@ class InputForm extends StatelessWidget {
     );
   }
 
+  Widget inputPicker(String title, bool isVisible, TextEditingController controller, {void Function()? onPressed}) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: isVisible,
+                    child: Expanded(
+                      child: VInputText(
+                        autoFocus: false,
+                        textEditingController: controller,
+                        readOnly: true,
+                        filled: true,
+                        fillColor: VColor.white,
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: isVisible,
+                    child: const SizedBox(
+                      width: marginMedium,
+                    ),
+                  ),
+                  VIconButton(
+                    Icons.search,
+                    colorBackground: VColor.secondary,
+                    onPressed: onPressed,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget transactionDate() {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -235,7 +301,7 @@ class InputForm extends StatelessWidget {
         const Expanded(
             child: Padding(
           padding: EdgeInsets.only(top: marginMedium),
-          child: VText("Transaction Date"),
+          child: VText("Transaction Date (Day-Month-Year)"),
         )),
         const SizedBox(
           width: marginMedium,
@@ -248,7 +314,7 @@ class InputForm extends StatelessWidget {
               builder: (controller) => GestureDetector(
                 onTap: () => showDatePickerStartDate(controller),
                 child: VText(
-                  controller.startDateView,
+                  controller.transactionDateView,
                   decoration: TextDecoration.underline,
                 ),
               ),
@@ -262,11 +328,11 @@ class InputForm extends StatelessWidget {
   Future<void> showDatePickerStartDate(PurchaseCreateController controller) async {
     final DateTime? picked = await showDatePicker(
       context: Get.context!,
-      initialDate: controller.startDate,
+      initialDate: controller.transactionDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2030),
     );
-    if (picked != null && picked != controller.startDate) {
+    if (picked != null && picked != controller.transactionDate) {
       controller.updateStartDate(picked);
     }
   }
@@ -330,70 +396,59 @@ class AddNewItemForm extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(paddingMedium),
       margin: const EdgeInsets.only(bottom: marginMedium),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Expanded(child: VText("Item Name")),
-              Expanded(
-                flex: 2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const VText("Item 1"),
-                    const SizedBox(
-                      width: marginMedium,
-                    ),
-                    VButton(
-                      "",
-                      onPressed: () {},
-                      buttonColor: VColor.primary,
-                      leftIcon: const Icon(
-                        Icons.search,
-                        color: VColor.white,
-                      ),
-                    ),
-                  ],
+      child: GetBuilder<PurchaseCreateController>(
+        builder: (controller) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            inputPicker(
+              "Item Name",
+              controller.item.id == null ? false : true,
+              controller.itemTextController,
+              onPressed: () {
+                VNavigation().toItemLookUp(
+                  callback: (p0) {
+                    if (p0 != null) {
+                      if (p0[PrefConst.keyArgsItem] != null) {
+                        controller.item = p0[PrefConst.keyArgsItem];
+                        controller.itemTextController.text = controller.item.name ?? "";
+                        controller.update();
+                      }
+                    }
+                  },
+                );
+              },
+            ),
+            const SizedBox(
+              height: marginSmall,
+            ),
+            inputField(controller.priceTextController, "Price"),
+            const SizedBox(
+              height: marginSmall,
+            ),
+            qtyField(controller.qtyTextController, "Quantity"),
+            const SizedBox(
+              height: marginLarge,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                VButton(
+                  "Close",
+                  onPressed: () {},
+                  buttonColor: VColor.red,
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: marginSmall,
-          ),
-          GetBuilder<PurchaseCreateController>(
-            builder: (controller) => inputField(controller.priceTextController, "Price"),
-          ),
-          const SizedBox(
-            height: marginSmall,
-          ),
-          GetBuilder<PurchaseCreateController>(
-            builder: (controller) => qtyField(controller.qtyTextController, "Quantity"),
-          ),
-          const SizedBox(
-            height: marginLarge,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              VButton(
-                "Close",
-                onPressed: () {},
-                buttonColor: VColor.red,
-              ),
-              const SizedBox(
-                width: marginMedium,
-              ),
-              VButton(
-                "Add",
-                onPressed: () {},
-                buttonColor: VColor.green,
-              ),
-            ],
-          )
-        ],
+                const SizedBox(
+                  width: marginMedium,
+                ),
+                VButton(
+                  "Add",
+                  onPressed: () {},
+                  buttonColor: VColor.green,
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -423,7 +478,7 @@ class AddNewItemForm extends StatelessWidget {
                 fillColor: VColor.white,
                 hintTextColor: VColor.grey1,
                 textEditingController: controller,
-                keyboardType: TextInputType.text,
+                keyboardType: TextInputType.number,
                 filledBorderColor: VColor.primary,
                 textPadding: paddingSuperSmall,
                 validator: (value) {
@@ -432,6 +487,56 @@ class AddNewItemForm extends StatelessWidget {
                   }
                   return null;
                 },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget inputPicker(String title, bool isVisible, TextEditingController controller, {void Function()? onPressed}) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: isVisible,
+                    child: Expanded(
+                      child: VInputText(
+                        autoFocus: false,
+                        textEditingController: controller,
+                        readOnly: true,
+                        filled: true,
+                        fillColor: VColor.white,
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: isVisible,
+                    child: const SizedBox(
+                      width: marginMedium,
+                    ),
+                  ),
+                  VIconButton(
+                    Icons.search,
+                    colorBackground: VColor.secondary,
+                    onPressed: onPressed,
+                  ),
+                ],
               ),
             ),
           ),
@@ -457,22 +562,10 @@ class AddNewItemForm extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Container(
-                //   decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.circular(radiusLarge)),
-                //   padding: const EdgeInsets.all(paddingSuperSmall),
-                //   child: const Icon(
-                //     Icons.add,
-                //     color: VColor.white,
-                //   ),
-                // ),
-                VButton(
-                  "",
+                VIconButton(
+                  Icons.add,
+                  colorBackground: VColor.secondary,
                   onPressed: () {},
-                  buttonColor: VColor.primary,
-                  leftIcon: const Icon(
-                    Icons.add,
-                    color: VColor.white,
-                  ),
                 ),
                 const SizedBox(
                   width: marginMedium,
@@ -509,25 +602,11 @@ class AddNewItemForm extends StatelessWidget {
                 const SizedBox(
                   width: marginMedium,
                 ),
-
-                VButton(
-                  "",
+                VIconButton(
+                  Icons.remove,
+                  colorBackground: VColor.secondary,
                   onPressed: () {},
-                  buttonColor: VColor.primary,
-                  leftIcon: const Icon(
-                    Icons.remove,
-                    color: VColor.white,
-                  ),
                 ),
-
-                // Container(
-                //   decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.circular(radiusLarge)),
-                //   padding: const EdgeInsets.all(paddingSuperSmall),
-                //   child: const Icon(
-                //     Icons.remove,
-                //     color: VColor.white,
-                //   ),
-                // ),
               ],
             ),
           ),

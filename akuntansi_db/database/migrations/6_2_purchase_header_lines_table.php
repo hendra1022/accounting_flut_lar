@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('purchase_header_lines', function (Blueprint $table) {
             $table->id();
-            $table->bigIncrements("sh_id");
-            $table->bigIncrements("i_id");
+            $table->bigInteger("ph_id");
+            $table->bigInteger("i_id");
             $table->mediumInteger("qty");
             $table->bigInteger("unit_price");
             $table->bigInteger("net_amount");

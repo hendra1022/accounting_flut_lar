@@ -20,7 +20,9 @@ class PrefConst {
   static const String keyArgsSalesId = 'sales_id';
 
   static const String keyArgsCustType = 'customer_type';
+  static const String keyArgsSupplier = 'supplier';
   static const String keyArgsItemCat = 'item_category';
+  static const String keyArgsItem = 'item';
 }
 
 class SettingsConstants {

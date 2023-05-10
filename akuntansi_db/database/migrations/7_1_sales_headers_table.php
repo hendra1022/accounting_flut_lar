@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('sales_headers', function (Blueprint $table) {
             $table->id();
+            $table->dateTime("sales_date");
+            $table->bigInteger("c_id");
+            $table->bigInteger("gross_amount");
+            $table->bigInteger("net_amount");
+            $table->bigInteger("note");
             $table->timestamps();
         });
     }

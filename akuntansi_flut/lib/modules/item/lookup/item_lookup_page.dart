@@ -1,17 +1,16 @@
-import 'package:akuntansi_flut/modules/supplier/component/table_builder.dart';
-import 'package:akuntansi_flut/modules/supplier/supplier.dart';
+import 'package:akuntansi_flut/services/model/item.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../commons/routes/app_navigation.dart';
-import '../../utils/constants.dart';
-import '../../utils/v_color.dart';
-import '../../utils/widgets/v_widgets.dart';
-import '../app_bar/custom_app_bar.dart';
+import '../../../utils/constants.dart';
+import '../../../utils/v_color.dart';
+import '../../../utils/widgets/v_widgets.dart';
+import '../../app_bar/custom_app_bar.dart';
+import 'item_lookup.dart';
 
-class SupplierPage extends StatelessWidget {
-  const SupplierPage({super.key});
+class ItemLookUpPage extends StatelessWidget {
+  const ItemLookUpPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,19 +28,54 @@ class SupplierPage extends StatelessWidget {
       child: Column(
         children: [
           const Header(),
-          const SizedBox(
-            height: marginSmall,
-          ),
+          const SizedBox(height: marginSmall),
           const Filter(),
-          const SizedBox(
-            height: marginMedium,
-          ),
+          const SizedBox(height: marginSmall),
           Expanded(
-            child: ListView(
-              children: const [
-                SupplierTable(),
-              ],
+            child: GetBuilder<ItemLookUpController>(
+              builder: (controller) => controller.isLoading
+                  ? const VLoadingPage()
+                  : controller.itemList.isEmpty
+                      ? const Center(
+                          child: VText("Data is empty!"),
+                        )
+                      : Container(
+                          padding: const EdgeInsets.all(paddingSmall),
+                          decoration: BoxDecoration(color: VColor.white, borderRadius: BorderRadius.circular(radiusSmall)),
+                          child: ListView.builder(
+                            itemCount: controller.itemList.length,
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) => _childList(controller.itemList[index]),
+                          ),
+                        ),
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _childList(Item item) {
+    return SizedBox(
+      width: double.infinity,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              VText(item.name ?? "-"),
+              VIconButton(
+                Icons.check,
+                onPressed: () {
+                  Get.back(result: {PrefConst.keyArgsItem: item});
+                },
+              ),
+            ],
+          ),
+          const Divider(
+            color: VColor.grey1,
           ),
         ],
       ),
@@ -78,8 +112,20 @@ class Header extends StatelessWidget {
                     Icons.arrow_right,
                     color: VColor.white,
                   ),
+                  VText(
+                    "Item",
+                    fontSize: textSizeMedium,
+                    color: VColor.white,
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
+                  const Icon(
+                    Icons.arrow_right,
+                    color: VColor.white,
+                  ),
                   const VText(
-                    "Supplier",
+                    "View",
                     fontSize: textSizeMedium,
                     color: VColor.black,
                   ),
@@ -89,25 +135,10 @@ class Header extends StatelessWidget {
                 height: marginSuperSmall,
               ),
               const VText(
-                "Supplier",
+                "Item LookUp",
                 fontSize: textSizeLarge,
                 color: VColor.white,
               ),
-            ],
-          ),
-          Column(
-            children: [
-              VButton(
-                "CREATE",
-                buttonColor: VColor.secondary,
-                leftIcon: const Icon(
-                  Icons.add,
-                  color: VColor.white,
-                ),
-                onPressed: () {
-                  VNavigation().toSupplierCreatePage();
-                },
-              )
             ],
           )
         ],
@@ -147,7 +178,7 @@ class Filter extends StatelessWidget {
             fontSize: textSizeLarge,
             isBold: true,
           ),
-          GetBuilder<SupplierController>(
+          GetBuilder<ItemLookUpController>(
             builder: (controller) => DropdownButton2(
               hint: const Padding(
                 padding: EdgeInsets.only(left: paddingSuperSmall),
@@ -195,7 +226,7 @@ class Filter extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const VText(
-          "Search by",
+          "Search",
           fontSize: textSizeLarge,
           isBold: true,
         ),
@@ -207,48 +238,9 @@ class Filter extends StatelessWidget {
               Radius.circular(radiusMedium),
             ),
           ),
-          child: GetBuilder<SupplierController>(
+          child: GetBuilder<ItemLookUpController>(
             builder: (controller) => Row(
               children: [
-                // DropdownButton2(
-                //   hint: const Padding(
-                //     padding: EdgeInsets.only(left: paddingSuperSmall),
-                //     child: VText(
-                //       'Select Item',
-                //       fontSize: textSizeMedium,
-                //       color: VColor.grey1,
-                //     ),
-                //   ),
-                //   items: controller.filterByItems
-                //       .map(
-                //         (item) => DropdownMenuItem<String>(
-                //           value: item,
-                //           child: Padding(
-                //             padding: const EdgeInsets.only(left: paddingSuperSmall),
-                //             child: VText(
-                //               item,
-                //               fontSize: textSizeMedium,
-                //             ),
-                //           ),
-                //         ),
-                //       )
-                //       .toList(),
-                //   value: controller.selectedFilterBy,
-                //   onChanged: (value) {
-                //     controller.selectedFilterBy = value as String;
-                //     controller.update();
-                //   },
-                //   buttonStyleData: const ButtonStyleData(
-                //     height: 40,
-                //     width: 100,
-                //   ),
-                //   menuItemStyleData: const MenuItemStyleData(
-                //     height: 40,
-                //   ),
-                // ),
-                // const SizedBox(
-                //   width: marginSmall,
-                // ),
                 SizedBox(
                   width: 250,
                   child: VInputText(
@@ -267,7 +259,7 @@ class Filter extends StatelessWidget {
                     color: VColor.white,
                   ),
                   onPressed: () {
-                    controller.changePage(1, true);
+                    controller.search();
                   },
                 )
               ],

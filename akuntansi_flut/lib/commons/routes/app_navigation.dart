@@ -73,6 +73,10 @@ class VNavigation {
     });
   }
 
+  toItemLookUp({required Function(dynamic) callback}) {
+    Get.toNamed(RoutesPath.itemLookup)!.then(callback);
+  }
+
   toItemCategoryDetailPage(int itemId) {
     Get.toNamed(
       RoutesPath.itemCategoryDetail,
@@ -139,6 +143,10 @@ class VNavigation {
     Get.toNamed(RoutesPath.supplierCreate, arguments: {
       PrefConst.keyArgsSupId: suppId,
     });
+  }
+
+  toSupplierLookUp({required Function(dynamic) callback}) {
+    Get.toNamed(RoutesPath.supplierLookUp)!.then(callback);
   }
 
   toPurchaseDetailPage(int purcId) {

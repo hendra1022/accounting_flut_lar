@@ -1,9 +1,11 @@
 import 'package:akuntansi_flut/modules/customer_type/create/customer_type_create.dart';
 import 'package:akuntansi_flut/modules/customer_type/detail/customer_type_detail.dart';
 import 'package:akuntansi_flut/modules/customer_type/lookup/customer_type_lookup.dart';
+import 'package:akuntansi_flut/modules/item/lookup/item_lookup.dart';
 import 'package:akuntansi_flut/modules/item_category/lookup/item_category_lookup.dart';
 import 'package:akuntansi_flut/modules/sales/detail/sales_detail.dart';
 import 'package:akuntansi_flut/modules/supplier/create/supplier_create.dart';
+import 'package:akuntansi_flut/modules/supplier/lookup/supplier_lookup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -98,6 +100,11 @@ class AppPages {
       binding: ItemCreateBinding(),
     ),
     GetPage(
+      name: RoutesPath.itemLookup,
+      page: () => const ItemLookUpPage(),
+      binding: ItemLookUpBinding(),
+    ),
+    GetPage(
       name: RoutesPath.itemCategoryDetail,
       page: () => const ItemCategoryDetailPage(),
       binding: ItemCategoryDetailBinding(),
@@ -146,6 +153,11 @@ class AppPages {
       name: RoutesPath.supplierCreate,
       page: () => const SupplierCreatePage(),
       binding: SupplierCreateBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.supplierLookUp,
+      page: () => const SupplierLookUpPage(),
+      binding: SupplierLookUpBinding(),
     ),
     GetPage(
       name: RoutesPath.purchaseDetail,
