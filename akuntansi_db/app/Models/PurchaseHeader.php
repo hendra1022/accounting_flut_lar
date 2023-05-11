@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,4 +17,9 @@ class PurchaseHeader extends Model
         'net_amount',
         'note',
     ];
+
+    public function setPurchaseDateAttribute($value)
+    {
+        $this->attributes['purchase_date'] = Carbon::parse($value);
+    }
 }

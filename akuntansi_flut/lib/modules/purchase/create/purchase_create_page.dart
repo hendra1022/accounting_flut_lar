@@ -434,7 +434,9 @@ class AddNewItemForm extends StatelessWidget {
               children: [
                 VButton(
                   "Close",
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.updateAddItemFormVisible();
+                  },
                   buttonColor: VColor.red,
                 ),
                 const SizedBox(

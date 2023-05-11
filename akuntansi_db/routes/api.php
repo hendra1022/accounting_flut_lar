@@ -4,6 +4,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerTypeController;
 use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\PurchaseHeaderController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
@@ -38,4 +39,10 @@ Route::controller(ItemCategoryController::class)->group(function () {
 Route::controller(ItemController::class)->group(function () {
     Route::get('/item/filter', 'indexByParam');
     Route::resource('item', ItemController::class);
+});
+
+
+Route::controller(PurchaseHeaderController::class)->group(function () {
+    Route::get('/purchase_header/filter', 'indexByParam');
+    Route::resource('purchase_header', PurchaseHeaderController::class);
 });
