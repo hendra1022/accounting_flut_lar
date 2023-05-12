@@ -20,4 +20,7 @@ class ApiUrl {
 
   static const item = "${baseUrl}item";
   static const itemFilter = "$item/filter";
+
+  static const purchaseHeader = "${baseUrl}purchase_header";
+  static const purchaseHeaderFilter = "$purchaseHeader/filter";
 }

@@ -131,16 +131,6 @@ class PurchaseHeaderController extends Controller
         try {
             $data = DB::table('purchase_headers')->select();
 
-            // $isActive = $request->is_active;
-            // if ($isActive == "1" || $isActive == "0") {
-            //     $data = $data->where("active", "=", $isActive);
-            // }
-
-            // $search = $request->search;
-            // if ($search != null) {
-            //     $data = $data->where("i.name", "like", "%{$search}%");
-            // }
-
             $purchaseDate = $request->purchase_date;
             if ($purchaseDate != null && $purchaseDate != "") {
                 $data = $data->whereDate("purchase_date", "=", $purchaseDate);
