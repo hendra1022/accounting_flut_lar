@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PurchaseHeader;
 use App\Http\Requests\StorePurchaseHeaderRequest;
 use App\Http\Requests\UpdatePurchaseHeaderRequest;
-use Carbon\Carbon;
+use App\Models\PurchaseHeaderLine;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -158,5 +158,107 @@ class PurchaseHeaderController extends Controller
                 'message' => $e->getMessage()
             ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public function storeHeaderAndLine(StorePurchaseHeaderRequest $request)
+    {
+        $response = DB::transaction(function () use ($request) {
+            try {
+                $request->validate([
+                    'purchase_date' => 'required',
+                    's_id' => 'required',
+                    'gross_amount' => 'required',
+                    'net_amount' => 'required',
+                    'note' => 'required',
+                    'data' => 'required',
+                ]);
+
+                $header = [
+                    "purchase_date" => $request->purchase_date,
+                    "s_id" => $request->s_id,
+                    "gross_amount" => $request->gross_amount,
+                    "net_amount" => $request->net_amount,
+                    "note" => $request->note
+                ];
+                $headerResponse = PurchaseHeader::create($header);
+                $phId = $headerResponse->id;
+
+                foreach ($request->data as $key => $value) {
+                    $model = new PurchaseHeaderLine();
+                    $model->ph_id = $phId;
+                    $model->i_id = $value['i_id'];
+                    $model->qty = $value['qty'];
+                    $model->unit_price = $value['unit_price'];
+                    $model->net_amount = $value['net_amount'];
+                    $model->note = $value['note'];
+                    $model->save();
+                }
+
+                return response()->json([
+                    'result' => $headerResponse,
+                    'message' => 'Succeed'
+                ], JsonResponse::HTTP_OK);
+            } catch (\Throwable $th) {
+
+                return response()->json([
+                    'result' => [],
+                    'message' => $th->getMessage()
+                ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        });
+
+        return $response;
+
+        // try {
+
+        //     $request->validate([
+        //         'purchase_date' => 'required',
+        //         's_id' => 'required',
+        //         'gross_amount' => 'required',
+        //         'net_amount' => 'required',
+        //         'note' => 'required',
+        //         'data' => 'required',
+        //     ]);
+
+        //     // $header = new PurchaseHeader;
+        //     // $header->purchase_date = $request->purchase_date;
+        //     // $header->s_id = $request->s_id;
+        //     // $header->gross_amount = $request->gross_amount;
+        //     // $header->net_amount = $request->net_amount;
+        //     // $header->note = $request->note;
+        //     // $headerResponse = $header->save();
+
+        //     $header = [
+        //         "purchase_date" => $request->purchase_date,
+        //         "s_id" => $request->s_id,
+        //         "gross_amount" => $request->gross_amount,
+        //         "net_amount" => $request->net_amount,
+        //         "note" => $request->note
+        //     ];
+        //     $headerResponse = PurchaseHeader::create($header);
+        //     $phId = $headerResponse->id;
+        //     DB::commit();
+
+        //     foreach ($request->data as $key => $value) {
+        //         $model = new PurchaseHeaderLine();
+        //         $model->ph_id = $phId;
+        //         $model->i_id = $value['i_id'];
+        //         $model->qty = $value['qty'];
+        //         $model->unit_price = $value['unit_price'];
+        //         $model->net_amount = $value['net_amount'];
+        //         $model->note = $value['note'];
+        //         $model->save();
+        //     }
+
+        //     return response()->json([
+        //         'result' => $headerResponse,
+        //         'message' => 'Succeed'
+        //     ], JsonResponse::HTTP_OK);
+        // } catch (Exception $e) {
+        // return response()->json([
+        //     'result' => [],
+        //     'message' => $e->getMessage()
+        // ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+        // }
     }
 }

@@ -44,5 +44,6 @@ Route::controller(ItemController::class)->group(function () {
 
 Route::controller(PurchaseHeaderController::class)->group(function () {
     Route::get('/purchase_header/filter', 'indexByParam');
+    Route::post('/purchase_header/store', 'storeHeaderAndLine');
     Route::resource('purchase_header', PurchaseHeaderController::class);
 });
