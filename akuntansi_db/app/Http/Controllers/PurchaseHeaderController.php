@@ -199,7 +199,7 @@ class PurchaseHeaderController extends Controller
                     'message' => 'Succeed'
                 ], JsonResponse::HTTP_OK);
             } catch (\Throwable $th) {
-
+                DB::rollBack();
                 return response()->json([
                     'result' => [],
                     'message' => $th->getMessage()

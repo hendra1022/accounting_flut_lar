@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Http\Requests\StoreItemRequest;
 use App\Http\Requests\UpdateItemRequest;
+use App\Models\Stock;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -38,24 +39,36 @@ class ItemController extends Controller
 
     public function store(StoreItemRequest $request)
     {
-        try {
-            $request->validate([
-                'name' => 'required',
-                'ic_id' => 'required',
-            ]);
+        $response = DB::transaction(function () use ($request) {
+            try {
+                $request->validate([
+                    'name' => 'required',
+                    'ic_id' => 'required',
+                ]);
 
-            $user = Item::create($request->all());
+                $itemResponse = Item::create($request->all());
+                $iId = $itemResponse->id;
 
-            return response()->json([
-                'result' => $user,
-                'message' => 'Succeed'
-            ], JsonResponse::HTTP_OK);
-        } catch (Exception $e) {
-            return response()->json([
-                'result' => [],
-                'message' => $e->getMessage()
-            ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        }
+                $model = new Stock();
+                $model->i_id = null;
+                $model->actual_qty = 0;
+                $model->total_qty = 0;
+                $model->save();
+
+                return response()->json([
+                    'result' => $itemResponse,
+                    'message' => 'Succeed'
+                ], JsonResponse::HTTP_OK);
+            } catch (Exception $e) {
+                DB::rollBack();
+                return response()->json([
+                    'result' => [],
+                    'message' => $e->getMessage()
+                ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        });
+
+        return $response;
     }
 
     public function show($id)
