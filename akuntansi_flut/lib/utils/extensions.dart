@@ -10,20 +10,6 @@ extension DoublePrecision on double {
   double toPrecision(int n) => double.parse(toStringAsFixed(n));
 }
 
-extension StringSequence on String {
-  String get sequence {
-    if (this == "1") {
-      return "${this}st";
-    } else if (this == "2") {
-      return "${this}nd";
-    } else if (this == "3") {
-      return "${this}rd";
-    } else {
-      return "${this}th";
-    }
-  }
-}
-
 extension StringCurrency on String {
   String get toCurrency {
     return 'Rp. ${this},-';
@@ -38,10 +24,45 @@ extension StringNumberFormat on String {
       return NumberFormat('#,###').format(double.parse(this));
     }
   }
+
+  double convertToDouble() {
+    try {
+      return double.tryParse(this)!.toPrecision(2);
+    } catch (e) {
+      return int.tryParse(this)!.toDouble().toPrecision(2);
+    }
+  }
+
+  int convertToInt() {
+    try {
+      return int.tryParse(this)!;
+    } catch (e) {
+      return double.tryParse(this)!.round();
+    }
+  }
 }
 
 extension StringCapitalizeExtension on String {
   String capitalize() {
     return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
+}
+
+extension StringExpresionExtension on String {
+  bool isOnlyContainNumber() {
+    if (this != "") {
+      return false;
+    }
+    try {
+      double.tryParse(this);
+      return true;
+    } catch (e) {
+      try {
+        int.tryParse(this);
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
   }
 }

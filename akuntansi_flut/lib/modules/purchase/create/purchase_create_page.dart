@@ -178,6 +178,8 @@ class InputForm extends StatelessWidget {
                     ),
                     const SizedBox(height: marginMedium),
                     transactionDate(),
+                    const SizedBox(height: marginMedium),
+                    inputField(controller.noteHeaderTextController, "Note")
                   ],
                 ),
               ),
@@ -429,6 +431,10 @@ class AddNewItemForm extends StatelessWidget {
             const SizedBox(
               height: marginLarge,
             ),
+            inputField(controller.noteLineTextController, "Note", number: false),
+            const SizedBox(
+              height: marginLarge,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -444,7 +450,9 @@ class AddNewItemForm extends StatelessWidget {
                 ),
                 VButton(
                   "Add",
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.onAddPurchaseLine();
+                  },
                   buttonColor: VColor.green,
                 ),
               ],
@@ -455,7 +463,7 @@ class AddNewItemForm extends StatelessWidget {
     );
   }
 
-  Widget inputField(TextEditingController controller, String title) {
+  Widget inputField(TextEditingController controller, String title, {bool number = true}) {
     return SizedBox(
       width: double.infinity,
       child: Row(
@@ -480,12 +488,14 @@ class AddNewItemForm extends StatelessWidget {
                 fillColor: VColor.white,
                 hintTextColor: VColor.grey1,
                 textEditingController: controller,
-                keyboardType: TextInputType.number,
+                keyboardType: number ? TextInputType.number : TextInputType.text,
                 filledBorderColor: VColor.primary,
                 textPadding: paddingSuperSmall,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "$title can't be empty";
+                  } else if (int.tryParse(value) == null && number) {
+                    return "Value must be number";
                   }
                   return null;
                 },

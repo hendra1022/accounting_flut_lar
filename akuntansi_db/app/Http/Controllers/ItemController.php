@@ -50,7 +50,7 @@ class ItemController extends Controller
                 $iId = $itemResponse->id;
 
                 $model = new Stock();
-                $model->i_id = null;
+                $model->i_id = $iId;
                 $model->actual_qty = 0;
                 $model->total_qty = 0;
                 $model->save();

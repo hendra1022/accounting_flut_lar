@@ -1,6 +1,7 @@
 import 'package:akuntansi_flut/commons/base_response.dart';
 import 'package:akuntansi_flut/services/model/purchase_header.dart';
 import 'package:akuntansi_flut/services/model/request/purchase_header.dart';
+import 'package:akuntansi_flut/services/model/request/purchase_header_line.dart';
 import 'package:intl/intl.dart';
 
 import '../api_client.dart';
@@ -19,6 +20,23 @@ class PurchaseRepo extends ApiClient {
   Future<String> createData(PurchaseHeaderRequest request) async {
     var res = await post(
       url: ApiUrl.purchaseHeader,
+      body: request.toJson(),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    if (res!.statusCode == 500) {
+      return "Nama ada yang sama";
+    } else if (res.statusCode == 200) {
+      return "Success";
+    } else {
+      return "Something Wrong, ${res.statusCode}";
+    }
+  }
+
+  Future<String> createDataCombo(PurchaseHeaderLineRequestBody request) async {
+    var res = await post(
+      url: ApiUrl.purchaseHeaderCombo,
       body: request.toJson(),
       headers: {
         'Content-Type': 'application/json',

@@ -140,6 +140,17 @@ class Header extends StatelessWidget {
                 color: VColor.white,
               ),
             ],
+          ),
+          VButton(
+            "Cancel",
+            buttonColor: VColor.secondary,
+            leftIcon: const Icon(
+              Icons.cancel_outlined,
+              color: VColor.white,
+            ),
+            onPressed: () {
+              Get.back();
+            },
           )
         ],
       ),
