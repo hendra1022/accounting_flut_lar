@@ -88,14 +88,16 @@ class SupplierCreateController extends BaseController {
           color: VColor.white,
         )));
         Get.back();
-      } else if (num.tryParse(phoneTextController.text) == null) {
-        ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
-            content: VText(
-          "Phone must be only contain number!",
-          color: VColor.white,
-        )));
-        Get.back();
-      } else {
+      }
+      // else if (num.tryParse(phoneTextController.text) == null) {
+      //   ScaffoldMessenger.of(Get.context!).showSnackBar(const SnackBar(
+      //       content: VText(
+      //     "Phone must be only contain number!",
+      //     color: VColor.white,
+      //   )));
+      //   Get.back();
+      // }
+      else {
         var requestBody = SupplierRequest(
           name: nameTextController.text,
           active: isActive ? "1" : "0",

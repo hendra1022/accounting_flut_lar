@@ -32,7 +32,9 @@ class PurchaseCreateController extends BaseController {
   Item item = Item();
   TextEditingController itemTextController = TextEditingController();
   TextEditingController priceTextController = TextEditingController();
+  int inputPrice = 0;
   TextEditingController qtyTextController = TextEditingController();
+  int inputQty = 0;
   TextEditingController noteLineTextController = TextEditingController();
 
   @override
@@ -60,8 +62,33 @@ class PurchaseCreateController extends BaseController {
     isAddItemFormShown = !isAddItemFormShown;
     item = Item();
     priceTextController.text = "0";
+    inputPrice = 0;
     qtyTextController.text = "0";
+    inputQty = 0;
+    noteLineTextController.text = "";
     update();
+  }
+
+  void updatePrice(String value) {
+    if (value.isEmpty) {
+      priceTextController.text = "0";
+      priceTextController.selection = TextSelection.fromPosition(TextPosition(offset: priceTextController.text.length));
+    } else if (value[0] == "0" && value.length > 1) {
+      priceTextController.text = value.replaceFirst("0", "");
+      priceTextController.selection = TextSelection.fromPosition(TextPosition(offset: priceTextController.text.length));
+    }
+    inputPrice = int.tryParse(priceTextController.text.replaceAll(",", "")) ?? double.tryParse(priceTextController.text.replaceAll(",", ""))?.round() ?? 0;
+  }
+
+  void updateQuantity(String value) {
+    if (value.isEmpty) {
+      qtyTextController.text = "0";
+      qtyTextController.selection = TextSelection.fromPosition(TextPosition(offset: qtyTextController.text.length));
+    } else if (value[0] == "0" && value.length > 1) {
+      qtyTextController.text = value.replaceFirst("0", "");
+      qtyTextController.selection = TextSelection.fromPosition(TextPosition(offset: qtyTextController.text.length));
+    }
+    inputQty = int.tryParse(qtyTextController.text.replaceAll(",", "")) ?? double.tryParse(qtyTextController.text.replaceAll(",", ""))?.round() ?? 0;
   }
 
   Future<void> onAddPurchaseLine() async {

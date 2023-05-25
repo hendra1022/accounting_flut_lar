@@ -18,7 +18,7 @@ return new class extends Migration
             $table->mediumInteger("qty");
             $table->bigInteger("unit_price");
             $table->bigInteger("net_amount");
-            $table->bigInteger("note");
+            $table->string("note")->nullable();
             $table->timestamps();
         });
     }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger("s_id");
             $table->bigInteger("gross_amount");
             $table->bigInteger("net_amount");
-            $table->bigInteger("note");
+            $table->string("note")->nullable();
             $table->timestamps();
         });
     }

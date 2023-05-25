@@ -45,7 +45,6 @@ class PurchaseHeaderController extends Controller
                 's_id' => 'required',
                 'gross_amount' => 'required',
                 'net_amount' => 'required',
-                'note' => 'required',
             ]);
 
             $data = PurchaseHeader::create($request->all());
@@ -91,7 +90,6 @@ class PurchaseHeaderController extends Controller
                 's_id' => 'required',
                 'gross_amount' => 'required',
                 'net_amount' => 'required',
-                'note' => 'required',
             ]);
 
             $data = PurchaseHeader::findOrFail($id);
@@ -129,11 +127,14 @@ class PurchaseHeaderController extends Controller
     public function indexByParam(Request $request)
     {
         try {
-            $data = DB::table('purchase_headers')->select();
+            $data = DB::table('purchase_headers as ph')->select(['ph.*', 's.name as s_name'])
+                ->leftJoin("suppliers as s", "s.id", "=", "ph.s_id");
 
-            $purchaseDate = $request->purchase_date;
-            if ($purchaseDate != null && $purchaseDate != "") {
-                $data = $data->whereDate("purchase_date", "=", $purchaseDate);
+            $startDate = $request->start_date;
+            $endDate = $request->end_date;
+            if ($startDate != null && $startDate != "" && $endDate != null && $endDate != "") {
+                $data = $data->whereDate("purchase_date", ">=", $startDate);
+                $data = $data->whereDate("purchase_date", "<=", $endDate);
             }
 
             $rowPerPage = $request->row_per_page;
@@ -169,7 +170,6 @@ class PurchaseHeaderController extends Controller
                     's_id' => 'required',
                     'gross_amount' => 'required',
                     'net_amount' => 'required',
-                    'note' => 'required',
                     'data' => 'required',
                 ]);
 

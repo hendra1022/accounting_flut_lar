@@ -4,6 +4,8 @@ extension StringExtension on String {
   String get currency => NumberFormat.simpleCurrency(locale: 'id_ID', decimalDigits: 0).format(double.parse(this));
 
   String get currencyInt => NumberFormat.simpleCurrency(locale: 'id_ID', decimalDigits: 0).format(int.parse(this));
+
+  String get dateDatabaseToView => DateFormat("dd-MM-yyyy").format(DateFormat("yyyy-MM-dd").parse(this));
 }
 
 extension DoublePrecision on double {

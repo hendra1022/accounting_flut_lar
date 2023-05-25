@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../../commons/routes/app_navigation.dart';
 import '../../../utils/constants.dart';
+import '../../../utils/thousand_seperator.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../../app_bar/custom_app_bar.dart';
@@ -27,17 +28,17 @@ class PurchaseCreatePage extends StatelessWidget {
       padding: const EdgeInsets.all(paddingSmall),
       child: Column(
         children: [
-          const Header(),
+          const _Header(),
           const SizedBox(height: marginSmall),
           Expanded(
             child: ListView(
               children: const [
-                InputForm(),
+                _InputForm(),
                 Divider(
                   thickness: 2,
                   color: VColor.black,
                 ),
-                PurchaseLineForm(),
+                _PurchaseLineForm(),
               ],
             ),
           ),
@@ -47,8 +48,8 @@ class PurchaseCreatePage extends StatelessWidget {
   }
 }
 
-class Header extends StatelessWidget {
-  const Header({super.key});
+class _Header extends StatelessWidget {
+  const _Header();
 
   @override
   Widget build(BuildContext context) {
@@ -141,8 +142,8 @@ class Header extends StatelessWidget {
   }
 }
 
-class InputForm extends StatelessWidget {
-  const InputForm({super.key});
+class _InputForm extends StatelessWidget {
+  const _InputForm();
 
   @override
   Widget build(BuildContext context) {
@@ -340,8 +341,8 @@ class InputForm extends StatelessWidget {
   }
 }
 
-class PurchaseLineForm extends StatelessWidget {
-  const PurchaseLineForm({super.key});
+class _PurchaseLineForm extends StatelessWidget {
+  const _PurchaseLineForm();
 
   @override
   Widget build(BuildContext context) {
@@ -375,7 +376,7 @@ class PurchaseLineForm extends StatelessWidget {
           GetBuilder<PurchaseCreateController>(
             builder: (controller) => Visibility(
               visible: controller.isAddItemFormShown,
-              child: const AddNewItemForm(),
+              child: const _AddNewItemForm(),
             ),
           ),
           const PurchaseLineTable(),
@@ -385,8 +386,8 @@ class PurchaseLineForm extends StatelessWidget {
   }
 }
 
-class AddNewItemForm extends StatelessWidget {
-  const AddNewItemForm({super.key});
+class _AddNewItemForm extends StatelessWidget {
+  const _AddNewItemForm();
 
   @override
   Widget build(BuildContext context) {
@@ -423,11 +424,11 @@ class AddNewItemForm extends StatelessWidget {
             const SizedBox(
               height: marginSmall,
             ),
-            inputField(controller.priceTextController, "Price"),
+            inputPrice(),
             const SizedBox(
               height: marginSmall,
             ),
-            qtyField(controller.qtyTextController, "Quantity"),
+            inputQty(),
             const SizedBox(
               height: marginLarge,
             ),
@@ -440,21 +441,29 @@ class AddNewItemForm extends StatelessWidget {
               children: [
                 VButton(
                   "Close",
+                  leftIcon: const Icon(
+                    Icons.delete,
+                    color: VColor.primary,
+                  ),
+                  textColor: VColor.primary,
+                  buttonColor: VColor.grey1,
                   onPressed: () {
                     controller.updateAddItemFormVisible();
                   },
-                  buttonColor: VColor.red,
                 ),
                 const SizedBox(
                   width: marginMedium,
                 ),
                 VButton(
                   "Add",
+                  leftIcon: const Icon(
+                    Icons.add,
+                    color: VColor.white,
+                  ),
                   onPressed: () {
                     controller.onAddPurchaseLine();
                   },
-                  buttonColor: VColor.green,
-                ),
+                )
               ],
             )
           ],
@@ -498,6 +507,16 @@ class AddNewItemForm extends StatelessWidget {
                     return "Value must be number";
                   }
                   return null;
+                },
+                onChanged: (value) {
+                  if (number) {
+                    if (value.isEmpty) {
+                      controller.text = "0";
+                    } else if (value[0] == "0" && value.length > 1) {
+                      controller.text = controller.text.replaceFirst("0", "");
+                      controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
+                    }
+                  }
                 },
               ),
             ),
@@ -557,69 +576,120 @@ class AddNewItemForm extends StatelessWidget {
     );
   }
 
-  Widget qtyField(TextEditingController controller, String title) {
+  Widget inputPrice() {
     return SizedBox(
       width: double.infinity,
       child: Row(
         children: [
-          Expanded(
+          const Expanded(
             flex: 1,
-            child: VText(title),
+            child: VText("Price"),
           ),
           const SizedBox(
             width: marginMedium,
           ),
           Expanded(
             flex: 2,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                VIconButton(
-                  Icons.add,
-                  colorBackground: VColor.secondary,
-                  onPressed: () {},
+            child: GetBuilder<PurchaseCreateController>(
+              builder: (controller) => SizedBox(
+                width: double.infinity,
+                child: VInputText(
+                  autoFocus: false,
+                  hint: "Price",
+                  textCapitalization: TextCapitalization.none,
+                  textInputAction: TextInputAction.next,
+                  filled: true,
+                  fillColor: VColor.white,
+                  hintTextColor: VColor.grey1,
+                  textEditingController: controller.priceTextController,
+                  keyboardType: TextInputType.number,
+                  filledBorderColor: VColor.primary,
+                  textPadding: paddingSuperSmall,
+                  textInputFormater: [ThousandsSeparatorInputFormatter()],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Price can't be empty";
+                    } else if (int.tryParse(value.replaceAll(".", "")) == null) {
+                      return "Price must be number";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    controller.updatePrice(value);
+                  },
                 ),
-                const SizedBox(
-                  width: marginMedium,
-                ),
-                SizedBox(
-                  width: 200,
-                  child: VInputText(
-                    autoFocus: false,
-                    hint: "0",
-                    textCapitalization: TextCapitalization.none,
-                    textInputAction: TextInputAction.next,
-                    filled: true,
-                    fillColor: VColor.white,
-                    hintTextColor: VColor.grey1,
-                    textEditingController: controller,
-                    keyboardType: TextInputType.number,
-                    filledBorderColor: VColor.primary,
-                    textPadding: paddingSuperSmall,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "$title can't be empty";
-                      } else if (int.tryParse(value) == null) {
-                        return "Quantity must be number";
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      if (value.isEmpty) {
-                        controller.text = "0";
-                      }
-                    },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget inputQty() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          const Expanded(
+            flex: 1,
+            child: VText("Quantity"),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: GetBuilder<PurchaseCreateController>(
+              builder: (controller) => Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  VIconButton(
+                    Icons.add,
+                    colorBackground: VColor.secondary,
+                    onPressed: () {},
                   ),
-                ),
-                const SizedBox(
-                  width: marginMedium,
-                ),
-                VIconButton(
-                  Icons.remove,
-                  colorBackground: VColor.secondary,
-                  onPressed: () {},
-                ),
-              ],
+                  const SizedBox(
+                    width: marginMedium,
+                  ),
+                  SizedBox(
+                    width: 200,
+                    child: VInputText(
+                      autoFocus: false,
+                      hint: "0",
+                      textCapitalization: TextCapitalization.none,
+                      textInputAction: TextInputAction.next,
+                      filled: true,
+                      fillColor: VColor.white,
+                      hintTextColor: VColor.grey1,
+                      textEditingController: controller.qtyTextController,
+                      keyboardType: TextInputType.number,
+                      filledBorderColor: VColor.primary,
+                      textPadding: paddingSuperSmall,
+                      textInputFormater: [ThousandsSeparatorInputFormatter()],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Quantity can't be empty";
+                        } else if (int.tryParse(value.replaceAll(".", "")) == null) {
+                          return "Quantity must be number";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        controller.updateQuantity(value);
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    width: marginMedium,
+                  ),
+                  VIconButton(
+                    Icons.remove,
+                    colorBackground: VColor.secondary,
+                    onPressed: () {},
+                  ),
+                ],
+              ),
             ),
           ),
         ],

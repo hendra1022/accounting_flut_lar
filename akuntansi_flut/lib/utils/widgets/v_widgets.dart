@@ -2,6 +2,7 @@ import 'package:akuntansi_flut/utils/extensions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -33,6 +34,7 @@ class VInputText extends StatelessWidget {
   final Function(String)? onSubmittedText;
   final Function()? onEditingComplete;
   final double? borderRadius;
+  final List<TextInputFormatter>? textInputFormater;
   final bool autoFocus;
 
   const VInputText(
@@ -61,6 +63,7 @@ class VInputText extends StatelessWidget {
       this.onSubmittedText,
       this.onEditingComplete,
       this.maxLines = 1,
+      this.textInputFormater,
       this.autoFocus = true});
 
   @override
@@ -123,6 +126,7 @@ class VInputText extends StatelessWidget {
         ),
       ),
       textCapitalization: textCapitalization,
+      inputFormatters: textInputFormater,
       validator: validator,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onSaved: onSaved,
