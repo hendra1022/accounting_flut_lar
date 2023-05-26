@@ -6,6 +6,8 @@ use App\Models\PurchaseHeader;
 use App\Http\Requests\StorePurchaseHeaderRequest;
 use App\Http\Requests\UpdatePurchaseHeaderRequest;
 use App\Models\PurchaseHeaderLine;
+use App\Models\Stock;
+use App\Models\StockHistory;
 use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -184,15 +186,31 @@ class PurchaseHeaderController extends Controller
                 $headerResponse = PurchaseHeader::create($header);
                 $phId = $headerResponse->id;
 
-                foreach ($request->data as $key => $value) {
+                foreach ($request->data as $value) {
                     $model = new PurchaseHeaderLine();
                     $model->ph_id = $phId;
+                    $model->line_no = $value['line_no'];
                     $model->i_id = $value['i_id'];
                     $model->qty = $value['qty'];
                     $model->unit_price = $value['unit_price'];
                     $model->net_amount = $value['net_amount'];
                     $model->note = $value['note'];
                     $model->save();
+
+                    $currentStock = Stock::findOrFail($value['i_id']);
+                    $currentStock->update(array(
+                        'actual_qty' => $currentStock->actual_qty + $value['qty'],
+                        'total_qty' => $currentStock->total_qty + $value['qty']
+                    ));
+
+                    $historyStock = new StockHistory();
+                    $historyStock->i_id = $value['i_id'];
+                    $historyStock->h_id = $phId;
+                    $historyStock->transaction_type = 1;
+                    $historyStock->total_qty = $value['qty'];
+                    $historyStock->current_qty = $value['qty'];
+                    $historyStock->item_price = $value['unit_price'];
+                    $historyStock->save();
                 }
 
                 return response()->json([

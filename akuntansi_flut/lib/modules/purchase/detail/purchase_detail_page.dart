@@ -1,4 +1,5 @@
 import 'package:akuntansi_flut/modules/purchase/detail/purchase_detail.dart';
+import 'package:akuntansi_flut/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -188,7 +189,7 @@ class _DetailItem extends StatelessWidget {
                 children: [
                   detailField("Supplier Name", controller.purchaseHeader.sName ?? "No Name"),
                   const SizedBox(height: marginExtraLarge),
-                  detailField("Transaction Date", controller.purchaseHeader.purchaseDate ?? "No Date"),
+                  detailField("Transaction Date", controller.purchaseHeader.purchaseDate?.dateDatabaseToView ?? "No Date"),
                   const SizedBox(height: marginExtraLarge),
                 ],
               ),

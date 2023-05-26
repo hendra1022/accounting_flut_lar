@@ -41,8 +41,11 @@ class StockHistoryController extends Controller
         try {
             $request->validate([
                 'i_id' => 'required',
-                'actual_qty' => 'required',
+                'h_id' => 'required',
+                'transaction_type' => 'required',
                 'total_qty' => 'required',
+                'current_qty' => 'required',
+                'item_price' => 'required',
             ]);
 
             $data = StockHistory::create($request->all());
@@ -85,8 +88,11 @@ class StockHistoryController extends Controller
         try {
             $request->validate([
                 'i_id' => 'required',
-                'actual_qty' => 'required',
+                'h_id' => 'required',
+                'transaction_type' => 'required',
                 'total_qty' => 'required',
+                'current_qty' => 'required',
+                'item_price' => 'required',
             ]);
 
             $data = StockHistory::findOrFail($id);

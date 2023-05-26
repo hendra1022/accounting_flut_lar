@@ -39,7 +39,7 @@ class ItemCategoryDetailController extends BaseController {
     isLoading = true;
     getArgumentData();
     await getData();
-    await dataSource.getData(page, rowPerPage: rowPerPage, true, itemCatId: itemCatId);
+    await dataSource.getData(page, true, rowPerPage: rowPerPage, itemCatId: itemCatId);
     isLoading = false;
     update();
 

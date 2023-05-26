@@ -129,11 +129,15 @@ class PurchaseHeaderLineController extends Controller
     {
         try {
             $data = DB::table('purchase_header_lines')->select();
+            $request->validate([
+                'header_id' => 'required',
+            ]);
 
             $headerId = $request->header_id;
-            if ($headerId != null && $headerId != 0) {
-                $data = $data->where("ph_id", "=", $headerId);
-            }
+
+            $data = DB::table('purchase_header_lines as phl')->select(['phl.*', 'i.name as i_name'])
+                ->leftJoin("items as i", "i.id", "=", "phl.i_id")->where("phl.ph_id", "=", $headerId);
+
 
             $rowPerPage = $request->row_per_page;
             if ($rowPerPage == null) {

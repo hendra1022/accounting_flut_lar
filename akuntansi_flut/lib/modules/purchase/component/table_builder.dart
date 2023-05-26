@@ -40,7 +40,7 @@ class PurchaseTable extends StatelessWidget {
                         controller.changePage(value ~/ controller.dataSource.rowPerPage + 1, false);
                       },
                       columns: [
-                        tableColumn(controller, "ID", (customerType) => customerType.id!, minWidth: Get.width * (5 / 100)),
+                        tableColumn(controller, "No.", (customerType) => customerType.id!, minWidth: Get.width * (5 / 100)),
                         tableColumn(controller, "Date", (customerType) => customerType.purchaseDate!, minWidth: Get.width * (10 / 100)),
                         tableColumn(controller, "Supplier", (customerType) => customerType.sId!, minWidth: Get.width * (25 / 100)),
                         tableColumn(controller, "Net Amount", (customerType) => customerType.netAmount!, minWidth: Get.width * (10 / 100)),

@@ -107,7 +107,7 @@ class PurchaseLineDataTableSource extends DataTableSource {
           Get.width * (24 / 100),
         ),
         dataCell(
-          purchaseLineList[index].unitPrice,
+          purchaseLineList[index].unitPrice!.thousandSeparator,
           Get.width * (8 / 100),
         ),
         dataCell(
@@ -116,7 +116,7 @@ class PurchaseLineDataTableSource extends DataTableSource {
           isMoney: true,
         ),
         dataCell(
-          purchaseLineList[index].qty ?? "0",
+          (purchaseLineList[index].qty ?? "0").thousandSeparator,
           Get.width * (8 / 100),
         ),
       ],

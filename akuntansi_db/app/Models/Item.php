@@ -11,7 +11,6 @@ class Item extends Model
 
     protected $fillable = [
         'name',
-        'phone',
         'active',
         'have_child',
         'parent_id',

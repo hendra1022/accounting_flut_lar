@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchase_header_lines', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger("line_no");
             $table->bigInteger("ph_id");
             $table->bigInteger("i_id");
             $table->mediumInteger("qty");

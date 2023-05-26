@@ -2,6 +2,7 @@ import 'package:akuntansi_flut/commons/base_response.dart';
 import 'package:akuntansi_flut/services/model/purchase_header.dart';
 import 'package:akuntansi_flut/services/model/request/purchase_header.dart';
 import 'package:akuntansi_flut/services/model/request/purchase_header_line.dart';
+import 'package:akuntansi_flut/services/model/response/purchase_header_line_list.dart';
 import 'package:intl/intl.dart';
 
 import '../api_client.dart';
@@ -122,5 +123,21 @@ class PurchaseRepo extends ApiClient {
     );
     var json = responseHandler(res);
     return BaseResponse.fromJsonMap(json, (data) => PurchaseHeader.fromJson(data));
+  }
+
+  Future<BaseResponse<PurchaseHeaderLineListResponse>> getAllDataLine(int page, int phId, {int rowPerPage = 25}) async {
+    var res = await get(
+      url: ApiUrl.purchaseHeaderLineFilter,
+      params: {
+        "page": "$page",
+        "row_per_page": "$rowPerPage",
+        "header_id": phId.toString(),
+      },
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    var json = responseHandler(res);
+    return BaseResponse.fromJsonMap(json, (data) => PurchaseHeaderLineListResponse.fromJson(data));
   }
 }

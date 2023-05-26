@@ -1,9 +1,8 @@
 import 'package:akuntansi_flut/services/model/purchase_header.dart';
+import 'package:akuntansi_flut/services/model/purchase_header_line.dart';
 import 'package:akuntansi_flut/services/repository/purchase_repo.dart';
-import 'package:get/get.dart';
 
 import '../../../commons/base_controller.dart';
-import '../../../services/model/item_model.dart';
 import '../../../utils/constants.dart';
 import 'table.dart';
 
@@ -14,12 +13,15 @@ class PurchaseDetailController extends BaseController {
   PurchaseHeader purchaseHeader = PurchaseHeader();
 
   final PurchaseLineDataTableSource dataSource = PurchaseLineDataTableSource();
+  int page = 1;
+  int rowPerPage = 10;
 
   @override
   Future<void> onInit() async {
     isLoading = true;
     getArgumentData();
     await getPurchaseHeader();
+    await dataSource.getData(page, true, purchaseId, rowPerPage: rowPerPage);
     isLoading = false;
     update();
 
@@ -32,7 +34,7 @@ class PurchaseDetailController extends BaseController {
     }
   }
 
-  void sortData<T>(Comparable<T> Function(ItemModel user) getField, int colIndex, bool ascending) {
+  void sortData<T>(Comparable<T> Function(PurchaseHeaderLine user) getField, int colIndex, bool ascending) {
     dataSource.sort<T>(getField, ascending);
   }
 
@@ -58,7 +60,14 @@ class PurchaseDetailController extends BaseController {
     }
   }
 
-  Future<void> onSave() async {
-    Get.back();
+  Future<void> changePage(int page, bool reset, {int rowPerPageTemp = 0}) async {
+    rowPerPage = rowPerPageTemp <= 0 ? rowPerPage : rowPerPageTemp;
+    isLoading = true;
+    update();
+    this.page = page;
+
+    await dataSource.getData(page, reset, purchaseId, rowPerPage: rowPerPage);
+    isLoading = false;
+    update();
   }
 }

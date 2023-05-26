@@ -9,7 +9,8 @@ class PurchaseHeaderLine extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'sh_id',
+        'line_no',
+        'ph_id',
         'i_id',
         'qty',
         'unit_price',

@@ -29,6 +29,8 @@ class PurchaseCreateController extends BaseController {
   final PurchaseLineDataTableSource dataSource = PurchaseLineDataTableSource();
   bool isAddItemFormShown = false;
 
+  int index = 1;
+
   Item item = Item();
   TextEditingController itemTextController = TextEditingController();
   TextEditingController priceTextController = TextEditingController();
@@ -77,7 +79,7 @@ class PurchaseCreateController extends BaseController {
       priceTextController.text = value.replaceFirst("0", "");
       priceTextController.selection = TextSelection.fromPosition(TextPosition(offset: priceTextController.text.length));
     }
-    inputPrice = int.tryParse(priceTextController.text.replaceAll(",", "")) ?? double.tryParse(priceTextController.text.replaceAll(",", ""))?.round() ?? 0;
+    inputPrice = int.tryParse(priceTextController.text.replaceAll(".", "")) ?? double.tryParse(priceTextController.text.replaceAll(".", ""))?.round() ?? 0;
   }
 
   void updateQuantity(String value) {
@@ -88,7 +90,7 @@ class PurchaseCreateController extends BaseController {
       qtyTextController.text = value.replaceFirst("0", "");
       qtyTextController.selection = TextSelection.fromPosition(TextPosition(offset: qtyTextController.text.length));
     }
-    inputQty = int.tryParse(qtyTextController.text.replaceAll(",", "")) ?? double.tryParse(qtyTextController.text.replaceAll(",", ""))?.round() ?? 0;
+    inputQty = int.tryParse(qtyTextController.text.replaceAll(".", "")) ?? double.tryParse(qtyTextController.text.replaceAll(".", ""))?.round() ?? 0;
   }
 
   Future<void> onAddPurchaseLine() async {
@@ -101,18 +103,20 @@ class PurchaseCreateController extends BaseController {
         color: VColor.white,
       )));
     } else {
-      int netAmountTemp = priceTextController.text.convertToInt() * qtyTextController.text.convertToInt();
+      int netAmountTemp = inputPrice * inputQty;
       var lineTemp = PurchaseLineRequestBody(
+        lineNo: index.toString(),
         iId: item.id!.toString(),
         itemName: item.name,
         netAmount: netAmountTemp.toString(),
-        qty: qtyTextController.text,
-        unitPrice: priceTextController.text,
+        qty: inputQty.toString(),
+        unitPrice: inputPrice.toString(),
         note: noteLineTextController.text,
       );
       purchaseLineList.add(lineTemp);
 
       dataSource.purchaseLineList.add(lineTemp);
+      index++;
     }
 
     await Future.delayed(const Duration(milliseconds: 250));
