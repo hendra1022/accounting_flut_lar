@@ -64,7 +64,8 @@ class PurchaseHeaderController extends Controller
     public function show($id)
     {
         try {
-            $data = PurchaseHeader::findOrFail($id);
+            $data = DB::table('purchase_headers as ph')->select(['ph.*', 's.name as s_name'])
+                ->leftJoin("suppliers as s", "s.id", "=", "ph.s_id")->where("ph.id", "=", $id)->get()->first();
 
             return response()->json([
                 'result' => $data,

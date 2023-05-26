@@ -112,4 +112,15 @@ class PurchaseRepo extends ApiClient {
     var json = responseHandler(res);
     return BaseResponse.fromJsonMap(json, (data) => PurchaseHeader.fromJson(data));
   }
+
+  Future<BaseResponse<PurchaseHeader>> getPurchaseHeaderLine(int id) async {
+    var res = await get(
+      url: "${ApiUrl.purchaseHeaderLine}/$id",
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+    var json = responseHandler(res);
+    return BaseResponse.fromJsonMap(json, (data) => PurchaseHeader.fromJson(data));
+  }
 }

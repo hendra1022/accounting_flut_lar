@@ -24,4 +24,6 @@ class ApiUrl {
   static const purchaseHeader = "${baseUrl}purchase_header";
   static const purchaseHeaderCombo = "${baseUrl}purchase_header/store";
   static const purchaseHeaderFilter = "$purchaseHeader/filter";
+
+  static const purchaseHeaderLine = "${baseUrl}purchase_header_line";
 }

@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PurchaseHeaderLineLineController extends Controller
+class PurchaseHeaderLineController extends Controller
 {
     public function index()
     {
@@ -45,7 +45,6 @@ class PurchaseHeaderLineLineController extends Controller
                 'qty' => 'required',
                 'unit_price' => 'required',
                 'net_amount' => 'required',
-                'note' => 'required',
             ]);
 
             $data = PurchaseHeaderLine::create($request->all());
@@ -92,7 +91,6 @@ class PurchaseHeaderLineLineController extends Controller
                 'qty' => 'required',
                 'unit_price' => 'required',
                 'net_amount' => 'required',
-                'note' => 'required',
             ]);
 
             $data = PurchaseHeaderLine::findOrFail($id);
@@ -132,9 +130,9 @@ class PurchaseHeaderLineLineController extends Controller
         try {
             $data = DB::table('purchase_header_lines')->select();
 
-            $purchaseDate = $request->purchase_date;
-            if ($purchaseDate != null && $purchaseDate != "") {
-                $data = $data->whereDate("purchase_date", "=", $purchaseDate);
+            $headerId = $request->header_id;
+            if ($headerId != null && $headerId != 0) {
+                $data = $data->where("ph_id", "=", $headerId);
             }
 
             $rowPerPage = $request->row_per_page;
