@@ -29,9 +29,12 @@ class PurchaseController extends BaseController {
   @override
   Future<void> onInit() async {
     isLoading = true;
+    final now = DateTime.now();
+    startDate = DateTime(now.year, now.month, 1);
+
     startDateView = DateFormat("dd-MM-yyyy").format(startDate);
     endDateView = DateFormat("dd-MM-yyyy").format(endDate);
-    await dataSource.getData(page, rowPerPage: rowPerPage, true);
+    await changePage(page, true);
     isLoading = false;
     update();
 
@@ -60,7 +63,10 @@ class PurchaseController extends BaseController {
     update();
     this.page = page;
 
-    await dataSource.getData(page, reset, rowPerPage: rowPerPage);
+    String sDate = DateFormat("yyyy-MM-dd").format(startDate);
+    String eDate = DateFormat("yyyy-MM-dd").format(endDate);
+
+    await dataSource.getData(page, reset, sDate, eDate, rowPerPage: rowPerPage);
     isLoading = false;
     update();
   }

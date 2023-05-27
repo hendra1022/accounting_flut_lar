@@ -35,7 +35,7 @@ class PurchasePage extends StatelessWidget {
           Expanded(
             child: ListView(
               children: const [
-                Filter(),
+                _Filter(),
                 SizedBox(
                   height: marginMedium,
                 ),
@@ -116,8 +116,8 @@ class Header extends StatelessWidget {
   }
 }
 
-class Filter extends StatelessWidget {
-  const Filter({super.key});
+class _Filter extends StatelessWidget {
+  const _Filter();
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +241,9 @@ class Filter extends StatelessWidget {
                 Icons.search,
                 color: VColor.white,
               ),
-              onPressed: () {},
+              onPressed: () {
+                controller.changePage(1, true);
+              },
             )
           ],
         ),

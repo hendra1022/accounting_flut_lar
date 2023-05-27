@@ -29,12 +29,12 @@ class PurchaseDataTableSource extends DataTableSource {
     notifyListeners();
   }
 
-  Future<bool> getData(int page, bool reset, {int rowPerPage = 25}) async {
+  Future<bool> getData(int page, bool reset, String startDate, String endDate, {int rowPerPage = 25}) async {
     try {
       if (reset) {
         dataList.clear();
       }
-      var response = await PurchaseRepo().getAllDataBy(page, rowPerPage: rowPerPage);
+      var response = await PurchaseRepo().getAllDataBy(page, startDate, endDate, rowPerPage: rowPerPage);
       if (response.code == 200) {
         _data = response.data ?? PurchaseHeaderListResponse();
         dataList.addAll(_data.purchaseHeaderList ?? []);

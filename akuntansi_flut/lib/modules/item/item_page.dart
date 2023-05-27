@@ -33,7 +33,7 @@ class ItemPage extends StatelessWidget {
           const SizedBox(
             height: marginSmall,
           ),
-          const Filter(),
+          const _Filter(),
           const SizedBox(
             height: marginMedium,
           ),
@@ -115,8 +115,8 @@ class Header extends StatelessWidget {
   }
 }
 
-class Filter extends StatelessWidget {
-  const Filter({super.key});
+class _Filter extends StatelessWidget {
+  const _Filter();
 
   @override
   Widget build(BuildContext context) {
