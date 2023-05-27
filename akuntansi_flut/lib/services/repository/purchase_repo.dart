@@ -3,7 +3,6 @@ import 'package:akuntansi_flut/services/model/purchase_header.dart';
 import 'package:akuntansi_flut/services/model/request/purchase_header.dart';
 import 'package:akuntansi_flut/services/model/request/purchase_header_line.dart';
 import 'package:akuntansi_flut/services/model/response/purchase_header_line_list.dart';
-import 'package:intl/intl.dart';
 
 import '../api_client.dart';
 import '../api_url.dart';
@@ -83,17 +82,19 @@ class PurchaseRepo extends ApiClient {
     }
   }
 
-  Future<BaseResponse<PurchaseHeaderListResponse>> getAllDataBy(int page, {int rowPerPage = 25, String purchaseDate = ""}) async {
-    if (purchaseDate == "") {
-      purchaseDate = DateFormat("dd-MM-yyyy").format(DateTime.now());
-    }
-
+  Future<BaseResponse<PurchaseHeaderListResponse>> getAllDataBy(
+    int page,
+    String startDate,
+    String endDate, {
+    int rowPerPage = 25,
+  }) async {
     var res = await get(
       url: ApiUrl.purchaseHeaderFilter,
       params: {
         "page": "$page",
         "row_per_page": "$rowPerPage",
-        "purchase_date": purchaseDate,
+        "start_date": startDate,
+        "end_date": endDate,
       },
       headers: {
         'Content-Type': 'application/json',
