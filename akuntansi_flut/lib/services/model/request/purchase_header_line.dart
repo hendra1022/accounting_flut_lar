@@ -1,15 +1,15 @@
 class PurchaseHeaderLineRequestBody {
-  String? purchaseDate;
+  String? transactionDate;
   String? sId;
   String? grossAmount;
   String? netAmount;
   String? note;
   List<PurchaseLineRequestBody>? data;
 
-  PurchaseHeaderLineRequestBody({this.purchaseDate, this.sId, this.grossAmount, this.netAmount, this.note, this.data});
+  PurchaseHeaderLineRequestBody({this.transactionDate, this.sId, this.grossAmount, this.netAmount, this.note, this.data});
 
   PurchaseHeaderLineRequestBody.fromJson(Map<String, dynamic> json) {
-    purchaseDate = json['purchase_date'];
+    transactionDate = json['transaction_date'];
     sId = json['s_id'];
     grossAmount = json['gross_amount'];
     netAmount = json['net_amount'];
@@ -24,7 +24,7 @@ class PurchaseHeaderLineRequestBody {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['purchase_date'] = purchaseDate;
+    data['transaction_date'] = transactionDate;
     data['s_id'] = sId;
     data['gross_amount'] = grossAmount;
     data['net_amount'] = netAmount;

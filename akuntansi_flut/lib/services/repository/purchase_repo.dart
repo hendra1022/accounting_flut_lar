@@ -83,9 +83,9 @@ class PurchaseRepo extends ApiClient {
     }
   }
 
-  Future<BaseResponse<PurchaseHeaderListResponse>> getAllDataBy(int page, {int rowPerPage = 25, String purchaseDate = ""}) async {
-    if (purchaseDate == "") {
-      purchaseDate = DateFormat("dd-MM-yyyy").format(DateTime.now());
+  Future<BaseResponse<PurchaseHeaderListResponse>> getAllDataBy(int page, {int rowPerPage = 25, String transactionDate = ""}) async {
+    if (transactionDate == "") {
+      transactionDate = DateFormat("dd-MM-yyyy").format(DateTime.now());
     }
 
     var res = await get(
@@ -93,7 +93,7 @@ class PurchaseRepo extends ApiClient {
       params: {
         "page": "$page",
         "row_per_page": "$rowPerPage",
-        "purchase_date": purchaseDate,
+        "transaction_date": transactionDate,
       },
       headers: {
         'Content-Type': 'application/json',

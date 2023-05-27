@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('purchase_headers', function (Blueprint $table) {
             $table->id();
-            $table->dateTime("purchase_date");
+            $table->dateTime("transaction_date");
             $table->bigInteger("s_id");
             $table->bigInteger("gross_amount");
             $table->bigInteger("net_amount");

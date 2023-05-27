@@ -43,7 +43,7 @@ class PurchaseHeaderController extends Controller
     {
         try {
             $request->validate([
-                'purchase_date' => 'required',
+                'transaction_date' => 'required',
                 's_id' => 'required',
                 'gross_amount' => 'required',
                 'net_amount' => 'required',
@@ -89,7 +89,7 @@ class PurchaseHeaderController extends Controller
     {
         try {
             $request->validate([
-                'purchase_date' => 'required',
+                'transaction_date' => 'required',
                 's_id' => 'required',
                 'gross_amount' => 'required',
                 'net_amount' => 'required',
@@ -136,8 +136,8 @@ class PurchaseHeaderController extends Controller
             $startDate = $request->start_date;
             $endDate = $request->end_date;
             if ($startDate != null && $startDate != "" && $endDate != null && $endDate != "") {
-                $data = $data->whereDate("purchase_date", ">=", $startDate);
-                $data = $data->whereDate("purchase_date", "<=", $endDate);
+                $data = $data->whereDate("transaction_date", ">=", $startDate);
+                $data = $data->whereDate("transaction_date", "<=", $endDate);
             }
 
             $rowPerPage = $request->row_per_page;
@@ -169,7 +169,7 @@ class PurchaseHeaderController extends Controller
         $response = DB::transaction(function () use ($request) {
             try {
                 $request->validate([
-                    'purchase_date' => 'required',
+                    'transaction_date' => 'required',
                     's_id' => 'required',
                     'gross_amount' => 'required',
                     'net_amount' => 'required',
@@ -177,7 +177,7 @@ class PurchaseHeaderController extends Controller
                 ]);
 
                 $header = [
-                    "purchase_date" => $request->purchase_date,
+                    "transaction_date" => $request->transaction_date,
                     "s_id" => $request->s_id,
                     "gross_amount" => $request->gross_amount,
                     "net_amount" => $request->net_amount,
@@ -227,57 +227,5 @@ class PurchaseHeaderController extends Controller
         });
 
         return $response;
-
-        // try {
-
-        //     $request->validate([
-        //         'purchase_date' => 'required',
-        //         's_id' => 'required',
-        //         'gross_amount' => 'required',
-        //         'net_amount' => 'required',
-        //         'note' => 'required',
-        //         'data' => 'required',
-        //     ]);
-
-        //     // $header = new PurchaseHeader;
-        //     // $header->purchase_date = $request->purchase_date;
-        //     // $header->s_id = $request->s_id;
-        //     // $header->gross_amount = $request->gross_amount;
-        //     // $header->net_amount = $request->net_amount;
-        //     // $header->note = $request->note;
-        //     // $headerResponse = $header->save();
-
-        //     $header = [
-        //         "purchase_date" => $request->purchase_date,
-        //         "s_id" => $request->s_id,
-        //         "gross_amount" => $request->gross_amount,
-        //         "net_amount" => $request->net_amount,
-        //         "note" => $request->note
-        //     ];
-        //     $headerResponse = PurchaseHeader::create($header);
-        //     $phId = $headerResponse->id;
-        //     DB::commit();
-
-        //     foreach ($request->data as $key => $value) {
-        //         $model = new PurchaseHeaderLine();
-        //         $model->ph_id = $phId;
-        //         $model->i_id = $value['i_id'];
-        //         $model->qty = $value['qty'];
-        //         $model->unit_price = $value['unit_price'];
-        //         $model->net_amount = $value['net_amount'];
-        //         $model->note = $value['note'];
-        //         $model->save();
-        //     }
-
-        //     return response()->json([
-        //         'result' => $headerResponse,
-        //         'message' => 'Succeed'
-        //     ], JsonResponse::HTTP_OK);
-        // } catch (Exception $e) {
-        // return response()->json([
-        //     'result' => [],
-        //     'message' => $e->getMessage()
-        // ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
-        // }
     }
 }

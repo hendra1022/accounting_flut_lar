@@ -11,15 +11,15 @@ class PurchaseHeader extends Model
     use HasFactory;
 
     protected $fillable = [
-        'purchase_date',
+        'transaction_date',
         's_id',
         'gross_amount',
         'net_amount',
         'note',
     ];
 
-    public function setPurchaseDateAttribute($value)
+    public function setTransactionDateAttribute($value)
     {
-        $this->attributes['purchase_date'] = Carbon::parse($value);
+        $this->attributes['transaction_date'] = Carbon::parse($value);
     }
 }

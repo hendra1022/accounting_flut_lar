@@ -1,6 +1,6 @@
 class PurchaseHeader {
   int? id;
-  String? purchaseDate;
+  String? transactionDate;
   int? sId;
   int? grossAmount;
   int? netAmount;
@@ -9,11 +9,11 @@ class PurchaseHeader {
   String? updatedAt;
   String? sName;
 
-  PurchaseHeader({this.id, this.purchaseDate, this.sId, this.grossAmount, this.netAmount, this.note, this.createdAt, this.updatedAt, this.sName});
+  PurchaseHeader({this.id, this.transactionDate, this.sId, this.grossAmount, this.netAmount, this.note, this.createdAt, this.updatedAt, this.sName});
 
   PurchaseHeader.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    purchaseDate = json['purchase_date'];
+    transactionDate = json['transaction_date'];
     sId = json['s_id'];
     grossAmount = json['gross_amount'];
     netAmount = json['net_amount'];
@@ -26,7 +26,7 @@ class PurchaseHeader {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['purchase_date'] = purchaseDate;
+    data['transaction_date'] = transactionDate;
     data['s_id'] = sId;
     data['gross_amount'] = grossAmount;
     data['net_amount'] = netAmount;

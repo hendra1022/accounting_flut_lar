@@ -189,7 +189,7 @@ class _DetailItem extends StatelessWidget {
                 children: [
                   detailField("Supplier Name", controller.purchaseHeader.sName ?? "No Name"),
                   const SizedBox(height: marginExtraLarge),
-                  detailField("Transaction Date", controller.purchaseHeader.purchaseDate?.dateDatabaseToView ?? "No Date"),
+                  detailField("Transaction Date", controller.purchaseHeader.transactionDate?.dateDatabaseToView ?? "No Date"),
                   const SizedBox(height: marginExtraLarge),
                 ],
               ),

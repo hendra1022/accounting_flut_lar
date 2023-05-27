@@ -69,7 +69,7 @@ class PurchaseDataTableSource extends DataTableSource {
       color: index % 2 == 1 ? MaterialStateColor.resolveWith((states) => VColor.grey4Opacity) : MaterialStateColor.resolveWith((states) => VColor.transparant),
       cells: [
         dataCell(dataList[index].id!.toString(), Get.width * (5 / 100)),
-        dataCell(dataList[index].purchaseDate!.dateDatabaseToView, Get.width * (10 / 100)),
+        dataCell(dataList[index].transactionDate!.dateDatabaseToView, Get.width * (10 / 100)),
         dataCell(dataList[index].sName.toString(), Get.width * (25 / 100)),
         dataCell(dataList[index].netAmount.toString().thousandSeparator, Get.width * (10 / 100)),
         DataCell(

@@ -153,7 +153,7 @@ class PurchaseCreateController extends BaseController {
         grossAmount: grossAmount.toString(),
         netAmount: grossAmount.toString(),
         note: noteHeaderTextController.text,
-        purchaseDate: transactionDateView,
+        transactionDate: transactionDateView,
         sId: supplier.id!.toString(),
         data: purchaseLineList,
       );

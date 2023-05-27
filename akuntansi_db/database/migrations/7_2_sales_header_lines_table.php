@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('sales_header_lines', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger("line_no");
             $table->bigInteger("sh_id");
             $table->bigInteger("i_id");
             $table->mediumInteger("qty");
             $table->bigInteger("unit_price");
             $table->bigInteger("net_amount");
-            $table->bigInteger("note");
+            $table->string("note")->nullable();
             $table->timestamps();
         });
     }
