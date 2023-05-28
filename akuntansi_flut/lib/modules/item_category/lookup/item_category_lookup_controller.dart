@@ -1,8 +1,10 @@
 import 'package:akuntansi_flut/services/model/item_category.dart';
+import 'package:akuntansi_flut/services/model/request/item_category.dart';
 import 'package:akuntansi_flut/services/repository/item_category_repo.dart';
 import 'package:flutter/material.dart';
 
 import '../../../commons/base_controller.dart';
+import '../../../utils/widgets/v_popup.dart';
 
 class ItemCategoryLookUpController extends BaseController {
   bool isActive = true;
@@ -25,9 +27,14 @@ class ItemCategoryLookUpController extends BaseController {
     'Code',
   ];
 
+  // create item category
+  final TextEditingController itemCategoryController = TextEditingController();
+
   @override
   Future<void> onInit() async {
     isLoading = true;
+    update();
+    itemCategoryController.text = "";
     await getData();
     isLoading = false;
     update();
@@ -79,6 +86,20 @@ class ItemCategoryLookUpController extends BaseController {
       }
     } catch (e) {
       print("error : $e");
+    }
+  }
+
+  Future<void> createSupplier() async {
+    try {
+      var requestBody = ItemCategoryRequest(name: itemCategoryController.text, active: "1");
+      var response = await ItemCategoryRepo().createData(requestBody);
+      if (response == "Success") {
+        onInit();
+      } else {
+        VPopup().alertText("Error", response);
+      }
+    } catch (e) {
+      print("Error create supplier : $e");
     }
   }
 }

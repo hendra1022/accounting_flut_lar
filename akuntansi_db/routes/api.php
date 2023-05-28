@@ -6,6 +6,8 @@ use App\Http\Controllers\ItemCategoryController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\PurchaseHeaderController;
 use App\Http\Controllers\PurchaseHeaderLineController;
+use App\Http\Controllers\SalesHeaderController;
+use App\Http\Controllers\SalesHeaderLineController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +44,6 @@ Route::controller(ItemController::class)->group(function () {
     Route::resource('item', ItemController::class);
 });
 
-
 Route::controller(PurchaseHeaderController::class)->group(function () {
     Route::get('/purchase_header/filter', 'indexByParam');
     Route::post('/purchase_header/store', 'storeHeaderAndLine');
@@ -52,4 +53,15 @@ Route::controller(PurchaseHeaderController::class)->group(function () {
 Route::controller(PurchaseHeaderLineController::class)->group(function () {
     Route::get('/purchase_header_line/filter', 'indexByParam');
     Route::resource('purchase_header_line', PurchaseHeaderLineController::class);
+});
+
+Route::controller(SalesHeaderController::class)->group(function () {
+    Route::get('/sales_header/filter', 'indexByParam');
+    Route::post('/sales_header/store', 'storeHeaderAndLine');
+    Route::resource('sales_header', SalesHeaderController::class);
+});
+
+Route::controller(SalesHeaderLineController::class)->group(function () {
+    Route::get('/sales_header_line/filter', 'indexByParam');
+    Route::resource('sales_header_line', SalesHeaderLineController::class);
 });

@@ -187,15 +187,17 @@ class PurchaseHeaderController extends Controller
                 $phId = $headerResponse->id;
 
                 foreach ($request->data as $value) {
-                    $model = new PurchaseHeaderLine();
-                    $model->ph_id = $phId;
-                    $model->line_no = $value['line_no'];
-                    $model->i_id = $value['i_id'];
-                    $model->qty = $value['qty'];
-                    $model->unit_price = $value['unit_price'];
-                    $model->net_amount = $value['net_amount'];
-                    $model->note = $value['note'];
-                    $model->save();
+                    $lineRequest = [
+                        "ph_id" => $phId,
+                        "line_no" => $value['line_no'],
+                        "i_id" => $value['i_id'],
+                        "qty" => $value['qty'],
+                        "unit_price" => $value['unit_price'],
+                        "net_amount" => $value['net_amount'],
+                        "note" => $value['note'],
+                    ];
+                    $lineResponse = PurchaseHeaderLine::create($lineRequest);
+                    $phlId = $lineResponse->id;
 
                     $currentStock = Stock::findOrFail($value['i_id']);
                     $currentStock->update(array(
@@ -205,11 +207,11 @@ class PurchaseHeaderController extends Controller
 
                     $historyStock = new StockHistory();
                     $historyStock->i_id = $value['i_id'];
-                    $historyStock->h_id = $phId;
+                    $historyStock->hl_id = $phlId;
                     $historyStock->transaction_type = 1;
                     $historyStock->total_qty = $value['qty'];
                     $historyStock->current_qty = $value['qty'];
-                    $historyStock->item_price = $value['unit_price'];
+                    $historyStock->unit_price = $value['unit_price'];
                     $historyStock->save();
                 }
 

@@ -14,11 +14,12 @@ return new class extends Migration
         Schema::create('stock_histories', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('i_id');
-            $table->bigInteger('h_id');
+            $table->bigInteger('hl_id');
             $table->smallInteger('transaction_type');
             $table->mediumInteger('total_qty');
             $table->mediumInteger('current_qty');
-            $table->bigInteger('item_price');
+            $table->bigInteger('unit_price');
+            $table->bigInteger('source_id')->nullable();
             $table->timestamps();
         });
     }

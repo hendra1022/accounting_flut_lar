@@ -163,6 +163,10 @@ class Filter extends StatelessWidget {
             width: 50,
           ),
           filterByDropdown(),
+          const SizedBox(
+            width: 50,
+          ),
+          createItemCategory(),
         ],
       ),
     );
@@ -230,39 +234,89 @@ class Filter extends StatelessWidget {
           fontSize: textSizeLarge,
           isBold: true,
         ),
-        Container(
-          width: 500,
-          decoration: const BoxDecoration(
-            color: VColor.white,
-            borderRadius: BorderRadius.all(
-              Radius.circular(radiusMedium),
+        FittedBox(
+          child: Container(
+            decoration: const BoxDecoration(
+              color: VColor.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(radiusMedium),
+              ),
+            ),
+            child: GetBuilder<ItemCategoryLookUpController>(
+              builder: (controller) => Row(
+                children: [
+                  SizedBox(
+                    width: 250,
+                    child: VInputText(
+                      hint: "Search item by ${controller.selectedFilterBy}",
+                      textEditingController: controller.itemSearchController,
+                      autoFocus: false,
+                    ),
+                  ),
+                  const SizedBox(
+                    width: marginSmall,
+                  ),
+                  VButton(
+                    "Filter",
+                    leftIcon: const Icon(
+                      Icons.search,
+                      color: VColor.white,
+                    ),
+                    onPressed: () {
+                      controller.search();
+                    },
+                  )
+                ],
+              ),
             ),
           ),
-          child: GetBuilder<ItemCategoryLookUpController>(
-            builder: (controller) => Row(
-              children: [
-                SizedBox(
-                  width: 250,
-                  child: VInputText(
-                    hint: "Search item by ${controller.selectedFilterBy}",
-                    textEditingController: controller.itemSearchController,
-                    autoFocus: false,
+        ),
+      ],
+    );
+  }
+
+  Widget createItemCategory() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const VText(
+          "Item Category",
+          isBold: true,
+        ),
+        FittedBox(
+          child: Container(
+            decoration: const BoxDecoration(
+              color: VColor.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(radiusMedium),
+              ),
+            ),
+            child: GetBuilder<ItemCategoryLookUpController>(
+              builder: (controller) => Row(
+                children: [
+                  SizedBox(
+                    width: 250,
+                    child: VInputText(
+                      hint: "Item Category",
+                      textEditingController: controller.itemCategoryController,
+                      autoFocus: false,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: marginSmall,
-                ),
-                VButton(
-                  "Filter",
-                  leftIcon: const Icon(
-                    Icons.search,
-                    color: VColor.white,
+                  const SizedBox(
+                    width: marginSmall,
                   ),
-                  onPressed: () {
-                    controller.search();
-                  },
-                )
-              ],
+                  VButton(
+                    "Create",
+                    leftIcon: const Icon(
+                      Icons.search,
+                      color: VColor.white,
+                    ),
+                    onPressed: () {
+                      controller.createSupplier();
+                    },
+                  )
+                ],
+              ),
             ),
           ),
         ),
