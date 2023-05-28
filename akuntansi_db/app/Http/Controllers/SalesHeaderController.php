@@ -226,7 +226,7 @@ class SalesHeaderController extends Controller
                                         'current_qty' => 0
                                     ));
                             }
-                            $stockSql[$i];
+                            // $stockSql[$i];
 
                             $i++;
                         }
