@@ -212,34 +212,42 @@ class SalesHeaderController extends Controller
                         $totalSales = $value['qty'];
                         $i = 0;
                         while ($totalSales > 0) {
-                            if ($stockSql[$i]->current_stock >= $totalSales) {
-                                $currentStockTemp = $stockSql[$i] - $totalSales;
+                            if ($stockSql[$i]->current_qty >= $totalSales) {
+                                $currentStockTemp = $stockSql[$i]->current_qty - $totalSales;
                                 DB::table("stock_histories")->where("id", "=", $stockSql[$i]->id)
                                     ->update(array(
                                         'current_qty' => $currentStockTemp
                                     ));
                                 $totalSales = 0;
+
+                                $historyStock = new StockHistory();
+                                $historyStock->i_id = $value['i_id'];
+                                $historyStock->hl_id = $shlId;
+                                $historyStock->transaction_type = 2;
+                                $historyStock->total_qty = $value['qty'];
+                                $historyStock->current_qty = $value['qty'];
+                                $historyStock->unit_price = $value['unit_price'];
+                                $historyStock->source_id = $stockSql[$i]->id;
+                                $historyStock->save();
                             } else {
-                                $totalSales = $totalSales - $stockSql[$i];
+                                $totalSales = $totalSales - $stockSql[$i]->current_qty;
                                 DB::table("stock_histories")->where("id", "=", $stockSql[$i]->id)
                                     ->update(array(
                                         'current_qty' => 0
                                     ));
-                            }
-                            // $stockSql[$i];
 
+                                $historyStock = new StockHistory();
+                                $historyStock->i_id = $value['i_id'];
+                                $historyStock->hl_id = $shlId;
+                                $historyStock->transaction_type = 2;
+                                $historyStock->total_qty = $value['qty'];
+                                $historyStock->current_qty = $value['qty'];
+                                $historyStock->unit_price = $value['unit_price'];
+                                $historyStock->source_id = $stockSql[$i]->id;
+                                $historyStock->save();
+                            }
                             $i++;
                         }
-
-
-                        $historyStock = new StockHistory();
-                        $historyStock->i_id = $value['i_id'];
-                        $historyStock->hl_id = $shlId;
-                        $historyStock->transaction_type = 2;
-                        $historyStock->total_qty = $value['qty'];
-                        $historyStock->current_qty = $value['qty'];
-                        $historyStock->item_price = $value['unit_price'];
-                        $historyStock->save();
                     } else {
                         DB::rollBack();
                         return response()->json([
