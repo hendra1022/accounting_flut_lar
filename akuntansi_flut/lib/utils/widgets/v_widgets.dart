@@ -323,12 +323,12 @@ class VLoadingPage extends StatelessWidget {
   const VLoadingPage({super.key});
 
   Widget _loadingPage() {
-    return Center(
+    return const Center(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.max,
-        children: const [
+        children: [
           CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(VColor.primary),
           ),
@@ -1458,7 +1458,7 @@ class ExpansionTileState extends State<VExpansionTile> with SingleTickerProvider
     _iconColor = _controller.drive(_iconColorTween.chain(_easeInTween));
     _backgroundColor = _controller.drive(_backgroundColorTween.chain(_easeOutTween));
 
-    _isExpanded = PageStorage.of(context)?.readState(context) as bool? ?? widget.initiallyExpanded;
+    _isExpanded = PageStorage.of(context).readState(context) as bool? ?? widget.initiallyExpanded;
     if (_isExpanded) _controller.value = 1.0;
   }
 
@@ -1481,7 +1481,7 @@ class ExpansionTileState extends State<VExpansionTile> with SingleTickerProvider
           });
         });
       }
-      PageStorage.of(context)?.writeState(context, _isExpanded);
+      PageStorage.of(context).writeState(context, _isExpanded);
     });
     widget.onExpansionChanged?.call(_isExpanded);
   }
@@ -1528,7 +1528,7 @@ class ExpansionTileState extends State<VExpansionTile> with SingleTickerProvider
     final ColorScheme colorScheme = theme.colorScheme;
     _borderColorTween.end = theme.dividerColor;
     _headerColorTween
-      ..begin = widget.collapsedTextColor ?? theme.textTheme.subtitle1!.color
+      ..begin = widget.collapsedTextColor ?? theme.textTheme.titleMedium!.color
       ..end = widget.textColor ?? colorScheme.secondary;
     _iconColorTween
       ..begin = widget.collapsedIconColor ?? theme.unselectedWidgetColor
