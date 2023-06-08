@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../commons/base_controller.dart';
-import '../../services/model/item_model.dart';
+import '../../services/model/sales_header.dart';
 
 class SalesController extends BaseController {
   final SalesDataTableSource dataSource = SalesDataTableSource();
@@ -22,19 +22,26 @@ class SalesController extends BaseController {
   DateTime endDate = DateTime.now();
   String endDateView = "";
 
+  // table
+  int page = 1;
+  int rowPerPage = 10;
+
   @override
   Future<void> onInit() async {
     isLoading = true;
-    await Future.delayed(const Duration(seconds: 1));
+    final now = DateTime.now();
+    startDate = DateTime(now.year, now.month, 1);
+
     startDateView = DateFormat("dd-MM-yyyy").format(startDate);
     endDateView = DateFormat("dd-MM-yyyy").format(endDate);
+    await changePage(page, true);
     isLoading = false;
     update();
 
     super.onInit();
   }
 
-  void sortData<T>(Comparable<T> Function(ItemModel user) getField, int colIndex, bool ascending) {
+  void sortData<T>(Comparable<T> Function(SalesHeader user) getField, int colIndex, bool ascending) {
     dataSource.sort<T>(getField, ascending);
   }
 
@@ -47,6 +54,20 @@ class SalesController extends BaseController {
   void updateEndDate(DateTime temp) {
     endDate = temp;
     endDateView = DateFormat("dd-MM-yyyy").format(endDate);
+    update();
+  }
+
+  Future<void> changePage(int page, bool reset, {int rowPerPageTemp = 0}) async {
+    rowPerPage = rowPerPageTemp <= 0 ? rowPerPage : rowPerPageTemp;
+    isLoading = true;
+    update();
+    this.page = page;
+
+    String sDate = DateFormat("yyyy-MM-dd").format(startDate);
+    String eDate = DateFormat("yyyy-MM-dd").format(endDate);
+
+    await dataSource.getData(page, reset, sDate, eDate, rowPerPage: rowPerPage);
+    isLoading = false;
     update();
   }
 }

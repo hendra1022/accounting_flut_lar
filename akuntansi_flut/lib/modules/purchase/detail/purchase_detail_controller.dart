@@ -7,8 +7,6 @@ import '../../../utils/constants.dart';
 import 'table.dart';
 
 class PurchaseDetailController extends BaseController {
-  bool isActive = true;
-
   int purchaseId = 0;
   PurchaseHeader purchaseHeader = PurchaseHeader();
 

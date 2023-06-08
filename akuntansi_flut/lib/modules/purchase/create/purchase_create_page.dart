@@ -191,12 +191,12 @@ class _InputForm extends StatelessWidget {
           ),
           Expanded(
             child: GetBuilder<PurchaseCreateController>(
-              builder: (controller) => SizedBox(
+              builder: (controller) => const SizedBox(
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [],
+                  children: [],
                 ),
               ),
             ),

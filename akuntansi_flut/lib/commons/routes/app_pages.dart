@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import '../../modules/customer/create/customer_create.dart';
 import '../../modules/customer/customer.dart';
 import '../../modules/customer/detail/customer_detail.dart';
+import '../../modules/customer/lookup/customer_lookup.dart';
 import '../../modules/customer_type/customer_type.dart';
 import '../../modules/dashboard/dashboard.dart';
 import '../../modules/item/item.dart';
@@ -128,6 +129,11 @@ class AppPages {
       name: RoutesPath.customerCreate,
       page: () => const CustomerCreatePage(),
       binding: CustomerCreateBinding(),
+    ),
+    GetPage(
+      name: RoutesPath.customerLookUp,
+      page: () => const CustomerLookUpPage(),
+      binding: CustomerLookUpBinding(),
     ),
     GetPage(
       name: RoutesPath.customerTypeDetail,

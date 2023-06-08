@@ -41,13 +41,18 @@ class CustomerController extends Controller
         try {
             $request->validate([
                 'name' => 'required',
-                'address' => 'required',
-                'email' => 'required',
-                'phone' => 'required',
-                'description' => 'required',
-                'active' => 'required',
-                'ct_id' => 'required',
             ]);
+
+            if ($request->ct_id == null) {
+                $data = DB::table('customer_types')->select()->first();
+                if ($data == null) {
+                    return response()->json([
+                        'result' => [],
+                        'message' => "Customer Type tidak ditemukan",
+                    ], JsonResponse::HTTP_INTERNAL_SERVER_ERROR);
+                }
+                $request["ct_id"] = $data->id;
+            }
 
             $user = Customer::create($request->all());
 

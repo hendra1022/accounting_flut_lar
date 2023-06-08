@@ -1,4 +1,5 @@
 import 'package:akuntansi_flut/services/model/item.dart';
+import 'package:akuntansi_flut/services/model/request/purchase_header.dart';
 import 'package:akuntansi_flut/services/model/request/purchase_header_line.dart';
 import 'package:akuntansi_flut/services/repository/purchase_repo.dart';
 import 'package:akuntansi_flut/utils/extensions.dart';
@@ -25,7 +26,7 @@ class PurchaseCreateController extends BaseController {
   String transactionDateView = "";
 
   // price line
-  List<PurchaseLineRequestBody> purchaseLineList = List<PurchaseLineRequestBody>.empty(growable: true);
+  List<PurchaseLineRequest> purchaseLineList = List<PurchaseLineRequest>.empty(growable: true);
   final PurchaseLineDataTableSource dataSource = PurchaseLineDataTableSource();
   bool isAddItemFormShown = false;
 
@@ -50,7 +51,7 @@ class PurchaseCreateController extends BaseController {
     super.onInit();
   }
 
-  void sortData<T>(Comparable<T> Function(PurchaseLineRequestBody user) getField, int colIndex, bool ascending) {
+  void sortData<T>(Comparable<T> Function(PurchaseLineRequest user) getField, int colIndex, bool ascending) {
     dataSource.sort<T>(getField, ascending);
   }
 
@@ -104,7 +105,7 @@ class PurchaseCreateController extends BaseController {
       )));
     } else {
       int netAmountTemp = inputPrice * inputQty;
-      var lineTemp = PurchaseLineRequestBody(
+      var lineTemp = PurchaseLineRequest(
         lineNo: index.toString(),
         iId: item.id!.toString(),
         itemName: item.name,
@@ -149,7 +150,7 @@ class PurchaseCreateController extends BaseController {
         grossAmount += element.netAmount!.convertToInt();
       }
 
-      PurchaseHeaderLineRequestBody requestBody = PurchaseHeaderLineRequestBody(
+      PurchaseHeaderRequest requestBody = PurchaseHeaderRequest(
         grossAmount: grossAmount.toString(),
         netAmount: grossAmount.toString(),
         note: noteHeaderTextController.text,

@@ -1,7 +1,6 @@
 import 'package:akuntansi_flut/commons/base_response.dart';
 import 'package:akuntansi_flut/services/model/purchase_header.dart';
 import 'package:akuntansi_flut/services/model/request/purchase_header.dart';
-import 'package:akuntansi_flut/services/model/request/purchase_header_line.dart';
 import 'package:akuntansi_flut/services/model/response/purchase_header_line_list.dart';
 
 import '../api_client.dart';
@@ -34,7 +33,7 @@ class PurchaseRepo extends ApiClient {
     }
   }
 
-  Future<String> createDataCombo(PurchaseHeaderLineRequestBody request) async {
+  Future<String> createDataCombo(PurchaseHeaderRequest request) async {
     var res = await post(
       url: ApiUrl.purchaseHeaderCombo,
       body: request.toJson(),

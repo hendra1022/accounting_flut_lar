@@ -1,11 +1,12 @@
+import 'package:akuntansi_flut/utils/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../commons/routes/app_navigation.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../../app_bar/custom_app_bar.dart';
+import 'sales_detail_controller.dart';
 import 'table.dart';
 
 class SalesDetailPage extends StatelessWidget {
@@ -26,12 +27,12 @@ class SalesDetailPage extends StatelessWidget {
       padding: const EdgeInsets.all(paddingSmall),
       child: Column(
         children: [
-          const Header(),
+          const _Header(),
           const SizedBox(height: marginSmall),
           Expanded(
             child: ListView(
               children: const [
-                DetailItem(),
+                _DetailItem(),
                 SalesLineTable(),
               ],
             ),
@@ -42,8 +43,8 @@ class SalesDetailPage extends StatelessWidget {
   }
 }
 
-class Header extends StatelessWidget {
-  const Header({super.key});
+class _Header extends StatelessWidget {
+  const _Header();
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +95,7 @@ class Header extends StatelessWidget {
                 height: marginSuperSmall,
               ),
               const VText(
-                "Sales Detail - No Document",
+                "Sales Detail",
                 fontSize: textSizeLarge,
                 color: VColor.white,
               ),
@@ -115,28 +116,28 @@ class Header extends StatelessWidget {
                       Get.back();
                     },
                   ),
-                  const SizedBox(width: marginMedium),
-                  VButton(
-                    "Update",
-                    buttonColor: VColor.secondary,
-                    leftIcon: const Icon(
-                      Icons.edit,
-                      color: VColor.white,
-                    ),
-                    onPressed: () {
-                      VNavigation().toSupplierCreatePage();
-                    },
-                  ),
-                  const SizedBox(width: marginMedium),
-                  VButton(
-                    "Delete",
-                    buttonColor: VColor.red,
-                    leftIcon: const Icon(
-                      Icons.delete,
-                      color: VColor.white,
-                    ),
-                    onPressed: () {},
-                  ),
+                  // const SizedBox(width: marginMedium),
+                  // VButton(
+                  //   "Update",
+                  //   buttonColor: VColor.secondary,
+                  //   leftIcon: const Icon(
+                  //     Icons.edit,
+                  //     color: VColor.white,
+                  //   ),
+                  //   onPressed: () {
+                  //     VNavigation().toSupplierCreatePage();
+                  //   },
+                  // ),
+                  // const SizedBox(width: marginMedium),
+                  // VButton(
+                  //   "Delete",
+                  //   buttonColor: VColor.red,
+                  //   leftIcon: const Icon(
+                  //     Icons.delete,
+                  //     color: VColor.white,
+                  //   ),
+                  //   onPressed: () {},
+                  // ),
                 ],
               )
             ],
@@ -147,8 +148,8 @@ class Header extends StatelessWidget {
   }
 }
 
-class DetailItem extends StatelessWidget {
-  const DetailItem({super.key});
+class _DetailItem extends StatelessWidget {
+  const _DetailItem();
 
   Widget detailField(String title, String field) {
     return SizedBox(
@@ -183,25 +184,25 @@ class DetailItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Column(
-              children: [
-                detailField("Document No", "123"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Supplier Name", "123"),
-                const SizedBox(height: marginExtraLarge),
-                detailField("Transaction Date", "123"),
-                const SizedBox(height: marginExtraLarge),
-              ],
+            child: GetBuilder<SalesDetailController>(
+              builder: (controller) => Column(
+                children: [
+                  detailField("Supplier Name", controller.salesHeader.cName ?? "No Name"),
+                  const SizedBox(height: marginExtraLarge),
+                  detailField("Transaction Date", controller.salesHeader.transactionDate?.dateDatabaseToView ?? "No Date"),
+                  const SizedBox(height: marginExtraLarge),
+                ],
+              ),
             ),
           ),
           const SizedBox(
             width: marginExtraLarge,
           ),
-          Expanded(
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [],
+              children: [],
             ),
           ),
         ],

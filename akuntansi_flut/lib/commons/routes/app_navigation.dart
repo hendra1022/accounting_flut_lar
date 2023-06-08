@@ -111,6 +111,10 @@ class VNavigation {
     });
   }
 
+  toCustomerLookUp({required Function(dynamic) callback}) {
+    Get.toNamed(RoutesPath.customerLookUp)!.then(callback);
+  }
+
   toCustomerTypeDetailPage(int custTypeId) {
     Get.toNamed(
       RoutesPath.customerTypeDetail,

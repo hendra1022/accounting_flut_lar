@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../commons/routes/app_navigation.dart';
 import '../../../utils/constants.dart';
+import '../../../utils/thousand_seperator.dart';
 import '../../../utils/v_color.dart';
 import '../../../utils/widgets/v_widgets.dart';
 import '../../app_bar/custom_app_bar.dart';
@@ -26,17 +28,17 @@ class SalesCreatePage extends StatelessWidget {
       padding: const EdgeInsets.all(paddingSmall),
       child: Column(
         children: [
-          const Header(),
+          const _Header(),
           const SizedBox(height: marginSmall),
           Expanded(
             child: ListView(
               children: const [
-                InputForm(),
+                _InputForm(),
                 Divider(
                   thickness: 2,
                   color: VColor.black,
                 ),
-                SalesLineForm(),
+                _SalesLineForm(),
               ],
             ),
           ),
@@ -46,8 +48,8 @@ class SalesCreatePage extends StatelessWidget {
   }
 }
 
-class Header extends StatelessWidget {
-  const Header({super.key});
+class _Header extends StatelessWidget {
+  const _Header();
 
   @override
   Widget build(BuildContext context) {
@@ -140,8 +142,8 @@ class Header extends StatelessWidget {
   }
 }
 
-class InputForm extends StatelessWidget {
-  const InputForm({super.key});
+class _InputForm extends StatelessWidget {
+  const _InputForm();
 
   @override
   Widget build(BuildContext context) {
@@ -157,11 +159,28 @@ class InputForm extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    inputField(controller.codeTextController, "Document No"),
-                    const SizedBox(height: marginMedium),
-                    inputField(controller.nameTextController, "Supplier Name"),
+                    inputPicker(
+                      "Customer Name",
+                      controller.customer.id == null ? false : true,
+                      controller.customerTextController,
+                      onPressed: () {
+                        VNavigation().toCustomerLookUp(
+                          callback: (p0) {
+                            if (p0 != null) {
+                              if (p0[PrefConst.keyArgsCustomer] != null) {
+                                controller.customer = p0[PrefConst.keyArgsCustomer];
+                                controller.customerTextController.text = controller.customer.name ?? "";
+                                controller.update();
+                              }
+                            }
+                          },
+                        );
+                      },
+                    ),
                     const SizedBox(height: marginMedium),
                     transactionDate(),
+                    const SizedBox(height: marginMedium),
+                    inputField(controller.noteHeaderTextController, "Note")
                   ],
                 ),
               ),
@@ -172,12 +191,12 @@ class InputForm extends StatelessWidget {
           ),
           Expanded(
             child: GetBuilder<SalesCreateController>(
-              builder: (controller) => SizedBox(
+              builder: (controller) => const SizedBox(
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [],
+                  children: [],
                 ),
               ),
             ),
@@ -228,6 +247,56 @@ class InputForm extends StatelessWidget {
     );
   }
 
+  Widget inputPicker(String title, bool isVisible, TextEditingController controller, {void Function()? onPressed}) {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: VText(title),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: isVisible,
+                    child: Expanded(
+                      child: VInputText(
+                        autoFocus: false,
+                        textEditingController: controller,
+                        readOnly: true,
+                        filled: true,
+                        fillColor: VColor.white,
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: isVisible,
+                    child: const SizedBox(
+                      width: marginMedium,
+                    ),
+                  ),
+                  VIconButton(
+                    Icons.search,
+                    colorBackground: VColor.secondary,
+                    onPressed: onPressed,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget transactionDate() {
     return Row(
       mainAxisSize: MainAxisSize.min,
@@ -235,7 +304,7 @@ class InputForm extends StatelessWidget {
         const Expanded(
             child: Padding(
           padding: EdgeInsets.only(top: marginMedium),
-          child: VText("Transaction Date"),
+          child: VText("Transaction Date (Day-Month-Year)"),
         )),
         const SizedBox(
           width: marginMedium,
@@ -248,7 +317,7 @@ class InputForm extends StatelessWidget {
               builder: (controller) => GestureDetector(
                 onTap: () => showDatePickerStartDate(controller),
                 child: VText(
-                  controller.startDateView,
+                  controller.transactionDateView,
                   decoration: TextDecoration.underline,
                 ),
               ),
@@ -262,18 +331,18 @@ class InputForm extends StatelessWidget {
   Future<void> showDatePickerStartDate(SalesCreateController controller) async {
     final DateTime? picked = await showDatePicker(
       context: Get.context!,
-      initialDate: controller.startDate,
+      initialDate: controller.transactionDate,
       firstDate: DateTime(2000),
       lastDate: DateTime(2030),
     );
-    if (picked != null && picked != controller.startDate) {
+    if (picked != null && picked != controller.transactionDate) {
       controller.updateStartDate(picked);
     }
   }
 }
 
-class SalesLineForm extends StatelessWidget {
-  const SalesLineForm({super.key});
+class _SalesLineForm extends StatelessWidget {
+  const _SalesLineForm();
 
   @override
   Widget build(BuildContext context) {
@@ -307,7 +376,7 @@ class SalesLineForm extends StatelessWidget {
           GetBuilder<SalesCreateController>(
             builder: (controller) => Visibility(
               visible: controller.isAddItemFormShown,
-              child: const AddNewItemForm(),
+              child: const _AddNewItemForm(),
             ),
           ),
           const SalesLineTable(),
@@ -317,8 +386,8 @@ class SalesLineForm extends StatelessWidget {
   }
 }
 
-class AddNewItemForm extends StatelessWidget {
-  const AddNewItemForm({super.key});
+class _AddNewItemForm extends StatelessWidget {
+  const _AddNewItemForm();
 
   @override
   Widget build(BuildContext context) {
@@ -330,75 +399,80 @@ class AddNewItemForm extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(paddingMedium),
       margin: const EdgeInsets.only(bottom: marginMedium),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Expanded(child: VText("Item Name")),
-              Expanded(
-                flex: 2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const VText("Item 1"),
-                    const SizedBox(
-                      width: marginMedium,
-                    ),
-                    VButton(
-                      "",
-                      onPressed: () {},
-                      buttonColor: VColor.primary,
-                      leftIcon: const Icon(
-                        Icons.search,
-                        color: VColor.white,
-                      ),
-                    ),
-                  ],
+      child: GetBuilder<SalesCreateController>(
+        builder: (controller) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            inputPicker(
+              "Item Name",
+              controller.item.id == null ? false : true,
+              controller.itemTextController,
+              onPressed: () {
+                VNavigation().toItemLookUp(
+                  callback: (p0) {
+                    if (p0 != null) {
+                      if (p0[PrefConst.keyArgsItem] != null) {
+                        controller.item = p0[PrefConst.keyArgsItem];
+                        controller.itemTextController.text = controller.item.name ?? "";
+                        controller.update();
+                      }
+                    }
+                  },
+                );
+              },
+            ),
+            const SizedBox(
+              height: marginSmall,
+            ),
+            inputPrice(),
+            const SizedBox(
+              height: marginSmall,
+            ),
+            inputQty(),
+            const SizedBox(
+              height: marginLarge,
+            ),
+            inputField(controller.noteLineTextController, "Note", number: false),
+            const SizedBox(
+              height: marginLarge,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                VButton(
+                  "Close",
+                  leftIcon: const Icon(
+                    Icons.delete,
+                    color: VColor.primary,
+                  ),
+                  textColor: VColor.primary,
+                  buttonColor: VColor.grey1,
+                  onPressed: () {
+                    controller.updateAddItemFormVisible();
+                  },
                 ),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: marginSmall,
-          ),
-          GetBuilder<SalesCreateController>(
-            builder: (controller) => inputField(controller.priceTextController, "Price"),
-          ),
-          const SizedBox(
-            height: marginSmall,
-          ),
-          GetBuilder<SalesCreateController>(
-            builder: (controller) => qtyField(controller.qtyTextController, "Quantity"),
-          ),
-          const SizedBox(
-            height: marginLarge,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              VButton(
-                "Close",
-                onPressed: () {},
-                buttonColor: VColor.red,
-              ),
-              const SizedBox(
-                width: marginMedium,
-              ),
-              VButton(
-                "Add",
-                onPressed: () {},
-                buttonColor: VColor.green,
-              ),
-            ],
-          )
-        ],
+                const SizedBox(
+                  width: marginMedium,
+                ),
+                VButton(
+                  "Add",
+                  leftIcon: const Icon(
+                    Icons.add,
+                    color: VColor.white,
+                  ),
+                  onPressed: () {
+                    controller.onAddSalesLine();
+                  },
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
 
-  Widget inputField(TextEditingController controller, String title) {
+  Widget inputField(TextEditingController controller, String title, {bool number = true}) {
     return SizedBox(
       width: double.infinity,
       child: Row(
@@ -423,14 +497,26 @@ class AddNewItemForm extends StatelessWidget {
                 fillColor: VColor.white,
                 hintTextColor: VColor.grey1,
                 textEditingController: controller,
-                keyboardType: TextInputType.text,
+                keyboardType: number ? TextInputType.number : TextInputType.text,
                 filledBorderColor: VColor.primary,
                 textPadding: paddingSuperSmall,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return "$title can't be empty";
+                  } else if (int.tryParse(value) == null && number) {
+                    return "Value must be number";
                   }
                   return null;
+                },
+                onChanged: (value) {
+                  if (number) {
+                    if (value.isEmpty) {
+                      controller.text = "0";
+                    } else if (value[0] == "0" && value.length > 1) {
+                      controller.text = controller.text.replaceFirst("0", "");
+                      controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
+                    }
+                  }
                 },
               ),
             ),
@@ -440,7 +526,7 @@ class AddNewItemForm extends StatelessWidget {
     );
   }
 
-  Widget qtyField(TextEditingController controller, String title) {
+  Widget inputPicker(String title, bool isVisible, TextEditingController controller, {void Function()? onPressed}) {
     return SizedBox(
       width: double.infinity,
       child: Row(
@@ -454,81 +540,156 @@ class AddNewItemForm extends StatelessWidget {
           ),
           Expanded(
             flex: 2,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // Container(
-                //   decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.circular(radiusLarge)),
-                //   padding: const EdgeInsets.all(paddingSuperSmall),
-                //   child: const Icon(
-                //     Icons.add,
-                //     color: VColor.white,
-                //   ),
-                // ),
-                VButton(
-                  "",
-                  onPressed: () {},
-                  buttonColor: VColor.primary,
-                  leftIcon: const Icon(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: isVisible,
+                    child: Expanded(
+                      child: VInputText(
+                        autoFocus: false,
+                        textEditingController: controller,
+                        readOnly: true,
+                        filled: true,
+                        fillColor: VColor.white,
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible: isVisible,
+                    child: const SizedBox(
+                      width: marginMedium,
+                    ),
+                  ),
+                  VIconButton(
+                    Icons.search,
+                    colorBackground: VColor.secondary,
+                    onPressed: onPressed,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget inputPrice() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          const Expanded(
+            flex: 1,
+            child: VText("Price"),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: GetBuilder<SalesCreateController>(
+              builder: (controller) => SizedBox(
+                width: double.infinity,
+                child: VInputText(
+                  autoFocus: false,
+                  hint: "Price",
+                  textCapitalization: TextCapitalization.none,
+                  textInputAction: TextInputAction.next,
+                  filled: true,
+                  fillColor: VColor.white,
+                  hintTextColor: VColor.grey1,
+                  textEditingController: controller.priceTextController,
+                  keyboardType: TextInputType.number,
+                  filledBorderColor: VColor.primary,
+                  textPadding: paddingSuperSmall,
+                  textInputFormater: [ThousandsSeparatorInputFormatter()],
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Price can't be empty";
+                    } else if (int.tryParse(value.replaceAll(".", "")) == null) {
+                      return "Price must be number";
+                    }
+                    return null;
+                  },
+                  onChanged: (value) {
+                    controller.updatePrice(value);
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget inputQty() {
+    return SizedBox(
+      width: double.infinity,
+      child: Row(
+        children: [
+          const Expanded(
+            flex: 1,
+            child: VText("Quantity"),
+          ),
+          const SizedBox(
+            width: marginMedium,
+          ),
+          Expanded(
+            flex: 2,
+            child: GetBuilder<SalesCreateController>(
+              builder: (controller) => Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  VIconButton(
                     Icons.add,
-                    color: VColor.white,
+                    colorBackground: VColor.secondary,
+                    onPressed: () {},
                   ),
-                ),
-                const SizedBox(
-                  width: marginMedium,
-                ),
-                SizedBox(
-                  width: 200,
-                  child: VInputText(
-                    autoFocus: false,
-                    hint: "0",
-                    textCapitalization: TextCapitalization.none,
-                    textInputAction: TextInputAction.next,
-                    filled: true,
-                    fillColor: VColor.white,
-                    hintTextColor: VColor.grey1,
-                    textEditingController: controller,
-                    keyboardType: TextInputType.number,
-                    filledBorderColor: VColor.primary,
-                    textPadding: paddingSuperSmall,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "$title can't be empty";
-                      } else if (int.tryParse(value) == null) {
-                        return "Quantity must be number";
-                      }
-                      return null;
-                    },
-                    onChanged: (value) {
-                      if (value.isEmpty) {
-                        controller.text = "0";
-                      }
-                    },
+                  const SizedBox(
+                    width: marginMedium,
                   ),
-                ),
-                const SizedBox(
-                  width: marginMedium,
-                ),
-
-                VButton(
-                  "",
-                  onPressed: () {},
-                  buttonColor: VColor.primary,
-                  leftIcon: const Icon(
+                  SizedBox(
+                    width: 200,
+                    child: VInputText(
+                      autoFocus: false,
+                      hint: "0",
+                      textCapitalization: TextCapitalization.none,
+                      textInputAction: TextInputAction.next,
+                      filled: true,
+                      fillColor: VColor.white,
+                      hintTextColor: VColor.grey1,
+                      textEditingController: controller.qtyTextController,
+                      keyboardType: TextInputType.number,
+                      filledBorderColor: VColor.primary,
+                      textPadding: paddingSuperSmall,
+                      textInputFormater: [ThousandsSeparatorInputFormatter()],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Quantity can't be empty";
+                        } else if (int.tryParse(value.replaceAll(".", "")) == null) {
+                          return "Quantity must be number";
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        controller.updateQuantity(value);
+                      },
+                    ),
+                  ),
+                  const SizedBox(
+                    width: marginMedium,
+                  ),
+                  VIconButton(
                     Icons.remove,
-                    color: VColor.white,
+                    colorBackground: VColor.secondary,
+                    onPressed: () {},
                   ),
-                ),
-
-                // Container(
-                //   decoration: BoxDecoration(color: VColor.primary, borderRadius: BorderRadius.circular(radiusLarge)),
-                //   padding: const EdgeInsets.all(paddingSuperSmall),
-                //   child: const Icon(
-                //     Icons.remove,
-                //     color: VColor.white,
-                //   ),
-                // ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

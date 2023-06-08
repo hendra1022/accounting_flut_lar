@@ -1,4 +1,4 @@
-class PurchaseLineRequest {
+class SalesLineRequest {
   String? lineNo;
   String? iId;
   String? qty;
@@ -7,17 +7,9 @@ class PurchaseLineRequest {
   String? note;
   String? itemName;
 
-  PurchaseLineRequest({
-    this.lineNo,
-    this.iId,
-    this.qty,
-    this.unitPrice,
-    this.netAmount,
-    this.note,
-    this.itemName,
-  });
+  SalesLineRequest({this.lineNo, this.iId, this.qty, this.unitPrice, this.netAmount, this.note, this.itemName});
 
-  PurchaseLineRequest.fromJson(Map<String, dynamic> json) {
+  SalesLineRequest.fromJson(Map<String, dynamic> json) {
     lineNo = json['line_no'];
     iId = json['i_id'];
     qty = json['qty'];

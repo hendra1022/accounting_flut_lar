@@ -198,11 +198,11 @@ class _DetailItem extends StatelessWidget {
           const SizedBox(
             width: marginExtraLarge,
           ),
-          Expanded(
+          const Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [],
+              children: [],
             ),
           ),
         ],

@@ -52,7 +52,7 @@ class PurchaseLineTable extends StatelessWidget {
   DataColumn tableColumn<T>(
     PurchaseCreateController controller,
     String title,
-    Comparable<T> Function(PurchaseLineRequestBody user)? sortBy, {
+    Comparable<T> Function(PurchaseLineRequest user)? sortBy, {
     double minWidth = 100.0,
   }) {
     return DataColumn(
@@ -70,12 +70,12 @@ class PurchaseLineTable extends StatelessWidget {
 }
 
 class PurchaseLineDataTableSource extends DataTableSource {
-  List<PurchaseLineRequestBody> purchaseLineList = List<PurchaseLineRequestBody>.empty(growable: true);
+  List<PurchaseLineRequest> purchaseLineList = List<PurchaseLineRequest>.empty(growable: true);
 
-  void sort<T>(Comparable<T> Function(PurchaseLineRequestBody d) getField, bool ascending) {
-    purchaseLineList.sort((PurchaseLineRequestBody a, PurchaseLineRequestBody b) {
+  void sort<T>(Comparable<T> Function(PurchaseLineRequest d) getField, bool ascending) {
+    purchaseLineList.sort((PurchaseLineRequest a, PurchaseLineRequest b) {
       if (!ascending) {
-        final PurchaseLineRequestBody c = a;
+        final PurchaseLineRequest c = a;
         a = b;
         b = c;
       }

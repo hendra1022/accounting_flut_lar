@@ -163,9 +163,12 @@ class _Filter extends StatelessWidget {
             width: marginSmall,
           ),
           GetBuilder<PurchaseController>(
-            builder: (controller) => VText(
-              controller.endDateView,
-              decoration: TextDecoration.underline,
+            builder: (controller) => GestureDetector(
+              onTap: () => showDatePickerEndDate(controller),
+              child: VText(
+                controller.endDateView,
+                decoration: TextDecoration.underline,
+              ),
             ),
           ),
         ],
@@ -260,6 +263,18 @@ class _Filter extends StatelessWidget {
     );
     if (picked != null && picked != controller.startDate) {
       controller.updateStartDate(picked);
+    }
+  }
+
+  Future<void> showDatePickerEndDate(PurchaseController controller) async {
+    final DateTime? picked = await showDatePicker(
+      context: Get.context!,
+      initialDate: controller.endDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2030),
+    );
+    if (picked != null && picked != controller.endDate) {
+      controller.updateEndDate(picked);
     }
   }
 }
